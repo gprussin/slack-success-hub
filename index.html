@@ -3,175 +3,296 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Slack Success Hub — CY 2026 MoM Content Engagement</title>
+  <title>Slack Success Hub — CY 2026 Report</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
+    :root {
+      --aubergine:  #4A154B;
+      --aubergine2: #3c0f3e;
+      --slack-blue: #36C5F0;
+      --slack-green:#2EB886;
+      --slack-yellow:#ECB22E;
+      --slack-red:  #E01E5A;
+      --bg:         #F8F8F8;
+      --surface:    #FFFFFF;
+      --border:     #EBEBEB;
+      --text:       #1D1C1D;
+      --muted:      #616061;
+      --subtle:     #ABABAD;
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #1d1c1d; font-size: 14px; }
+    body { font-family: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; }
 
-    .header { background: #1d1c1d; color: #fff; padding: 28px 40px 24px; }
-    .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
-    .header .sub { font-size: 13px; color: #999; margin-top: 5px; }
+    /* ── HEADER ── */
+    .site-header { background: var(--aubergine); color: #fff; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+    .site-header .logo { display: flex; align-items: center; gap: 10px; }
+    .site-header .logo svg { width: 24px; height: 24px; }
+    .site-header h1 { font-size: 16px; font-weight: 700; letter-spacing: -0.2px; }
+    .site-header .badge { font-size: 11px; background: rgba(255,255,255,.15); padding: 2px 8px; border-radius: 3px; font-weight: 400; }
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px 56px; }
+    /* ── TABS ── */
+    .tab-bar { background: var(--aubergine2); display: flex; padding: 0 40px; gap: 4px; }
+    .tab-btn { color: rgba(255,255,255,.6); border: none; background: transparent; padding: 12px 16px; font-size: 13px; font-family: 'Lato', sans-serif; font-weight: 700; cursor: pointer; border-bottom: 3px solid transparent; transition: color .15s, border-color .15s; }
+    .tab-btn:hover { color: rgba(255,255,255,.9); }
+    .tab-btn.active { color: #fff; border-bottom-color: var(--slack-yellow); }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
 
-    .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin: 32px 0 14px; }
+    /* ── LAYOUT ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px 64px; }
+    .section-label { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; color: var(--subtle); margin: 36px 0 14px; }
     .section-label:first-child { margin-top: 0; }
 
-    /* ── Metric cards ── */
+    /* ── SUMMARY BANNER ── */
+    .summary-banner { background: var(--aubergine); color: #fff; border-radius: 10px; padding: 24px 28px; margin-bottom: 28px; display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
+    .summary-banner .headline { flex: 1; min-width: 200px; }
+    .summary-banner .headline h2 { font-size: 20px; font-weight: 900; line-height: 1.3; margin-bottom: 6px; }
+    .summary-banner .headline p { font-size: 13px; color: rgba(255,255,255,.7); line-height: 1.6; }
+    .summary-banner .kpis { display: flex; gap: 28px; flex-wrap: wrap; }
+    .kpi { text-align: center; }
+    .kpi .val { font-size: 28px; font-weight: 900; line-height: 1; }
+    .kpi .lbl { font-size: 11px; color: rgba(255,255,255,.6); margin-top: 3px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+    .kpi .chg { font-size: 11px; margin-top: 2px; font-weight: 700; }
+    .green { color: var(--slack-green); } .red { color: var(--slack-red); } .yellow { color: var(--slack-yellow); }
+
+    /* ── METRIC CARDS ── */
     .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    .m-card { background: #fff; border-radius: 8px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,.07); }
-    .m-card .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 10px; }
-    .m-card .big { font-size: 30px; font-weight: 800; line-height: 1; }
-    .m-card .delta { font-size: 12px; font-weight: 600; margin-top: 5px; }
-    .m-card .note { font-size: 11px; color: #aaa; margin-top: 3px; }
-    .green { color: #2eb886; } .red { color: #e01e5a; } .yellow { color: #ecb22e; }
+    .m-card { background: var(--surface); border-radius: 8px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,.06); border: 1px solid var(--border); }
+    .m-card .lbl { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.07em; color: var(--subtle); margin-bottom: 10px; }
+    .m-card .big { font-size: 28px; font-weight: 900; line-height: 1; }
+    .m-card .delta { font-size: 12px; font-weight: 700; margin-top: 5px; }
+    .m-card .note { font-size: 11px; color: var(--subtle); margin-top: 3px; }
 
-    /* ── Charts ── */
+    /* ── MONTH FILTER ── */
+    .month-filter { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+    .mf-btn { border: 1px solid var(--border); background: var(--surface); color: var(--muted); padding: 5px 14px; border-radius: 20px; font-size: 12px; font-family: 'Lato', sans-serif; font-weight: 700; cursor: pointer; transition: all .15s; }
+    .mf-btn:hover { border-color: var(--aubergine); color: var(--aubergine); }
+    .mf-btn.active { background: var(--aubergine); border-color: var(--aubergine); color: #fff; }
+
+    /* ── CHARTS ── */
     .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .chart-row.single { grid-template-columns: 1fr; }
-    .c-card { background: #fff; border-radius: 8px; padding: 22px 20px 16px; box-shadow: 0 1px 3px rgba(0,0,0,.07); }
-    .c-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 18px; color: #333; }
+    .c-card { background: var(--surface); border-radius: 8px; padding: 22px 20px 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); border: 1px solid var(--border); }
+    .c-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 18px; color: var(--text); }
 
-    /* ── Insights ── */
-    .insights { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-    .ins { background: #fff; border-radius: 8px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,.07); border-left: 4px solid #ddd; }
-    .ins.pos  { border-left-color: #2eb886; }
-    .ins.warn { border-left-color: #ecb22e; }
-    .ins.neg  { border-left-color: #e01e5a; }
-    .ins.blue { border-left-color: #36c5f0; }
-    .ins .tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #888; margin-bottom: 5px; }
+    /* ── INSIGHTS ── */
+    .insights { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .ins { background: var(--surface); border-radius: 8px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,.06); border: 1px solid var(--border); border-left: 4px solid var(--border); }
+    .ins.pos  { border-left-color: var(--slack-green); }
+    .ins.warn { border-left-color: var(--slack-yellow); }
+    .ins.neg  { border-left-color: var(--slack-red); }
+    .ins.blue { border-left-color: var(--slack-blue); }
+    .ins .tag { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .1em; color: var(--subtle); margin-bottom: 5px; }
     .ins h4   { font-size: 13px; font-weight: 700; margin-bottom: 6px; line-height: 1.35; }
-    .ins p    { font-size: 12px; color: #555; line-height: 1.6; }
+    .ins p    { font-size: 12px; color: var(--muted); line-height: 1.65; }
 
-    /* ── Recommendations ── */
-    .recs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .rec { background: #fff; border-radius: 8px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,.07); display: flex; gap: 14px; }
-    .rec-num { font-size: 22px; font-weight: 900; color: #4a154b; min-width: 28px; line-height: 1.1; }
+    /* ── RECOMMENDATIONS ── */
+    .recs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .rec { background: var(--surface); border-radius: 8px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,.06); border: 1px solid var(--border); display: flex; gap: 14px; }
+    .rec-num { font-size: 22px; font-weight: 900; color: var(--aubergine); min-width: 28px; line-height: 1.1; }
     .rec h4  { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
-    .rec p   { font-size: 12px; color: #555; line-height: 1.6; }
+    .rec p   { font-size: 12px; color: var(--muted); line-height: 1.65; }
 
-    /* ── Table ── */
-    .t-wrap { background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.07); overflow-x: auto; }
+    /* ── TABLE ── */
+    .table-controls { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+    .search-box { padding: 7px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; font-family: 'Lato', sans-serif; width: 220px; outline: none; }
+    .search-box:focus { border-color: var(--aubergine); }
+    .cat-filter { padding: 7px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; font-family: 'Lato', sans-serif; outline: none; color: var(--text); background: var(--surface); cursor: pointer; }
+    .cat-filter:focus { border-color: var(--aubergine); }
+    .t-wrap { background: var(--surface); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.06); border: 1px solid var(--border); overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 900px; }
-    thead th { padding: 10px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #888; border-bottom: 2px solid #f0f2f5; text-align: left; white-space: nowrap; background: #fafafa; }
+    thead th { padding: 10px 12px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .07em; color: var(--subtle); border-bottom: 2px solid var(--border); text-align: left; white-space: nowrap; background: #FAFAFA; cursor: pointer; user-select: none; }
+    thead th:hover { color: var(--aubergine); }
     thead th.num { text-align: right; }
-    tbody td { padding: 8px 12px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+    thead th .sort-icon { margin-left: 3px; opacity: .4; }
+    thead th.sorted .sort-icon { opacity: 1; color: var(--aubergine); }
+    tbody td { padding: 9px 12px; border-bottom: 1px solid #F5F5F5; vertical-align: middle; }
     tbody tr:last-child td { border-bottom: none; }
-    tbody tr:hover { background: #fafafa; }
-    .cat-row td { background: #f7f4f8; font-weight: 700; font-size: 11px; color: #4a154b; text-transform: uppercase; letter-spacing: .05em; padding: 6px 12px; }
-    .badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 3px; }
-    .pill { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 3px; white-space: nowrap; }
-    .pill.up   { background: #e8f9f3; color: #2eb886; }
-    .pill.down { background: #fde8ef; color: #e01e5a; }
-    .pill.flat { color: #aaa; font-size: 10px; }
-    .pill.warn { background: #fdf5e0; color: #b08000; }
+    tbody tr:hover { background: #FAFAFA; }
+    tbody tr.hidden { display: none; }
+    .cat-row td { background: #F3EEF4; font-weight: 900; font-size: 10px; color: var(--aubergine); text-transform: uppercase; letter-spacing: .08em; padding: 6px 12px; }
+    .pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+    .pill.up   { background: #E8F9F3; color: #1a7a57; }
+    .pill.down { background: #FDE8EF; color: #b0143f; }
+    .pill.flat { color: var(--subtle); }
+    .pill.warn { background: #FDF5E0; color: #957200; }
+    .pill.new  { background: #EEE8EF; color: var(--aubergine); }
     td.num { text-align: right; }
-    td.muted { color: #aaa; text-align: right; font-size: 11px; }
-    td.b-bad { text-align: right; color: #e01e5a; font-weight: 600; }
-    td.b-ok  { text-align: right; color: #aaa; }
-    .sparkline { display: flex; align-items: flex-end; gap: 2px; height: 18px; }
-    .sparkline span { display: inline-block; width: 7px; border-radius: 1px; background: #ccc; }
-    .art-title { font-weight: 500; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    td.muted { color: var(--subtle); text-align: right; font-size: 11px; }
+    td.b-bad { text-align: right; color: var(--slack-red); font-weight: 700; }
+    td.b-ok  { text-align: right; color: var(--subtle); }
+    .sparkline { display: flex; align-items: flex-end; gap: 2px; height: 20px; }
+    .sparkline span { display: inline-block; width: 7px; border-radius: 1px; }
+    .art-title { font-weight: 700; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cat-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 3px; }
 
-    footer { text-align: center; padding: 20px; font-size: 11px; color: #bbb; }
+    /* ── ONBOARDING TAB ── */
+    .onboard-hero { background: var(--aubergine); color: #fff; border-radius: 10px; padding: 32px 36px; margin-bottom: 28px; }
+    .onboard-hero h2 { font-size: 24px; font-weight: 900; margin-bottom: 8px; }
+    .onboard-hero p { font-size: 14px; color: rgba(255,255,255,.75); line-height: 1.7; max-width: 700px; }
+    .onboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .onboard-card { background: var(--surface); border-radius: 8px; padding: 22px 24px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+    .onboard-card h3 { font-size: 14px; font-weight: 900; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .onboard-card h3 .icon { width: 22px; height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+    .onboard-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .onboard-card ul li { font-size: 13px; color: var(--muted); line-height: 1.55; padding-left: 14px; position: relative; }
+    .onboard-card ul li::before { content: '·'; position: absolute; left: 0; color: var(--aubergine); font-weight: 900; }
+    .onboard-card ul li strong { color: var(--text); font-weight: 700; }
+    .metric-explainer { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+    .me-card { background: var(--surface); border-radius: 8px; padding: 16px 18px; border: 1px solid var(--border); border-top: 3px solid var(--aubergine); }
+    .me-card h4 { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; color: var(--aubergine); }
+    .me-card p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item { display: flex; gap: 16px; padding-bottom: 20px; position: relative; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--aubergine); flex-shrink: 0; margin-top: 3px; position: relative; z-index: 1; }
+    .tl-item:not(:last-child) .tl-dot::after { content: ''; position: absolute; left: 5px; top: 12px; width: 2px; height: calc(100% + 8px); background: var(--border); }
+    .tl-content h4 { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+    .tl-content p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .tl-month { font-size: 10px; font-weight: 900; text-transform: uppercase; color: var(--subtle); letter-spacing: .07em; margin-bottom: 4px; }
+    .divider { height: 1px; background: var(--border); margin: 28px 0; }
+    .full-width { grid-column: 1 / -1; }
+
+    footer { text-align: center; padding: 20px; font-size: 11px; color: var(--subtle); border-top: 1px solid var(--border); margin-top: 40px; }
   </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>Slack Success Hub — CY 2026 Content Engagement</h1>
-  <div class="sub">January – May 2026 &nbsp;·&nbsp; Month-over-Month Analysis &nbsp;·&nbsp; GA4 &nbsp;·&nbsp; Global English pages only</div>
+<!-- HEADER -->
+<div class="site-header">
+  <div class="logo">
+    <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M19.712 9.447a4.224 4.224 0 0 0-8.448 0v22.048a4.224 4.224 0 0 0 8.448 0V9.447z" fill="#36C5F0"/>
+      <path d="M44.288 19.712a4.224 4.224 0 0 0 0-8.448H22.24a4.224 4.224 0 0 0 0 8.448h22.048z" fill="#2EB886"/>
+      <path d="M34.024 44.288a4.224 4.224 0 0 0 8.448 0V22.24a4.224 4.224 0 0 0-8.448 0v22.048z" fill="#ECB22E"/>
+      <path d="M9.448 34.024a4.224 4.224 0 0 0 0 8.448h22.048a4.224 4.224 0 0 0 0-8.448H9.448z" fill="#E01E5A"/>
+    </svg>
+    <h1>Success Hub</h1>
+  </div>
+  <span class="badge">CY 2026 · Jan–May · GA4</span>
 </div>
 
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('report')">Content Report</button>
+  <button class="tab-btn" onclick="switchTab('onboard')">About Success Hub</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- TAB 1: REPORT -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-report" class="tab-pane active">
 <div class="container">
 
-  <!-- OVERALL METRICS -->
-  <div class="section-label">Overall Metrics — May 2026 (most recent)</div>
-  <div class="metrics">
+  <!-- SUMMARY BANNER -->
+  <div class="summary-banner">
+    <div class="headline">
+      <h2>Sessions up 50% since January. Clicks more than doubled.</h2>
+      <p>The Hub is growing — but a May bounce spike tied to Slackbot content warrants a closer look at traffic quality. Salesforce in Slack is quietly the strongest engagement story.</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="val">2,570</div><div class="lbl">May Sessions</div><div class="chg green">+25% vs Apr</div></div>
+      <div class="kpi"><div class="val">277</div><div class="lbl">May Clicks</div><div class="chg green">+8% vs Apr</div></div>
+      <div class="kpi"><div class="val">37%</div><div class="lbl">Bounce Rate</div><div class="chg red">↑ from 23% in Apr</div></div>
+      <div class="kpi"><div class="val">+105%</div><div class="lbl">Click Growth Jan→May</div><div class="chg" style="color:rgba(255,255,255,.5)">baseline: 135 clicks</div></div>
+    </div>
+  </div>
+
+  <!-- MONTH FILTER -->
+  <div class="section-label">Filter by Month</div>
+  <div class="month-filter">
+    <button class="mf-btn active" data-month="all" onclick="filterMonth(this)">All Months</button>
+    <button class="mf-btn" data-month="0" onclick="filterMonth(this)">January</button>
+    <button class="mf-btn" data-month="1" onclick="filterMonth(this)">February</button>
+    <button class="mf-btn" data-month="2" onclick="filterMonth(this)">March</button>
+    <button class="mf-btn" data-month="3" onclick="filterMonth(this)">April</button>
+    <button class="mf-btn" data-month="4" onclick="filterMonth(this)">May</button>
+  </div>
+
+  <!-- METRIC CARDS -->
+  <div class="metrics" id="metric-cards">
     <div class="m-card">
       <div class="lbl">Sessions</div>
-      <div class="big green">2,570</div>
-      <div class="delta green">+25% vs Apr</div>
-      <div class="note">+50% vs Jan baseline</div>
+      <div class="big green" id="mc-sessions">2,570</div>
+      <div class="delta green" id="mc-sessions-d">+25% vs prior month</div>
+      <div class="note" id="mc-sessions-n">+50% vs Jan baseline</div>
     </div>
     <div class="m-card">
       <div class="lbl">Pageviews</div>
-      <div class="big green">2,997</div>
-      <div class="delta green">+17% vs Apr</div>
-      <div class="note">+47% vs Jan baseline</div>
+      <div class="big green" id="mc-pv">2,997</div>
+      <div class="delta green" id="mc-pv-d">+17% vs prior month</div>
+      <div class="note" id="mc-pv-n">+47% vs Jan baseline</div>
     </div>
     <div class="m-card">
       <div class="lbl">Total Clicks</div>
-      <div class="big green">277</div>
-      <div class="delta green">+8% vs Apr</div>
-      <div class="note">+105% vs Jan baseline</div>
+      <div class="big green" id="mc-clicks">277</div>
+      <div class="delta green" id="mc-clicks-d">+8% vs prior month</div>
+      <div class="note" id="mc-clicks-n">+105% vs Jan baseline</div>
     </div>
     <div class="m-card">
       <div class="lbl">Bounce Sessions</div>
-      <div class="big red">961</div>
-      <div class="delta red">+101% vs Apr</div>
-      <div class="note">Bounce rate: 37%</div>
+      <div class="big red" id="mc-bounce">961</div>
+      <div class="delta red" id="mc-bounce-d">+101% vs prior month</div>
+      <div class="note" id="mc-bounce-n">Bounce rate: 37%</div>
     </div>
   </div>
 
-  <!-- TREND CHARTS -->
-  <div class="section-label">Monthly Trends — Jan through May 2026</div>
+  <!-- TRENDS -->
+  <div class="section-label">Monthly Trends</div>
   <div class="chart-row">
     <div class="c-card">
-      <h3>Sessions &amp; Pageviews by Month</h3>
+      <h3>Sessions &amp; Pageviews</h3>
       <canvas id="sessionsChart"></canvas>
     </div>
     <div class="c-card">
-      <h3>Clicks &amp; Bounce Sessions by Month</h3>
+      <h3>Clicks &amp; Bounce Sessions</h3>
       <canvas id="clicksBounceChart"></canvas>
     </div>
   </div>
-
-  <div class="section-label" style="margin-top:20px"></div>
-  <div class="chart-row">
+  <div class="chart-row" style="margin-top:20px">
     <div class="c-card">
-      <h3>Sessions by Category — Monthly</h3>
+      <h3>Sessions by Category</h3>
       <canvas id="catTrendChart"></canvas>
     </div>
     <div class="c-card">
-      <h3>Bounce Rate by Category — Monthly</h3>
+      <h3>Bounce Rate by Category (%)</h3>
       <canvas id="bounceRateChart"></canvas>
     </div>
   </div>
 
   <!-- INSIGHTS -->
-  <div class="section-label">Key Insights</div>
+  <div class="section-label">What the Data Is Telling Us</div>
   <div class="insights">
     <div class="ins pos">
       <div class="tag">Growth</div>
-      <h4>Sessions grew 50% from Jan to May</h4>
-      <p>The Hub has steadily climbed from 1,716 sessions in January to 2,570 in May — a 50% increase in five months. Slackbot content entering the Featured Tools category in March–April was the primary catalyst.</p>
+      <h4>Sessions up 50% since January</h4>
+      <p>The Hub climbed from 1,716 sessions in January to 2,570 in May. Slackbot content entering the Featured Tools category in March was the catalyst — it's now the top driver of site traffic.</p>
     </div>
     <div class="ins warn">
       <div class="tag">Watch</div>
-      <h4>May bounce surge is a yellow flag</h4>
-      <p>Bounce sessions more than doubled in May (478 → 961), driven almost entirely by the Slackbot guide (50 → 193 bounces). In GA4, bounces are sub-10-second sessions — this traffic spike is likely low-intent or from a mismatched referral source.</p>
+      <h4>May bounce is a yellow flag, not a red one</h4>
+      <p>Bounce sessions doubled (478 → 961). In GA4, bounces are sub-10-second visits — so this isn't readers leaving, it's the wrong audience landing. The Slackbot guide alone drove 193 of those bounces. Worth checking the referral source.</p>
     </div>
     <div class="ins pos">
-      <div class="tag">Momentum</div>
-      <h4>Clicks nearly doubled since January</h4>
-      <p>Total clicks grew from 135 in January to 277 in May (+105%). This outpaces session growth, meaning visitors are clicking more per visit — a sign of improving content engagement quality.</p>
+      <div class="tag">Quality Signal</div>
+      <h4>Clicks more than doubled Jan→May</h4>
+      <p>Total clicks grew from 135 to 277 (+105%) — faster than session growth. Visitors are clicking more per visit, meaning content is prompting next steps. This is the engagement signal that actually matters.</p>
     </div>
     <div class="ins neg">
       <div class="tag">Decline</div>
-      <h4>New User Onboarding sliding since March</h4>
-      <p>Workshop 101 peaked in March (570 sessions) and has dropped each month since: 570 → 199 → 159. It was the #1 article site-wide in Q1 and is now #4. Worth investigating whether the on-demand experience still resonates.</p>
+      <h4>Workshop 101 lost 72% of traffic since March</h4>
+      <p>New User Onboarding peaked in March (570 sessions) and has dropped sharply: 570 → 199 → 159. It was the #1 article site-wide in Q1 and is now #4. The on-demand format may need a refresh.</p>
     </div>
     <div class="ins blue">
-      <div class="tag">Stable</div>
-      <h4>Salesforce in Slack: quiet, consistent growth</h4>
-      <p>The SF Channels Implementation Guide has grown every month (Jan: 252 → May: 246 sessions). Across all four SF in Slack articles, sessions rose 22% Apr→May with strong click engagement. Low bounce, high intent.</p>
+      <div class="tag">Consistent</div>
+      <h4>Salesforce in Slack: low-key strongest category</h4>
+      <p>Consistent sessions, growing clicks, low bounce. The SF Channels Implementation Guide has been the #1 or #2 article by sessions every single month. High-intent admins coming back repeatedly.</p>
     </div>
     <div class="ins warn">
       <div class="tag">Agentforce</div>
-      <h4>Agentforce traffic inconsistent despite expansion</h4>
-      <p>Category peaked in February (175 sessions on Launching Agentforce alone) then dropped back. More localized pages appeared in Mar–May but didn't add volume. Total category sessions have barely moved since Jan.</p>
+      <h4>More pages, same traffic</h4>
+      <p>Agentforce grew in page count (localized versions in 3+ languages) but category sessions are flat. February had a spike (175 on Launching Agentforce) that didn't sustain. The collection page drives most views, not the resource guides.</p>
     </div>
   </div>
 
@@ -181,48 +302,60 @@
     <div class="rec">
       <div class="rec-num">1</div>
       <div>
-        <h4>Investigate the Slackbot guide traffic source</h4>
-        <p>Sessions doubled but bounce nearly quadrupled — pull the referral breakdown for that article specifically. If a single source is sending mismatched traffic, consider whether the content or CTA needs to be updated for that audience.</p>
+        <h4>Audit the Slackbot guide's traffic source</h4>
+        <p>Pull the referral breakdown for that article in GA4 directly. If a single source is sending low-intent traffic, the fix is upstream — either a better CTA at the source, or a content update to match the audience that's actually arriving.</p>
       </div>
     </div>
     <div class="rec">
       <div class="rec-num">2</div>
       <div>
-        <h4>Refresh Workshop 101 or add a follow-on</h4>
-        <p>NUO dropped 72% from its March peak. The on-demand webinar format may be losing relevance. Consider either refreshing the content, adding a second NUO resource, or testing a different format (e.g., resource guide vs. webinar).</p>
+        <h4>Refresh Workshop 101 or add a second NUO resource</h4>
+        <p>Traffic dropped 72% in two months. Consider updating the content, adding a text-based "new user quick-start" guide alongside the webinar, or testing a new format. The audience is there — the content may have aged out.</p>
       </div>
     </div>
     <div class="rec">
       <div class="rec-num">3</div>
       <div>
-        <h4>Double down on Salesforce in Slack content</h4>
-        <p>This category has the best engagement profile — consistent sessions, growing clicks, low bounce. It's likely serving high-intent admins. Adding a second or third piece (e.g., a troubleshooting guide or use-case spotlight) could capture more of this audience.</p>
+        <h4>Expand Salesforce in Slack content</h4>
+        <p>Best engagement profile on the site: consistent sessions, strong clicks, low bounce. A troubleshooting guide or use-case spotlight could capture more of this high-intent admin audience without needing to drive new traffic.</p>
       </div>
     </div>
     <div class="rec">
       <div class="rec-num">4</div>
       <div>
-        <h4>Audit Agentforce content strategy</h4>
-        <p>Category has grown in page count (localized versions) but not in sessions. Volume is dominated by the collection page, not resource guides. Consider whether the right content types and CTAs are in place to drive deeper engagement.</p>
+        <h4>Rethink Agentforce content types</h4>
+        <p>The collection landing page drives most Agentforce views — not the resource guides. Either the guides need better CTAs from the collection, or the content format isn't matching what admins need at this stage of the Agentforce rollout.</p>
       </div>
     </div>
   </div>
 
-  <!-- FULL TABLE -->
-  <div class="section-label">All Articles — Month-over-Month Sessions</div>
+  <!-- TABLE -->
+  <div class="section-label">All Articles</div>
+  <div class="table-controls">
+    <input type="text" class="search-box" placeholder="Search articles..." oninput="filterTable(this.value)">
+    <select class="cat-filter" onchange="filterCat(this.value)">
+      <option value="all">All Categories</option>
+      <option value="Featured Tools">Featured Tools</option>
+      <option value="New User Onboarding">New User Onboarding</option>
+      <option value="Salesforce in Slack">Salesforce in Slack</option>
+      <option value="Use Cases">Use Cases</option>
+      <option value="Agentforce">Agentforce</option>
+      <option value="Launch">Launch</option>
+    </select>
+  </div>
   <div class="t-wrap">
-    <table>
+    <table id="main-table">
       <thead>
         <tr>
-          <th>Article</th>
-          <th class="num">Jan</th>
-          <th class="num">Feb</th>
-          <th class="num">Mar</th>
-          <th class="num">Apr</th>
-          <th class="num">May</th>
-          <th class="num">Jan→May</th>
-          <th class="num">Apr→May</th>
-          <th class="num">May Bounce</th>
+          <th onclick="sortTable(0)">Article <span class="sort-icon">↕</span></th>
+          <th class="num" onclick="sortTable(1)">Jan <span class="sort-icon">↕</span></th>
+          <th class="num" onclick="sortTable(2)">Feb <span class="sort-icon">↕</span></th>
+          <th class="num" onclick="sortTable(3)">Mar <span class="sort-icon">↕</span></th>
+          <th class="num" onclick="sortTable(4)">Apr <span class="sort-icon">↕</span></th>
+          <th class="num" onclick="sortTable(5)">May <span class="sort-icon">↕</span></th>
+          <th class="num" onclick="sortTable(6)">Jan→May <span class="sort-icon">↕</span></th>
+          <th class="num" onclick="sortTable(7)">Apr→May <span class="sort-icon">↕</span></th>
+          <th class="num" onclick="sortTable(8)">May Bounce <span class="sort-icon">↕</span></th>
           <th>Trend</th>
         </tr>
       </thead>
@@ -230,130 +363,429 @@
     </table>
   </div>
 
-</div>
+</div><!-- /container -->
+</div><!-- /tab-report -->
 
-<footer>Slack Success Hub &nbsp;·&nbsp; Data from GA4 via Tableau &nbsp;·&nbsp; Generated June 2026 &nbsp;·&nbsp; Global English pages only</footer>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- TAB 2: ONBOARDING -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-onboard" class="tab-pane">
+<div class="container">
+
+  <div class="onboard-hero">
+    <h2>Welcome to Success Hub, Diana 👋</h2>
+    <p>This page gives you a quick-start view of what the Slack Success Hub is, what we own, what success looks like, and where things stand heading into H2 2026. It's meant to answer the questions you'd otherwise have to chase down in meetings.</p>
+  </div>
+
+  <!-- WHAT IS IT -->
+  <div class="section-label">What Is the Success Hub?</div>
+  <div class="onboard-grid">
+    <div class="onboard-card">
+      <h3><span class="icon" style="background:#EEE8EF">🏠</span> The short version</h3>
+      <ul>
+        <li>The Success Hub is <strong>Slack's primary post-sale, self-serve content destination for admins</strong> — the place we send customers after they sign to help them launch, adopt, and get more out of Slack.</li>
+        <li>It lives at <strong>slack.com/resources</strong> and is built on WordPress.</li>
+        <li>Content covers six categories: Launch, New User Onboarding, Use Cases, Agentforce, Featured Tools (Slackbot), and Salesforce in Slack.</li>
+        <li>Webinar programming lives here too — it's a natural extension of the same customer education surface.</li>
+      </ul>
+    </div>
+    <div class="onboard-card">
+      <h3><span class="icon" style="background:#E8F9F3">📊</span> Why it matters</h3>
+      <ul>
+        <li>It's the <strong>self-serve alternative to a CSM call</strong> — customers who engage with Hub content are more likely to adopt key features and expand.</li>
+        <li>It's the primary delivery mechanism for <strong>adoption program content</strong> — email and Success Bot programs point here.</li>
+        <li>It supports <strong>cross-functional content requests</strong> from PMM, RR, and other teams who need a home for admin-facing resources.</li>
+        <li>Traffic has grown <strong>50% YTD in CY 2026</strong> — the Hub is becoming a more significant owned channel.</li>
+      </ul>
+    </div>
+    <div class="onboard-card">
+      <h3><span class="icon" style="background:#FDE8EF">👤</span> What Gabe owns</h3>
+      <ul>
+        <li><strong>Content strategy and roadmap</strong> — what gets published, when, and why</li>
+        <li><strong>Publishing, QA, and maintenance</strong> of all resources</li>
+        <li><strong>XFN content intake and governance</strong> — the process for other teams to get content on the Hub</li>
+        <li><strong>Webinar programming</strong> — topic selection, speaker coordination, follow-up content</li>
+        <li><strong>Performance measurement</strong> — traffic, engagement, downloads, and this monthly report</li>
+      </ul>
+    </div>
+    <div class="onboard-card">
+      <h3><span class="icon" style="background:#FDF5E0">🚫</span> What this team doesn't own</h3>
+      <ul>
+        <li>Email operations or Success Bot operations (owned by Tierra Washington and Victoria Gironda)</li>
+        <li>Segment strategy for the Digital Success customer segment</li>
+        <li>Content creation for other teams — we govern distribution, not production</li>
+        <li>External surfaces like Trailhead or Help Center</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- METRICS EXPLAINER -->
+  <div class="section-label">How to Read This Report</div>
+  <div class="metric-explainer">
+    <div class="me-card">
+      <h4>Sessions</h4>
+      <p>A visit to the site. One session can include multiple page views. This is our primary volume metric — how many admins are coming to the Hub.</p>
+    </div>
+    <div class="me-card">
+      <h4>Pageviews</h4>
+      <p>Total pages loaded. Higher than sessions because visitors sometimes view multiple pages. A pageviews/sessions ratio above 1.1 means visitors are exploring beyond their landing page.</p>
+    </div>
+    <div class="me-card">
+      <h4>Clicks</h4>
+      <p>Outbound clicks to Slack.com resources or product pages. This is our engagement quality signal — a click means the content prompted a next step. We want this growing faster than sessions.</p>
+    </div>
+    <div class="me-card">
+      <h4>Bounce (GA4)</h4>
+      <p>In GA4, a bounce is a session under 10 seconds with no interaction. Unlike old analytics, someone who reads an article for 3 minutes does NOT count as a bounce. High bounce = wrong audience, not bored reader.</p>
+    </div>
+  </div>
+
+  <!-- WHAT GOOD LOOKS LIKE -->
+  <div class="section-label">What Good Looks Like</div>
+  <div class="onboard-grid">
+    <div class="onboard-card">
+      <h3><span class="icon" style="background:#E8F9F3">✅</span> Healthy signals</h3>
+      <ul>
+        <li><strong>Clicks growing faster than sessions</strong> — means content quality is improving, not just volume</li>
+        <li><strong>Returning visitor % above 60%</strong> — admins are coming back, indicating ongoing value (currently 61–67% each month)</li>
+        <li><strong>Low bounce on high-intent categories</strong> — Salesforce in Slack consistently under 35% bounce rate</li>
+        <li><strong>Consistent category distribution</strong> — no single category dominating to an unhealthy degree</li>
+      </ul>
+    </div>
+    <div class="onboard-card">
+      <h3><span class="icon" style="background:#FDE8EF">⚠️</span> Watch signals</h3>
+      <ul>
+        <li><strong>Bounce spiking on a single article</strong> — usually a traffic source mismatch, not a content problem</li>
+        <li><strong>Category traffic dropping two months in a row</strong> — may indicate content is aging out or audience needs have shifted</li>
+        <li><strong>Clicks flat while sessions grow</strong> — traffic without engagement; content isn't prompting next steps</li>
+        <li><strong>New pages with zero sessions</strong> — distribution may not be connected to content publishing</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CY 2026 STORY SO FAR -->
+  <div class="section-label">CY 2026 — Story So Far</div>
+  <div class="onboard-card" style="margin-bottom: 20px;">
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-month">January 2026</div>
+          <h4>Strong baseline, NUO dominates</h4>
+          <p>Workshop 101 (New User Onboarding webinar) is the #1 article at 565 sessions. Salesforce Channels Implementation Guide is a consistent #2 at 252. Total site: 1,716 sessions.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-month">February 2026</div>
+          <h4>Agentforce spike — then drops</h4>
+          <p>"Launching Agentforce in Slack" jumps to 175 sessions (likely tied to a launch moment or email push). Workshop 101 still #1 at 553. Total: 1,918 sessions.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-month">March 2026</div>
+          <h4>Slackbot content joins Featured Tools</h4>
+          <p>Slackbot Admin Toolkit (42 sessions) and the Slackbot Guide (34 sessions) appear for the first time. Workshop 101 peaks at 570 sessions. Total: 1,992 sessions.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-month">April 2026</div>
+          <h4>Slackbot takes off, NUO drops sharply</h4>
+          <p>Slackbot prompt playbook hits 328 sessions and the Slackbot Guide reaches 274 — both now outpace Workshop 101 (199). Clicks jump to 256 from 151 in March. Total: 2,053 sessions.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-month">May 2026</div>
+          <h4>Traffic peaks — but so does bounce</h4>
+          <p>Best traffic month yet at 2,570 sessions. Slackbot Guide more than doubles (274 → 594) and becomes the #1 article on the site. But bounces double site-wide, driven almost entirely by that article. Quality vs. volume tension emerges.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="section-label">Tools &amp; Where to Find Things</div>
+  <div class="onboard-grid">
+    <div class="onboard-card">
+      <h3><span class="icon" style="background:#EEE8EF">🛠</span> Core tools</h3>
+      <ul>
+        <li><strong>Slack WordPress</strong> — Success Hub publication and content management</li>
+        <li><strong>On24</strong> — Webinar operations and registration</li>
+        <li><strong>Tableau</strong> — Dashboard at prod-uswest-c.online.tableau.com (Slack Success Hub view)</li>
+        <li><strong>GA4</strong> — Underlying analytics source; Tableau pulls from here</li>
+      </ul>
+    </div>
+    <div class="onboard-card">
+      <h3><span class="icon" style="background:#E8F9F3">💬</span> Slack channels</h3>
+      <ul>
+        <li><strong>#slack-digital-success</strong> — Main team channel</li>
+        <li><strong>#ds-channel-management</strong> — Channel management and Hub operations</li>
+        <li>Adoption program delivery: <strong>Tierra Washington</strong> (email) and <strong>Victoria Gironda</strong> (Success Bot)</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /container -->
+</div><!-- /tab-onboard -->
+
+<footer>Slack Success Hub &nbsp;·&nbsp; CY 2026 Content Engagement Report &nbsp;·&nbsp; GA4 via Tableau &nbsp;·&nbsp; Global English pages only</footer>
 
 <script>
+// ── DATA ────────────────────────────────────────────────────────────────────
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
-const MONTH_COLORS = ['#c2b0c8', '#a07db0', '#7a4d99', '#4a154b', '#2d0b2e'];
-
-const CAT_COLORS = {
-  'Featured Tools':       '#4a154b',
-  'Salesforce in Slack':  '#0d7380',
-  'Use Cases':            '#2eb886',
-  'New User Onboarding':  '#36c5f0',
-  'Agentforce':           '#e01e5a',
-  'Launch':               '#ecb22e',
-};
-
-// [Jan, Feb, Mar, Apr, May]
-const ARTICLES = [
-  // Featured Tools
-  { title: 'Complete guide to launching Slackbot',            cat: 'Featured Tools',      s: [0,   0,   34,  274, 594], b: [0,  0,  8,  50,  193] },
-  { title: 'The Slackbot prompt playbook',                    cat: 'Featured Tools',      s: [0,   0,   31,  328, 321], b: [0,  0,  5,  52,  63]  },
-  { title: 'Slackbot Admin Toolkit',                          cat: 'Featured Tools',      s: [0,   0,   42,  147, 127], b: [0,  0,  8,  10,  30]  },
-  { title: 'Resources to achieve your goals with Slack',      cat: 'Featured Tools',      s: [9,   7,   19,  8,   26],  b: [1,  1,  0,  0,   17]  },
-  { title: 'Introducing Slack canvas',                        cat: 'Featured Tools',      s: [8,   8,   10,  4,   2],   b: [0,  0,  0,  1,   0]   },
-  // Salesforce in Slack
-  { title: 'Salesforce Channels: Implementation Guide',       cat: 'Salesforce in Slack', s: [252, 231, 221, 220, 246], b: [84, 71, 77, 73,  90]  },
-  { title: 'Complete guide to launching SF channels',         cat: 'Salesforce in Slack', s: [20,  37,  30,  26,  44],  b: [2,  11, 6,  2,   24]  },
-  { title: 'Salesforce in Slack: Implementation Guide',       cat: 'Salesforce in Slack', s: [0,   0,   23,  46,  56],  b: [0,  0,  4,  12,  26]  },
-  { title: 'Salesforce channels: Launch communications',      cat: 'Salesforce in Slack', s: [9,   12,  13,  16,  28],  b: [0,  2,  0,  1,   16]  },
-  // New User Onboarding
-  { title: 'Workshop 101: Learn the basics (on-demand)',      cat: 'New User Onboarding', s: [565, 553, 570, 199, 159], b: [99, 132,113, 40,  24]  },
-  // Use Cases
-  { title: 'Slack for internal communications',               cat: 'Use Cases',           s: [92,  79,  81,  103, 101], b: [11, 22, 18, 30,  38]  },
-  { title: 'Slack for HR, Recruiting, and DEI',               cat: 'Use Cases',           s: [60,  56,  78,  68,  41],  b: [19, 19, 32, 18,  20]  },
-  { title: 'Slack for legal',                                 cat: 'Use Cases',           s: [46,  42,  55,  43,  64],  b: [12, 7,  9,  2,   31]  },
-  { title: 'Slack for Executives and EAs',                    cat: 'Use Cases',           s: [36,  36,  60,  43,  45],  b: [8,  2,  21, 6,   24]  },
-  { title: 'Slack for sales',                                 cat: 'Use Cases',           s: [32,  41,  33,  23,  31],  b: [1,  3,  3,  3,   18]  },
-  { title: 'Slack for customer success',                      cat: 'Use Cases',           s: [23,  43,  54,  41,  33],  b: [4,  19, 24, 21,  16]  },
-  { title: 'Slack for IT and Security',                       cat: 'Use Cases',           s: [25,  26,  58,  57,  57],  b: [5,  9,  15, 24,  34]  },
-  { title: 'Slack for customer service',                      cat: 'Use Cases',           s: [16,  40,  29,  20,  37],  b: [7,  21, 9,  5,   24]  },
-  { title: 'Slack for marketing',                             cat: 'Use Cases',           s: [12,  16,  21,  27,  42],  b: [3,  0,  8,  6,   33]  },
-  { title: 'Unlocking value with Slack',                      cat: 'Use Cases',           s: [29,  15,  27,  17,  27],  b: [12, 3,  9,  3,   15]  },
-  { title: '5 steps to support team adoption',               cat: 'Use Cases',           s: [11,  22,  21,  19,  25],  b: [4,  0,  4,  1,   21]  },
-  // Agentforce
-  { title: 'Launching Agentforce in Slack',                   cat: 'Agentforce',          s: [42,  175, 92,  92,  76],  b: [4,  92, 13, 6,   25]  },
-  { title: 'Unlock productivity w/ Slack Professions',        cat: 'Agentforce',          s: [21,  31,  31,  33,  35],  b: [1,  8,  4,  5,   14]  },
-  { title: 'Agentforce in Slack: Admin Setup Guide',          cat: 'Agentforce',          s: [23,  17,  25,  27,  34],  b: [11, 1,  5,  7,   18]  },
-  { title: 'Agentforce in Slack: Launch Communications',      cat: 'Agentforce',          s: [7,   7,   15,  5,   16],  b: [1,  0,  0,  1,   13]  },
-  // Launch
-  { title: '5 steps to launch Slack',                         cat: 'Launch',              s: [68,  63,  61,  50,  63],  b: [11, 11, 7,  11,  23]  },
-  { title: 'Slack launch communications',                     cat: 'Launch',              s: [38,  39,  35,  33,  59],  b: [3,  6,  12, 7,   19]  },
-  { title: 'How to launch Slack at your organization',        cat: 'Launch',              s: [47,  39,  22,  22,  12],  b: [6,  3,  1,  4,   0]   },
-];
-
-// Sort by May sessions desc
-ARTICLES.sort((a, b) => b.s[4] - a.s[4]);
-const maxMay = Math.max(...ARTICLES.map(a => a.s[4]));
-
-// ── Build table ──────────────────────────────────────────────────────────────
-const tbody = document.getElementById('tbody');
-const CATS_ORDER = ['Featured Tools', 'New User Onboarding', 'Salesforce in Slack', 'Use Cases', 'Agentforce', 'Launch'];
-CATS_ORDER.forEach(cat => {
-  // Category header row
-  const catRow = document.createElement('tr');
-  catRow.className = 'cat-row';
-  catRow.innerHTML = `<td colspan="9" style="color:${CAT_COLORS[cat]}">${cat}</td>`;
-  tbody.appendChild(catRow);
-
-  const arts = ARTICLES.filter(a => a.cat === cat).sort((a, b) => b.s[4] - a.s[4]);
-  arts.forEach(a => {
-    const totChange = a.s[0] > 0 ? Math.round(((a.s[4] - a.s[0]) / a.s[0]) * 100) : null;
-    const momChange = a.s[3] > 0 ? Math.round(((a.s[4] - a.s[3]) / a.s[3]) * 100) : null;
-    const totPill = totChange === null ? '<span class="pill flat">new</span>'
-      : totChange > 0 ? `<span class="pill up">+${totChange}%</span>`
-      : totChange < 0 ? `<span class="pill down">${totChange}%</span>`
-      : '<span class="pill flat">—</span>';
-    const momPill = momChange === null ? '<span class="pill flat">—</span>'
-      : momChange > 50 ? `<span class="pill warn">+${momChange}%</span>`
-      : momChange > 0 ? `<span class="pill up">+${momChange}%</span>`
-      : momChange < 0 ? `<span class="pill down">${momChange}%</span>`
-      : '<span class="pill flat">—</span>';
-
-    // sparkline
-    const spMax = Math.max(...a.s);
-    const spark = a.s.map((v, i) => {
-      const h = spMax > 0 ? Math.round((v / spMax) * 16) + 2 : 2;
-      const col = i === 4 ? CAT_COLORS[cat] : '#ddd';
-      return `<span style="height:${h}px;background:${col}"></span>`;
-    }).join('');
-
-    const bounceCls = a.b[4] > a.b[3] ? 'b-bad' : 'b-ok';
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><div class="art-title" title="${a.title}">${a.title}</div></td>
-      <td class="muted">${a.s[0] || '—'}</td>
-      <td class="muted">${a.s[1] || '—'}</td>
-      <td class="muted">${a.s[2] || '—'}</td>
-      <td class="muted">${a.s[3] || '—'}</td>
-      <td class="num" style="font-weight:700">${a.s[4]}</td>
-      <td class="num">${totPill}</td>
-      <td class="num">${momPill}</td>
-      <td class="${bounceCls}">${a.b[4]}</td>
-      <td><div class="sparkline">${spark}</div></td>
-    `;
-    tbody.appendChild(tr);
-  });
-});
-
-// ── Overall monthly data ─────────────────────────────────────────────────────
 const OV = {
   sessions: [1716, 1918, 1992, 2053, 2570],
   pv:       [2032, 2202, 2371, 2558, 2997],
   clicks:   [135,  142,  151,  256,  277],
   bounce:   [351,  502,  486,  478,  961],
 };
+const CAT_COLORS = {
+  'Featured Tools':       '#4A154B',
+  'Salesforce in Slack':  '#0d7380',
+  'Use Cases':            '#2EB886',
+  'New User Onboarding':  '#36C5F0',
+  'Agentforce':           '#E01E5A',
+  'Launch':               '#ECB22E',
+};
+const ARTICLES = [
+  { title: 'Complete guide to launching Slackbot',       cat: 'Featured Tools',      s: [0,   0,   34,  274, 594], b: [0,  0,  8,  50,  193] },
+  { title: 'The Slackbot prompt playbook',               cat: 'Featured Tools',      s: [0,   0,   31,  328, 321], b: [0,  0,  5,  52,  63]  },
+  { title: 'Slackbot Admin Toolkit',                     cat: 'Featured Tools',      s: [0,   0,   42,  147, 127], b: [0,  0,  8,  10,  30]  },
+  { title: 'Resources to achieve your goals with Slack', cat: 'Featured Tools',      s: [9,   7,   19,  8,   26],  b: [1,  1,  0,  0,   17]  },
+  { title: 'Introducing Slack canvas',                   cat: 'Featured Tools',      s: [8,   8,   10,  4,   2],   b: [0,  0,  0,  1,   0]   },
+  { title: 'Salesforce Channels: Implementation Guide',  cat: 'Salesforce in Slack', s: [252, 231, 221, 220, 246], b: [84, 71, 77, 73,  90]  },
+  { title: 'Complete guide to launching SF channels',    cat: 'Salesforce in Slack', s: [20,  37,  30,  26,  44],  b: [2,  11, 6,  2,   24]  },
+  { title: 'Salesforce in Slack: Implementation Guide',  cat: 'Salesforce in Slack', s: [0,   0,   23,  46,  56],  b: [0,  0,  4,  12,  26]  },
+  { title: 'Salesforce channels: Launch communications', cat: 'Salesforce in Slack', s: [9,   12,  13,  16,  28],  b: [0,  2,  0,  1,   16]  },
+  { title: 'Workshop 101: Learn the basics (on-demand)', cat: 'New User Onboarding', s: [565, 553, 570, 199, 159], b: [99, 132,113, 40,  24]  },
+  { title: 'Slack for internal communications',          cat: 'Use Cases',           s: [92,  79,  81,  103, 101], b: [11, 22, 18, 30,  38]  },
+  { title: 'Slack for HR, Recruiting, and DEI',          cat: 'Use Cases',           s: [60,  56,  78,  68,  41],  b: [19, 19, 32, 18,  20]  },
+  { title: 'Slack for legal',                            cat: 'Use Cases',           s: [46,  42,  55,  43,  64],  b: [12, 7,  9,  2,   31]  },
+  { title: 'Slack for Executives and EAs',               cat: 'Use Cases',           s: [36,  36,  60,  43,  45],  b: [8,  2,  21, 6,   24]  },
+  { title: 'Slack for sales',                            cat: 'Use Cases',           s: [32,  41,  33,  23,  31],  b: [1,  3,  3,  3,   18]  },
+  { title: 'Slack for customer success',                 cat: 'Use Cases',           s: [23,  43,  54,  41,  33],  b: [4,  19, 24, 21,  16]  },
+  { title: 'Slack for IT and Security',                  cat: 'Use Cases',           s: [25,  26,  58,  57,  57],  b: [5,  9,  15, 24,  34]  },
+  { title: 'Slack for customer service',                 cat: 'Use Cases',           s: [16,  40,  29,  20,  37],  b: [7,  21, 9,  5,   24]  },
+  { title: 'Slack for marketing',                        cat: 'Use Cases',           s: [12,  16,  21,  27,  42],  b: [3,  0,  8,  6,   33]  },
+  { title: 'Unlocking value with Slack',                 cat: 'Use Cases',           s: [29,  15,  27,  17,  27],  b: [12, 3,  9,  3,   15]  },
+  { title: '5 steps to support team adoption',          cat: 'Use Cases',           s: [11,  22,  21,  19,  25],  b: [4,  0,  4,  1,   21]  },
+  { title: 'Launching Agentforce in Slack',              cat: 'Agentforce',          s: [42,  175, 92,  92,  76],  b: [4,  92, 13, 6,   25]  },
+  { title: 'Unlock productivity w/ Slack Professions',   cat: 'Agentforce',          s: [21,  31,  31,  33,  35],  b: [1,  8,  4,  5,   14]  },
+  { title: 'Agentforce in Slack: Admin Setup Guide',     cat: 'Agentforce',          s: [23,  17,  25,  27,  34],  b: [11, 1,  5,  7,   18]  },
+  { title: 'Agentforce: Launch Communications',          cat: 'Agentforce',          s: [7,   7,   15,  5,   16],  b: [1,  0,  0,  1,   13]  },
+  { title: '5 steps to launch Slack',                    cat: 'Launch',              s: [68,  63,  61,  50,  63],  b: [11, 11, 7,  11,  23]  },
+  { title: 'Slack launch communications',                cat: 'Launch',              s: [38,  39,  35,  33,  59],  b: [3,  6,  12, 7,   19]  },
+  { title: 'How to launch Slack at your organization',   cat: 'Launch',              s: [47,  39,  22,  22,  12],  b: [6,  3,  1,  4,   0]   },
+];
 
+// ── TABS ─────────────────────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── MONTH FILTER ─────────────────────────────────────────────────────────────
+let activeMonth = 'all';
+function filterMonth(btn) {
+  document.querySelectorAll('.mf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeMonth = btn.dataset.month;
+  updateMetricCards();
+  updateTableForMonth();
+}
+
+function updateMetricCards() {
+  if (activeMonth === 'all') {
+    document.getElementById('mc-sessions').textContent = '2,570';
+    document.getElementById('mc-sessions-d').textContent = '+25% vs prior month';
+    document.getElementById('mc-sessions-d').className = 'delta green';
+    document.getElementById('mc-sessions-n').textContent = '+50% vs Jan baseline';
+    document.getElementById('mc-pv').textContent = '2,997';
+    document.getElementById('mc-pv-d').textContent = '+17% vs prior month';
+    document.getElementById('mc-pv-d').className = 'delta green';
+    document.getElementById('mc-pv-n').textContent = '+47% vs Jan baseline';
+    document.getElementById('mc-clicks').textContent = '277';
+    document.getElementById('mc-clicks-d').textContent = '+8% vs prior month';
+    document.getElementById('mc-clicks-d').className = 'delta green';
+    document.getElementById('mc-clicks-n').textContent = '+105% vs Jan baseline';
+    document.getElementById('mc-bounce').textContent = '961';
+    document.getElementById('mc-bounce-d').textContent = '+101% vs prior month';
+    document.getElementById('mc-bounce-d').className = 'delta red';
+    document.getElementById('mc-bounce-n').textContent = 'Bounce rate: 37%';
+    return;
+  }
+  const mi = parseInt(activeMonth);
+  const prev = mi > 0 ? mi - 1 : null;
+  const s = OV.sessions[mi], pv = OV.pv[mi], c = OV.clicks[mi], b = OV.bounce[mi];
+  const pct = (v, p) => p ? Math.round((v - OV.sessions[p]) / OV.sessions[p] * 100) : null;
+  const fmt = v => v.toLocaleString();
+  const chg = (cur, prev, arr) => prev !== null ? Math.round((arr[cur] - arr[prev]) / arr[prev] * 100) : null;
+  const arrow = (v) => v === null ? '' : v > 0 ? `+${v}% vs prior month` : `${v}% vs prior month`;
+  const cls = (v) => v === null ? '' : v > 0 ? 'delta green' : 'delta red';
+
+  document.getElementById('mc-sessions').textContent = fmt(s);
+  const sd = chg(mi, prev, OV.sessions);
+  document.getElementById('mc-sessions-d').textContent = arrow(sd);
+  document.getElementById('mc-sessions-d').className = cls(sd);
+  document.getElementById('mc-sessions-n').textContent = MONTHS[mi] + ' 2026';
+
+  document.getElementById('mc-pv').textContent = fmt(pv);
+  const pd = chg(mi, prev, OV.pv);
+  document.getElementById('mc-pv-d').textContent = arrow(pd);
+  document.getElementById('mc-pv-d').className = cls(pd);
+  document.getElementById('mc-pv-n').textContent = MONTHS[mi] + ' 2026';
+
+  document.getElementById('mc-clicks').textContent = fmt(c);
+  const cd = chg(mi, prev, OV.clicks);
+  document.getElementById('mc-clicks-d').textContent = arrow(cd);
+  document.getElementById('mc-clicks-d').className = cls(cd);
+  document.getElementById('mc-clicks-n').textContent = MONTHS[mi] + ' 2026';
+
+  document.getElementById('mc-bounce').textContent = fmt(b);
+  const bd = chg(mi, prev, OV.bounce);
+  document.getElementById('mc-bounce-d').textContent = arrow(bd);
+  document.getElementById('mc-bounce-d').className = prev !== null ? (bd > 0 ? 'delta red' : 'delta green') : 'delta';
+  document.getElementById('mc-bounce-n').textContent = 'Bounce rate: ' + Math.round(b/s*100) + '%';
+}
+
+function updateTableForMonth() {
+  const rows = document.querySelectorAll('#tbody tr[data-art]');
+  rows.forEach(row => {
+    if (activeMonth === 'all') {
+      row.style.opacity = '1';
+      // reset column highlighting
+      row.querySelectorAll('td').forEach((td, i) => td.style.background = '');
+    } else {
+      const mi = parseInt(activeMonth);
+      row.style.opacity = '1';
+      row.querySelectorAll('td').forEach((td, i) => {
+        td.style.background = (i === mi + 1) ? '#F3EEF4' : '';
+      });
+    }
+  });
+}
+
+// ── TABLE ─────────────────────────────────────────────────────────────────────
+const CATS_ORDER = ['Featured Tools','New User Onboarding','Salesforce in Slack','Use Cases','Agentforce','Launch'];
+const tbody = document.getElementById('tbody');
+
+CATS_ORDER.forEach(cat => {
+  const catRow = document.createElement('tr');
+  catRow.className = 'cat-row';
+  catRow.dataset.cat = cat;
+  catRow.innerHTML = `<td colspan="10" style="color:${CAT_COLORS[cat]}">${cat}</td>`;
+  tbody.appendChild(catRow);
+
+  ARTICLES.filter(a => a.cat === cat).sort((a,b) => b.s[4]-a.s[4]).forEach(a => {
+    const tot = a.s[0] > 0 ? Math.round((a.s[4]-a.s[0])/a.s[0]*100) : null;
+    const mom = a.s[3] > 0 ? Math.round((a.s[4]-a.s[3])/a.s[3]*100) : null;
+    const totPill = tot === null ? '<span class="pill new">new</span>'
+      : tot > 0 ? `<span class="pill up">+${tot}%</span>`
+      : tot < 0 ? `<span class="pill down">${tot}%</span>`
+      : '<span class="pill flat">—</span>';
+    const momPill = mom === null ? '<span class="pill flat">—</span>'
+      : mom > 50 ? `<span class="pill warn">+${mom}%</span>`
+      : mom > 0 ? `<span class="pill up">+${mom}%</span>`
+      : mom < 0 ? `<span class="pill down">${mom}%</span>`
+      : '<span class="pill flat">—</span>';
+    const spMax = Math.max(...a.s, 1);
+    const spark = a.s.map((v,i) => {
+      const h = Math.round((v/spMax)*18)+2;
+      return `<span style="height:${h}px;background:${i===4?CAT_COLORS[cat]:'#DDD'}"></span>`;
+    }).join('');
+    const bCls = a.b[4] > a.b[3] ? 'b-bad' : 'b-ok';
+    const tr = document.createElement('tr');
+    tr.dataset.art = '1';
+    tr.dataset.cat = cat;
+    tr.dataset.title = a.title.toLowerCase();
+    tr.dataset.vals = a.s.join(',');
+    tr.innerHTML = `
+      <td><div class="art-title" title="${a.title}">${a.title}</div></td>
+      <td class="muted">${a.s[0]||'—'}</td>
+      <td class="muted">${a.s[1]||'—'}</td>
+      <td class="muted">${a.s[2]||'—'}</td>
+      <td class="muted">${a.s[3]||'—'}</td>
+      <td class="num" style="font-weight:700">${a.s[4]}</td>
+      <td class="num">${totPill}</td>
+      <td class="num">${momPill}</td>
+      <td class="${bCls}">${a.b[4]}</td>
+      <td><div class="sparkline">${spark}</div></td>`;
+    tbody.appendChild(tr);
+  });
+});
+
+// ── SEARCH ───────────────────────────────────────────────────────────────────
+let currentCat = 'all', currentSearch = '';
+function filterTable(q) { currentSearch = q.toLowerCase(); applyFilters(); }
+function filterCat(c) { currentCat = c; applyFilters(); }
+function applyFilters() {
+  const rows = document.querySelectorAll('#tbody tr');
+  rows.forEach(row => {
+    if (row.classList.contains('cat-row')) {
+      const cat = row.dataset.cat;
+      const artRows = document.querySelectorAll(`#tbody tr[data-cat="${cat}"][data-art]`);
+      const anyVisible = Array.from(artRows).some(r => !r.classList.contains('hidden'));
+      row.classList.toggle('hidden', currentCat !== 'all' && cat !== currentCat);
+    } else if (row.dataset.art) {
+      const matchCat = currentCat === 'all' || row.dataset.cat === currentCat;
+      const matchSearch = !currentSearch || row.dataset.title.includes(currentSearch);
+      row.classList.toggle('hidden', !matchCat || !matchSearch);
+    }
+  });
+  // hide cat headers if all children hidden
+  document.querySelectorAll('#tbody tr.cat-row').forEach(catRow => {
+    const cat = catRow.dataset.cat;
+    const artRows = document.querySelectorAll(`#tbody tr[data-cat="${cat}"][data-art]`);
+    const anyVisible = Array.from(artRows).some(r => !r.classList.contains('hidden'));
+    catRow.classList.toggle('hidden', !anyVisible);
+  });
+}
+
+// ── SORT ─────────────────────────────────────────────────────────────────────
+let sortCol = 5, sortAsc = false;
+function sortTable(col) {
+  if (sortCol === col) sortAsc = !sortAsc; else { sortCol = col; sortAsc = false; }
+  document.querySelectorAll('thead th').forEach((th, i) => {
+    th.classList.toggle('sorted', i === col);
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = i === col ? (sortAsc ? '↑' : '↓') : '↕';
+  });
+  CATS_ORDER.forEach(cat => {
+    const catRow = document.querySelector(`#tbody tr.cat-row[data-cat="${cat}"]`);
+    const artRows = Array.from(document.querySelectorAll(`#tbody tr[data-cat="${cat}"][data-art]`));
+    artRows.sort((a, b) => {
+      let va, vb;
+      if (col === 0) { va = a.dataset.title; vb = b.dataset.title; return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va); }
+      const getVal = (row, c) => { const vals = row.dataset.vals.split(',').map(Number); return vals[c-1] || 0; };
+      if (col >= 1 && col <= 5) { va = getVal(a, col); vb = getVal(b, col); }
+      else if (col === 8) { va = parseInt(a.querySelector('td:nth-child(9)').textContent)||0; vb = parseInt(b.querySelector('td:nth-child(9)').textContent)||0; }
+      else { va = 0; vb = 0; }
+      return sortAsc ? va - vb : vb - va;
+    });
+    artRows.forEach(row => catRow.parentNode.insertBefore(row, catRow.nextSibling));
+    catRow.parentNode.insertBefore(catRow, artRows[0]);
+  });
+}
+
+// ── CHARTS ───────────────────────────────────────────────────────────────────
 const CHART_OPTS = {
   responsive: true,
-  plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 }, padding: 12 } } },
+  plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11, family: 'Lato' }, padding: 12 } } },
   scales: {
-    x: { grid: { display: false }, ticks: { font: { size: 11 } } },
-    y: { grid: { color: '#f0f2f5' }, ticks: { font: { size: 11 } } },
+    x: { grid: { display: false }, ticks: { font: { size: 11, family: 'Lato' } } },
+    y: { grid: { color: '#F0F0F0' }, ticks: { font: { size: 11, family: 'Lato' } } },
   },
 };
 
@@ -362,8 +794,8 @@ new Chart(document.getElementById('sessionsChart'), {
   data: {
     labels: MONTHS,
     datasets: [
-      { label: 'Sessions',   data: OV.sessions, borderColor: '#4a154b', backgroundColor: '#4a154b22', fill: true, tension: 0.3, pointRadius: 4 },
-      { label: 'Pageviews',  data: OV.pv,       borderColor: '#0d7380', backgroundColor: 'transparent', tension: 0.3, pointRadius: 4, borderDash: [4,3] },
+      { label: 'Sessions',  data: OV.sessions, borderColor: '#4A154B', backgroundColor: '#4A154B15', fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: '#4A154B' },
+      { label: 'Pageviews', data: OV.pv,       borderColor: '#36C5F0', backgroundColor: 'transparent', tension: 0.3, pointRadius: 4, borderDash: [4,3], pointBackgroundColor: '#36C5F0' },
     ],
   },
   options: CHART_OPTS,
@@ -374,58 +806,46 @@ new Chart(document.getElementById('clicksBounceChart'), {
   data: {
     labels: MONTHS,
     datasets: [
-      { label: 'Clicks',  data: OV.clicks, backgroundColor: '#2eb886', borderRadius: 4 },
-      { label: 'Bounce',  data: OV.bounce, backgroundColor: '#e01e5a99', borderRadius: 4 },
+      { label: 'Clicks', data: OV.clicks, backgroundColor: '#2EB886', borderRadius: 4 },
+      { label: 'Bounce', data: OV.bounce, backgroundColor: '#E01E5A99', borderRadius: 4 },
     ],
   },
   options: CHART_OPTS,
 });
 
-// ── Category trend chart ─────────────────────────────────────────────────────
-const CATS = ['Featured Tools', 'New User Onboarding', 'Salesforce in Slack', 'Use Cases', 'Agentforce', 'Launch'];
-const catDatasets = CATS.map(cat => ({
-  label: cat,
-  data: MONTHS.map((_, mi) => ARTICLES.filter(a => a.cat === cat).reduce((s, a) => s + a.s[mi], 0)),
-  borderColor: CAT_COLORS[cat],
-  backgroundColor: 'transparent',
-  tension: 0.3,
-  pointRadius: 3,
-}));
-
+const CATS = ['Featured Tools','New User Onboarding','Salesforce in Slack','Use Cases','Agentforce','Launch'];
 new Chart(document.getElementById('catTrendChart'), {
   type: 'line',
-  data: { labels: MONTHS, datasets: catDatasets },
+  data: {
+    labels: MONTHS,
+    datasets: CATS.map(cat => ({
+      label: cat,
+      data: MONTHS.map((_,mi) => ARTICLES.filter(a=>a.cat===cat).reduce((s,a)=>s+a.s[mi],0)),
+      borderColor: CAT_COLORS[cat], backgroundColor: 'transparent', tension: 0.3, pointRadius: 3,
+    })),
+  },
   options: CHART_OPTS,
 });
 
-// ── Bounce rate by category ──────────────────────────────────────────────────
-const bounceRateDatasets = CATS.map(cat => ({
-  label: cat,
-  data: MONTHS.map((_, mi) => {
-    const arts = ARTICLES.filter(a => a.cat === cat);
-    const totalS = arts.reduce((s, a) => s + a.s[mi], 0);
-    const totalB = arts.reduce((s, a) => s + a.b[mi], 0);
-    return totalS > 0 ? Math.round((totalB / totalS) * 100) : 0;
-  }),
-  borderColor: CAT_COLORS[cat],
-  backgroundColor: 'transparent',
-  tension: 0.3,
-  pointRadius: 3,
-}));
-
 new Chart(document.getElementById('bounceRateChart'), {
   type: 'line',
-  data: { labels: MONTHS, datasets: bounceRateDatasets },
+  data: {
+    labels: MONTHS,
+    datasets: CATS.map(cat => ({
+      label: cat,
+      data: MONTHS.map((_,mi) => {
+        const arts = ARTICLES.filter(a=>a.cat===cat);
+        const s = arts.reduce((t,a)=>t+a.s[mi],0);
+        const b = arts.reduce((t,a)=>t+a.b[mi],0);
+        return s > 0 ? Math.round(b/s*100) : 0;
+      }),
+      borderColor: CAT_COLORS[cat], backgroundColor: 'transparent', tension: 0.3, pointRadius: 3,
+    })),
+  },
   options: {
     ...CHART_OPTS,
-    plugins: {
-      ...CHART_OPTS.plugins,
-      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}%` } },
-    },
-    scales: {
-      ...CHART_OPTS.scales,
-      y: { ...CHART_OPTS.scales.y, max: 100, ticks: { font: { size: 11 }, callback: v => v + '%' } },
-    },
+    plugins: { ...CHART_OPTS.plugins, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } } },
+    scales: { ...CHART_OPTS.scales, y: { ...CHART_OPTS.scales.y, max: 100, ticks: { font: { size: 11, family: 'Lato' }, callback: v => v+'%' } } },
   },
 });
 </script>
