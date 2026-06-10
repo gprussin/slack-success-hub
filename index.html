@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slack Success Hub — CY 2026 MoM Content Engagement</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #1d1c1d; font-size: 14px; }
+
+    .header { background: #1d1c1d; color: #fff; padding: 28px 40px 24px; }
+    .header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+    .header .sub { font-size: 13px; color: #999; margin-top: 5px; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px 56px; }
+
+    .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin: 32px 0 14px; }
+    .section-label:first-child { margin-top: 0; }
+
+    /* ── Metric cards ── */
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .m-card { background: #fff; border-radius: 8px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,.07); }
+    .m-card .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 10px; }
+    .m-card .big { font-size: 30px; font-weight: 800; line-height: 1; }
+    .m-card .delta { font-size: 12px; font-weight: 600; margin-top: 5px; }
+    .m-card .note { font-size: 11px; color: #aaa; margin-top: 3px; }
+    .green { color: #2eb886; } .red { color: #e01e5a; } .yellow { color: #ecb22e; }
+
+    /* ── Charts ── */
+    .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .chart-row.single { grid-template-columns: 1fr; }
+    .c-card { background: #fff; border-radius: 8px; padding: 22px 20px 16px; box-shadow: 0 1px 3px rgba(0,0,0,.07); }
+    .c-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 18px; color: #333; }
+
+    /* ── Insights ── */
+    .insights { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .ins { background: #fff; border-radius: 8px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,.07); border-left: 4px solid #ddd; }
+    .ins.pos  { border-left-color: #2eb886; }
+    .ins.warn { border-left-color: #ecb22e; }
+    .ins.neg  { border-left-color: #e01e5a; }
+    .ins.blue { border-left-color: #36c5f0; }
+    .ins .tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #888; margin-bottom: 5px; }
+    .ins h4   { font-size: 13px; font-weight: 700; margin-bottom: 6px; line-height: 1.35; }
+    .ins p    { font-size: 12px; color: #555; line-height: 1.6; }
+
+    /* ── Recommendations ── */
+    .recs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .rec { background: #fff; border-radius: 8px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(0,0,0,.07); display: flex; gap: 14px; }
+    .rec-num { font-size: 22px; font-weight: 900; color: #4a154b; min-width: 28px; line-height: 1.1; }
+    .rec h4  { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+    .rec p   { font-size: 12px; color: #555; line-height: 1.6; }
+
+    /* ── Table ── */
+    .t-wrap { background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.07); overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 900px; }
+    thead th { padding: 10px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #888; border-bottom: 2px solid #f0f2f5; text-align: left; white-space: nowrap; background: #fafafa; }
+    thead th.num { text-align: right; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: #fafafa; }
+    .cat-row td { background: #f7f4f8; font-weight: 700; font-size: 11px; color: #4a154b; text-transform: uppercase; letter-spacing: .05em; padding: 6px 12px; }
+    .badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 3px; }
+    .pill { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 3px; white-space: nowrap; }
+    .pill.up   { background: #e8f9f3; color: #2eb886; }
+    .pill.down { background: #fde8ef; color: #e01e5a; }
+    .pill.flat { color: #aaa; font-size: 10px; }
+    .pill.warn { background: #fdf5e0; color: #b08000; }
+    td.num { text-align: right; }
+    td.muted { color: #aaa; text-align: right; font-size: 11px; }
+    td.b-bad { text-align: right; color: #e01e5a; font-weight: 600; }
+    td.b-ok  { text-align: right; color: #aaa; }
+    .sparkline { display: flex; align-items: flex-end; gap: 2px; height: 18px; }
+    .sparkline span { display: inline-block; width: 7px; border-radius: 1px; background: #ccc; }
+    .art-title { font-weight: 500; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    footer { text-align: center; padding: 20px; font-size: 11px; color: #bbb; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Slack Success Hub — CY 2026 Content Engagement</h1>
+  <div class="sub">January – May 2026 &nbsp;·&nbsp; Month-over-Month Analysis &nbsp;·&nbsp; GA4 &nbsp;·&nbsp; Global English pages only</div>
+</div>
+
+<div class="container">
+
+  <!-- OVERALL METRICS -->
+  <div class="section-label">Overall Metrics — May 2026 (most recent)</div>
+  <div class="metrics">
+    <div class="m-card">
+      <div class="lbl">Sessions</div>
+      <div class="big green">2,570</div>
+      <div class="delta green">+25% vs Apr</div>
+      <div class="note">+50% vs Jan baseline</div>
+    </div>
+    <div class="m-card">
+      <div class="lbl">Pageviews</div>
+      <div class="big green">2,997</div>
+      <div class="delta green">+17% vs Apr</div>
+      <div class="note">+47% vs Jan baseline</div>
+    </div>
+    <div class="m-card">
+      <div class="lbl">Total Clicks</div>
+      <div class="big green">277</div>
+      <div class="delta green">+8% vs Apr</div>
+      <div class="note">+105% vs Jan baseline</div>
+    </div>
+    <div class="m-card">
+      <div class="lbl">Bounce Sessions</div>
+      <div class="big red">961</div>
+      <div class="delta red">+101% vs Apr</div>
+      <div class="note">Bounce rate: 37%</div>
+    </div>
+  </div>
+
+  <!-- TREND CHARTS -->
+  <div class="section-label">Monthly Trends — Jan through May 2026</div>
+  <div class="chart-row">
+    <div class="c-card">
+      <h3>Sessions &amp; Pageviews by Month</h3>
+      <canvas id="sessionsChart"></canvas>
+    </div>
+    <div class="c-card">
+      <h3>Clicks &amp; Bounce Sessions by Month</h3>
+      <canvas id="clicksBounceChart"></canvas>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:20px"></div>
+  <div class="chart-row">
+    <div class="c-card">
+      <h3>Sessions by Category — Monthly</h3>
+      <canvas id="catTrendChart"></canvas>
+    </div>
+    <div class="c-card">
+      <h3>Bounce Rate by Category — Monthly</h3>
+      <canvas id="bounceRateChart"></canvas>
+    </div>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="section-label">Key Insights</div>
+  <div class="insights">
+    <div class="ins pos">
+      <div class="tag">Growth</div>
+      <h4>Sessions grew 50% from Jan to May</h4>
+      <p>The Hub has steadily climbed from 1,716 sessions in January to 2,570 in May — a 50% increase in five months. Slackbot content entering the Featured Tools category in March–April was the primary catalyst.</p>
+    </div>
+    <div class="ins warn">
+      <div class="tag">Watch</div>
+      <h4>May bounce surge is a yellow flag</h4>
+      <p>Bounce sessions more than doubled in May (478 → 961), driven almost entirely by the Slackbot guide (50 → 193 bounces). In GA4, bounces are sub-10-second sessions — this traffic spike is likely low-intent or from a mismatched referral source.</p>
+    </div>
+    <div class="ins pos">
+      <div class="tag">Momentum</div>
+      <h4>Clicks nearly doubled since January</h4>
+      <p>Total clicks grew from 135 in January to 277 in May (+105%). This outpaces session growth, meaning visitors are clicking more per visit — a sign of improving content engagement quality.</p>
+    </div>
+    <div class="ins neg">
+      <div class="tag">Decline</div>
+      <h4>New User Onboarding sliding since March</h4>
+      <p>Workshop 101 peaked in March (570 sessions) and has dropped each month since: 570 → 199 → 159. It was the #1 article site-wide in Q1 and is now #4. Worth investigating whether the on-demand experience still resonates.</p>
+    </div>
+    <div class="ins blue">
+      <div class="tag">Stable</div>
+      <h4>Salesforce in Slack: quiet, consistent growth</h4>
+      <p>The SF Channels Implementation Guide has grown every month (Jan: 252 → May: 246 sessions). Across all four SF in Slack articles, sessions rose 22% Apr→May with strong click engagement. Low bounce, high intent.</p>
+    </div>
+    <div class="ins warn">
+      <div class="tag">Agentforce</div>
+      <h4>Agentforce traffic inconsistent despite expansion</h4>
+      <p>Category peaked in February (175 sessions on Launching Agentforce alone) then dropped back. More localized pages appeared in Mar–May but didn't add volume. Total category sessions have barely moved since Jan.</p>
+    </div>
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <div class="section-label">Recommendations</div>
+  <div class="recs">
+    <div class="rec">
+      <div class="rec-num">1</div>
+      <div>
+        <h4>Investigate the Slackbot guide traffic source</h4>
+        <p>Sessions doubled but bounce nearly quadrupled — pull the referral breakdown for that article specifically. If a single source is sending mismatched traffic, consider whether the content or CTA needs to be updated for that audience.</p>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="rec-num">2</div>
+      <div>
+        <h4>Refresh Workshop 101 or add a follow-on</h4>
+        <p>NUO dropped 72% from its March peak. The on-demand webinar format may be losing relevance. Consider either refreshing the content, adding a second NUO resource, or testing a different format (e.g., resource guide vs. webinar).</p>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="rec-num">3</div>
+      <div>
+        <h4>Double down on Salesforce in Slack content</h4>
+        <p>This category has the best engagement profile — consistent sessions, growing clicks, low bounce. It's likely serving high-intent admins. Adding a second or third piece (e.g., a troubleshooting guide or use-case spotlight) could capture more of this audience.</p>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="rec-num">4</div>
+      <div>
+        <h4>Audit Agentforce content strategy</h4>
+        <p>Category has grown in page count (localized versions) but not in sessions. Volume is dominated by the collection page, not resource guides. Consider whether the right content types and CTAs are in place to drive deeper engagement.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULL TABLE -->
+  <div class="section-label">All Articles — Month-over-Month Sessions</div>
+  <div class="t-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Article</th>
+          <th class="num">Jan</th>
+          <th class="num">Feb</th>
+          <th class="num">Mar</th>
+          <th class="num">Apr</th>
+          <th class="num">May</th>
+          <th class="num">Jan→May</th>
+          <th class="num">Apr→May</th>
+          <th class="num">May Bounce</th>
+          <th>Trend</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<footer>Slack Success Hub &nbsp;·&nbsp; Data from GA4 via Tableau &nbsp;·&nbsp; Generated June 2026 &nbsp;·&nbsp; Global English pages only</footer>
+
+<script>
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
+const MONTH_COLORS = ['#c2b0c8', '#a07db0', '#7a4d99', '#4a154b', '#2d0b2e'];
+
+const CAT_COLORS = {
+  'Featured Tools':       '#4a154b',
+  'Salesforce in Slack':  '#0d7380',
+  'Use Cases':            '#2eb886',
+  'New User Onboarding':  '#36c5f0',
+  'Agentforce':           '#e01e5a',
+  'Launch':               '#ecb22e',
+};
+
+// [Jan, Feb, Mar, Apr, May]
+const ARTICLES = [
+  // Featured Tools
+  { title: 'Complete guide to launching Slackbot',            cat: 'Featured Tools',      s: [0,   0,   34,  274, 594], b: [0,  0,  8,  50,  193] },
+  { title: 'The Slackbot prompt playbook',                    cat: 'Featured Tools',      s: [0,   0,   31,  328, 321], b: [0,  0,  5,  52,  63]  },
+  { title: 'Slackbot Admin Toolkit',                          cat: 'Featured Tools',      s: [0,   0,   42,  147, 127], b: [0,  0,  8,  10,  30]  },
+  { title: 'Resources to achieve your goals with Slack',      cat: 'Featured Tools',      s: [9,   7,   19,  8,   26],  b: [1,  1,  0,  0,   17]  },
+  { title: 'Introducing Slack canvas',                        cat: 'Featured Tools',      s: [8,   8,   10,  4,   2],   b: [0,  0,  0,  1,   0]   },
+  // Salesforce in Slack
+  { title: 'Salesforce Channels: Implementation Guide',       cat: 'Salesforce in Slack', s: [252, 231, 221, 220, 246], b: [84, 71, 77, 73,  90]  },
+  { title: 'Complete guide to launching SF channels',         cat: 'Salesforce in Slack', s: [20,  37,  30,  26,  44],  b: [2,  11, 6,  2,   24]  },
+  { title: 'Salesforce in Slack: Implementation Guide',       cat: 'Salesforce in Slack', s: [0,   0,   23,  46,  56],  b: [0,  0,  4,  12,  26]  },
+  { title: 'Salesforce channels: Launch communications',      cat: 'Salesforce in Slack', s: [9,   12,  13,  16,  28],  b: [0,  2,  0,  1,   16]  },
+  // New User Onboarding
+  { title: 'Workshop 101: Learn the basics (on-demand)',      cat: 'New User Onboarding', s: [565, 553, 570, 199, 159], b: [99, 132,113, 40,  24]  },
+  // Use Cases
+  { title: 'Slack for internal communications',               cat: 'Use Cases',           s: [92,  79,  81,  103, 101], b: [11, 22, 18, 30,  38]  },
+  { title: 'Slack for HR, Recruiting, and DEI',               cat: 'Use Cases',           s: [60,  56,  78,  68,  41],  b: [19, 19, 32, 18,  20]  },
+  { title: 'Slack for legal',                                 cat: 'Use Cases',           s: [46,  42,  55,  43,  64],  b: [12, 7,  9,  2,   31]  },
+  { title: 'Slack for Executives and EAs',                    cat: 'Use Cases',           s: [36,  36,  60,  43,  45],  b: [8,  2,  21, 6,   24]  },
+  { title: 'Slack for sales',                                 cat: 'Use Cases',           s: [32,  41,  33,  23,  31],  b: [1,  3,  3,  3,   18]  },
+  { title: 'Slack for customer success',                      cat: 'Use Cases',           s: [23,  43,  54,  41,  33],  b: [4,  19, 24, 21,  16]  },
+  { title: 'Slack for IT and Security',                       cat: 'Use Cases',           s: [25,  26,  58,  57,  57],  b: [5,  9,  15, 24,  34]  },
+  { title: 'Slack for customer service',                      cat: 'Use Cases',           s: [16,  40,  29,  20,  37],  b: [7,  21, 9,  5,   24]  },
+  { title: 'Slack for marketing',                             cat: 'Use Cases',           s: [12,  16,  21,  27,  42],  b: [3,  0,  8,  6,   33]  },
+  { title: 'Unlocking value with Slack',                      cat: 'Use Cases',           s: [29,  15,  27,  17,  27],  b: [12, 3,  9,  3,   15]  },
+  { title: '5 steps to support team adoption',               cat: 'Use Cases',           s: [11,  22,  21,  19,  25],  b: [4,  0,  4,  1,   21]  },
+  // Agentforce
+  { title: 'Launching Agentforce in Slack',                   cat: 'Agentforce',          s: [42,  175, 92,  92,  76],  b: [4,  92, 13, 6,   25]  },
+  { title: 'Unlock productivity w/ Slack Professions',        cat: 'Agentforce',          s: [21,  31,  31,  33,  35],  b: [1,  8,  4,  5,   14]  },
+  { title: 'Agentforce in Slack: Admin Setup Guide',          cat: 'Agentforce',          s: [23,  17,  25,  27,  34],  b: [11, 1,  5,  7,   18]  },
+  { title: 'Agentforce in Slack: Launch Communications',      cat: 'Agentforce',          s: [7,   7,   15,  5,   16],  b: [1,  0,  0,  1,   13]  },
+  // Launch
+  { title: '5 steps to launch Slack',                         cat: 'Launch',              s: [68,  63,  61,  50,  63],  b: [11, 11, 7,  11,  23]  },
+  { title: 'Slack launch communications',                     cat: 'Launch',              s: [38,  39,  35,  33,  59],  b: [3,  6,  12, 7,   19]  },
+  { title: 'How to launch Slack at your organization',        cat: 'Launch',              s: [47,  39,  22,  22,  12],  b: [6,  3,  1,  4,   0]   },
+];
+
+// Sort by May sessions desc
+ARTICLES.sort((a, b) => b.s[4] - a.s[4]);
+const maxMay = Math.max(...ARTICLES.map(a => a.s[4]));
+
+// ── Build table ──────────────────────────────────────────────────────────────
+const tbody = document.getElementById('tbody');
+const CATS_ORDER = ['Featured Tools', 'New User Onboarding', 'Salesforce in Slack', 'Use Cases', 'Agentforce', 'Launch'];
+CATS_ORDER.forEach(cat => {
+  // Category header row
+  const catRow = document.createElement('tr');
+  catRow.className = 'cat-row';
+  catRow.innerHTML = `<td colspan="9" style="color:${CAT_COLORS[cat]}">${cat}</td>`;
+  tbody.appendChild(catRow);
+
+  const arts = ARTICLES.filter(a => a.cat === cat).sort((a, b) => b.s[4] - a.s[4]);
+  arts.forEach(a => {
+    const totChange = a.s[0] > 0 ? Math.round(((a.s[4] - a.s[0]) / a.s[0]) * 100) : null;
+    const momChange = a.s[3] > 0 ? Math.round(((a.s[4] - a.s[3]) / a.s[3]) * 100) : null;
+    const totPill = totChange === null ? '<span class="pill flat">new</span>'
+      : totChange > 0 ? `<span class="pill up">+${totChange}%</span>`
+      : totChange < 0 ? `<span class="pill down">${totChange}%</span>`
+      : '<span class="pill flat">—</span>';
+    const momPill = momChange === null ? '<span class="pill flat">—</span>'
+      : momChange > 50 ? `<span class="pill warn">+${momChange}%</span>`
+      : momChange > 0 ? `<span class="pill up">+${momChange}%</span>`
+      : momChange < 0 ? `<span class="pill down">${momChange}%</span>`
+      : '<span class="pill flat">—</span>';
+
+    // sparkline
+    const spMax = Math.max(...a.s);
+    const spark = a.s.map((v, i) => {
+      const h = spMax > 0 ? Math.round((v / spMax) * 16) + 2 : 2;
+      const col = i === 4 ? CAT_COLORS[cat] : '#ddd';
+      return `<span style="height:${h}px;background:${col}"></span>`;
+    }).join('');
+
+    const bounceCls = a.b[4] > a.b[3] ? 'b-bad' : 'b-ok';
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><div class="art-title" title="${a.title}">${a.title}</div></td>
+      <td class="muted">${a.s[0] || '—'}</td>
+      <td class="muted">${a.s[1] || '—'}</td>
+      <td class="muted">${a.s[2] || '—'}</td>
+      <td class="muted">${a.s[3] || '—'}</td>
+      <td class="num" style="font-weight:700">${a.s[4]}</td>
+      <td class="num">${totPill}</td>
+      <td class="num">${momPill}</td>
+      <td class="${bounceCls}">${a.b[4]}</td>
+      <td><div class="sparkline">${spark}</div></td>
+    `;
+    tbody.appendChild(tr);
+  });
+});
+
+// ── Overall monthly data ─────────────────────────────────────────────────────
+const OV = {
+  sessions: [1716, 1918, 1992, 2053, 2570],
+  pv:       [2032, 2202, 2371, 2558, 2997],
+  clicks:   [135,  142,  151,  256,  277],
+  bounce:   [351,  502,  486,  478,  961],
+};
+
+const CHART_OPTS = {
+  responsive: true,
+  plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 }, padding: 12 } } },
+  scales: {
+    x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+    y: { grid: { color: '#f0f2f5' }, ticks: { font: { size: 11 } } },
+  },
+};
+
+new Chart(document.getElementById('sessionsChart'), {
+  type: 'line',
+  data: {
+    labels: MONTHS,
+    datasets: [
+      { label: 'Sessions',   data: OV.sessions, borderColor: '#4a154b', backgroundColor: '#4a154b22', fill: true, tension: 0.3, pointRadius: 4 },
+      { label: 'Pageviews',  data: OV.pv,       borderColor: '#0d7380', backgroundColor: 'transparent', tension: 0.3, pointRadius: 4, borderDash: [4,3] },
+    ],
+  },
+  options: CHART_OPTS,
+});
+
+new Chart(document.getElementById('clicksBounceChart'), {
+  type: 'bar',
+  data: {
+    labels: MONTHS,
+    datasets: [
+      { label: 'Clicks',  data: OV.clicks, backgroundColor: '#2eb886', borderRadius: 4 },
+      { label: 'Bounce',  data: OV.bounce, backgroundColor: '#e01e5a99', borderRadius: 4 },
+    ],
+  },
+  options: CHART_OPTS,
+});
+
+// ── Category trend chart ─────────────────────────────────────────────────────
+const CATS = ['Featured Tools', 'New User Onboarding', 'Salesforce in Slack', 'Use Cases', 'Agentforce', 'Launch'];
+const catDatasets = CATS.map(cat => ({
+  label: cat,
+  data: MONTHS.map((_, mi) => ARTICLES.filter(a => a.cat === cat).reduce((s, a) => s + a.s[mi], 0)),
+  borderColor: CAT_COLORS[cat],
+  backgroundColor: 'transparent',
+  tension: 0.3,
+  pointRadius: 3,
+}));
+
+new Chart(document.getElementById('catTrendChart'), {
+  type: 'line',
+  data: { labels: MONTHS, datasets: catDatasets },
+  options: CHART_OPTS,
+});
+
+// ── Bounce rate by category ──────────────────────────────────────────────────
+const bounceRateDatasets = CATS.map(cat => ({
+  label: cat,
+  data: MONTHS.map((_, mi) => {
+    const arts = ARTICLES.filter(a => a.cat === cat);
+    const totalS = arts.reduce((s, a) => s + a.s[mi], 0);
+    const totalB = arts.reduce((s, a) => s + a.b[mi], 0);
+    return totalS > 0 ? Math.round((totalB / totalS) * 100) : 0;
+  }),
+  borderColor: CAT_COLORS[cat],
+  backgroundColor: 'transparent',
+  tension: 0.3,
+  pointRadius: 3,
+}));
+
+new Chart(document.getElementById('bounceRateChart'), {
+  type: 'line',
+  data: { labels: MONTHS, datasets: bounceRateDatasets },
+  options: {
+    ...CHART_OPTS,
+    plugins: {
+      ...CHART_OPTS.plugins,
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}%` } },
+    },
+    scales: {
+      ...CHART_OPTS.scales,
+      y: { ...CHART_OPTS.scales.y, max: 100, ticks: { font: { size: 11 }, callback: v => v + '%' } },
+    },
+  },
+});
+</script>
+</body>
+</html>
