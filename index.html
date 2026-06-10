@@ -127,6 +127,14 @@
     .art-title { font-weight: 700; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .cat-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 3px; }
 
+    /* ── TRAFFIC SOURCE ── */
+    .ts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .ts-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .ts-bar-label { font-size: 12px; font-weight: 700; width: 130px; flex-shrink: 0; color: var(--text); }
+    .ts-bar-track { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .ts-bar-fill { height: 8px; border-radius: 4px; }
+    .ts-bar-val { font-size: 11px; color: var(--muted); width: 60px; text-align: right; flex-shrink: 0; }
+
     /* ── ONBOARDING TAB ── */
     .onboard-hero { background: var(--aubergine); color: #fff; border-radius: 10px; padding: 32px 36px; margin-bottom: 28px; }
     .onboard-hero h2 { font-size: 24px; font-weight: 900; margin-bottom: 8px; }
@@ -162,11 +170,17 @@
 <!-- HEADER -->
 <div class="site-header">
   <div class="logo">
-    <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M19.712 9.447a4.224 4.224 0 0 0-8.448 0v22.048a4.224 4.224 0 0 0 8.448 0V9.447z" fill="#36C5F0"/>
-      <path d="M44.288 19.712a4.224 4.224 0 0 0 0-8.448H22.24a4.224 4.224 0 0 0 0 8.448h22.048z" fill="#2EB886"/>
-      <path d="M34.024 44.288a4.224 4.224 0 0 0 8.448 0V22.24a4.224 4.224 0 0 0-8.448 0v22.048z" fill="#ECB22E"/>
-      <path d="M9.448 34.024a4.224 4.224 0 0 0 0 8.448h22.048a4.224 4.224 0 0 0 0-8.448H9.448z" fill="#E01E5A"/>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 270" width="28" height="28">
+      <g fill="none">
+        <path d="M99.4 151.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9 5.8-12.9 12.9-12.9h12.9v12.9z" fill="#E01E5A"/>
+        <path d="M105.9 151.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9v-32.3z" fill="#E01E5A"/>
+        <path d="M118.8 99.4c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9 12.9 5.8 12.9 12.9v12.9h-12.9z" fill="#36C5F0"/>
+        <path d="M118.8 105.9c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H86.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3z" fill="#36C5F0"/>
+        <path d="M170.6 118.8c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9h-12.9v-12.9z" fill="#2EB886"/>
+        <path d="M164.1 118.8c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V86.5c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3z" fill="#2EB886"/>
+        <path d="M151.2 170.6c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9v-12.9h12.9z" fill="#ECB22E"/>
+        <path d="M151.2 164.1c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9h-32.3z" fill="#ECB22E"/>
+      </g>
     </svg>
     <h1>Success Hub</h1>
   </div>
@@ -214,27 +228,27 @@
   <div class="metrics" id="metric-cards">
     <div class="m-card">
       <div class="lbl">Sessions</div>
-      <div class="big green" id="mc-sessions">2,570</div>
-      <div class="delta green" id="mc-sessions-d">+25% vs prior month</div>
-      <div class="note" id="mc-sessions-n">+50% vs Jan baseline</div>
+      <div class="big green" id="mc-sessions">10,249</div>
+      <div class="delta" id="mc-sessions-d" style="color:var(--muted)">CY 2026 total · Jan–May</div>
+      <div class="note" id="mc-sessions-n">May alone: 2,570 (+25% MoM)</div>
     </div>
     <div class="m-card">
       <div class="lbl">Pageviews</div>
-      <div class="big green" id="mc-pv">2,997</div>
-      <div class="delta green" id="mc-pv-d">+17% vs prior month</div>
-      <div class="note" id="mc-pv-n">+47% vs Jan baseline</div>
+      <div class="big green" id="mc-pv">12,160</div>
+      <div class="delta" id="mc-pv-d" style="color:var(--muted)">CY 2026 total · Jan–May</div>
+      <div class="note" id="mc-pv-n">May alone: 2,997 (+17% MoM)</div>
     </div>
     <div class="m-card">
       <div class="lbl">Total Clicks</div>
-      <div class="big green" id="mc-clicks">277</div>
-      <div class="delta green" id="mc-clicks-d">+8% vs prior month</div>
-      <div class="note" id="mc-clicks-n">+105% vs Jan baseline</div>
+      <div class="big green" id="mc-clicks">961</div>
+      <div class="delta" id="mc-clicks-d" style="color:var(--muted)">CY 2026 total · Jan–May</div>
+      <div class="note" id="mc-clicks-n">May alone: 277 (+8% MoM)</div>
     </div>
     <div class="m-card">
       <div class="lbl">Bounce Sessions</div>
-      <div class="big red" id="mc-bounce">961</div>
-      <div class="delta red" id="mc-bounce-d">+101% vs prior month</div>
-      <div class="note" id="mc-bounce-n">Bounce rate: 37%</div>
+      <div class="big red" id="mc-bounce">2,778</div>
+      <div class="delta" id="mc-bounce-d" style="color:var(--muted)">CY 2026 total · Jan–May</div>
+      <div class="note" id="mc-bounce-n">May alone: 961 (+101% MoM)</div>
     </div>
   </div>
 
@@ -258,6 +272,34 @@
     <div class="c-card">
       <h3>Bounce Rate by Category (%)</h3>
       <canvas id="bounceRateChart"></canvas>
+    </div>
+  </div>
+
+  <!-- TRAFFIC SOURCES -->
+  <div class="section-label">How People Find the Hub</div>
+  <div class="chart-row">
+    <div class="c-card">
+      <h3>Traffic by Marketing Channel — May 2026</h3>
+      <div style="margin-top:4px">
+        <div class="ts-bar-row"><div class="ts-bar-label">Direct</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:66%;background:#4A154B"></div></div><div class="ts-bar-val">1,689 · 66%</div></div>
+        <div class="ts-bar-row"><div class="ts-bar-label">Organic Search</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:30%;background:#36C5F0"></div></div><div class="ts-bar-val">781 · 30%</div></div>
+        <div class="ts-bar-row"><div class="ts-bar-label">Referral</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:3%;background:#2EB886"></div></div><div class="ts-bar-val">70 · 3%</div></div>
+        <div class="ts-bar-row"><div class="ts-bar-label">SFDC Email</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:1%;background:#ECB22E"></div></div><div class="ts-bar-val">18 · 1%</div></div>
+        <div class="ts-bar-row"><div class="ts-bar-label">Paid Search</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:1%;background:#E01E5A"></div></div><div class="ts-bar-val">17 · 1%</div></div>
+        <div class="ts-bar-row"><div class="ts-bar-label">Other</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:1%;background:#ABABAD"></div></div><div class="ts-bar-val">~25 · &lt;1%</div></div>
+      </div>
+      <p style="font-size:11px;color:var(--subtle);margin-top:14px">Direct includes both bookmarked visits and unattributed traffic (e.g. Slack app links, dark social). The &quot;not set&quot; referral bucket (~35% of hostname traffic) falls largely into this channel.</p>
+    </div>
+    <div class="c-card">
+      <h3>Top Referring Hostnames — May 2026</h3>
+      <div style="margin-top:4px">
+        <div class="ts-bar-row"><div class="ts-bar-label">(not set)</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:55%;background:#4A154B"></div></div><div class="ts-bar-val">1,412 · 55%</div></div>
+        <div class="ts-bar-row"><div class="ts-bar-label">slack.com</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:13%;background:#36C5F0"></div></div><div class="ts-bar-val">345 · 13%</div></div>
+        <div class="ts-bar-row"><div class="ts-bar-label">google.com</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:28%;background:#2EB886"></div></div><div class="ts-bar-val">709 · 28%</div></div>
+        <div class="ts-bar-row"><div class="ts-bar-label">bing.com</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:1%;background:#ECB22E"></div></div><div class="ts-bar-val">19 · 1%</div></div>
+        <div class="ts-bar-row"><div class="ts-bar-label">chatgpt.com</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:0.5%;background:#E01E5A"></div></div><div class="ts-bar-val">1 · &lt;1%</div></div>
+      </div>
+      <p style="font-size:11px;color:var(--subtle);margin-top:14px">slack.com referrals = visitors arriving from internal Slack surfaces (app, admin pages, etc.). Google organic is the primary discovery channel for net-new visitors — and likely the source driving the Slackbot guide bounce spike.</p>
     </div>
   </div>
 
@@ -368,76 +410,105 @@
 
 
 <!-- ══════════════════════════════════════════════════════════════════════════ -->
-<!-- TAB 2: ONBOARDING -->
+<!-- TAB 2: ABOUT -->
 <!-- ══════════════════════════════════════════════════════════════════════════ -->
 <div id="tab-onboard" class="tab-pane">
 <div class="container">
 
   <div class="onboard-hero">
-    <h2>Welcome to Success Hub, Diana 👋</h2>
-    <p>This page gives you a quick-start view of what the Slack Success Hub is, what we own, what success looks like, and where things stand heading into H2 2026. It's meant to answer the questions you'd otherwise have to chase down in meetings.</p>
+    <h2>About the Slack Success Hub</h2>
+    <p>The Success Hub is Slack's primary post-sale, self-serve content destination for admins — the place we send customers after they sign to help them launch, adopt, and get more out of Slack. It lives at slack.com/resources and is built on WordPress. Traffic has grown 50% YTD in CY 2026.</p>
   </div>
 
-  <!-- WHAT IS IT -->
-  <div class="section-label">What Is the Success Hub?</div>
+  <!-- WHAT DIGITAL SUCCESS OWNS -->
+  <div class="section-label">What Digital Success Owns</div>
   <div class="onboard-grid">
     <div class="onboard-card">
-      <h3><span class="icon" style="background:#EEE8EF">🏠</span> The short version</h3>
+      <h3><span class="icon" style="background:#EEE8EF">📋</span> Content Strategy &amp; Roadmap</h3>
       <ul>
-        <li>The Success Hub is <strong>Slack's primary post-sale, self-serve content destination for admins</strong> — the place we send customers after they sign to help them launch, adopt, and get more out of Slack.</li>
-        <li>It lives at <strong>slack.com/resources</strong> and is built on WordPress.</li>
-        <li>Content covers six categories: Launch, New User Onboarding, Use Cases, Agentforce, Featured Tools (Slackbot), and Salesforce in Slack.</li>
-        <li>Webinar programming lives here too — it's a natural extension of the same customer education surface.</li>
+        <li><strong>What gets published, when, and why</strong> — including prioritization across categories</li>
+        <li><strong>Audience segmentation and behavioral triggers</strong> for adoption programs</li>
+        <li><strong>Messaging frameworks</strong> for each adoption focus area</li>
+        <li><strong>XFN intake and governance</strong> — the process for PMM, RR, and other teams to get content on the Hub</li>
       </ul>
     </div>
     <div class="onboard-card">
-      <h3><span class="icon" style="background:#E8F9F3">📊</span> Why it matters</h3>
+      <h3><span class="icon" style="background:#E8F9F3">🌐</span> Hub Operations</h3>
       <ul>
-        <li>It's the <strong>self-serve alternative to a CSM call</strong> — customers who engage with Hub content are more likely to adopt key features and expand.</li>
-        <li>It's the primary delivery mechanism for <strong>adoption program content</strong> — email and Success Bot programs point here.</li>
-        <li>It supports <strong>cross-functional content requests</strong> from PMM, RR, and other teams who need a home for admin-facing resources.</li>
-        <li>Traffic has grown <strong>50% YTD in CY 2026</strong> — the Hub is becoming a more significant owned channel.</li>
+        <li><strong>Publishing, QA, and maintenance</strong> of all resources on the Hub</li>
+        <li><strong>Content standards governance</strong> — distribution and programming owner, not a content production team</li>
+        <li><strong>Performance measurement</strong> — traffic, engagement, downloads, and monthly reporting</li>
+        <li><strong>Webinar programming</strong> — topic selection, speaker coordination, cadence, follow-up content (via On24)</li>
       </ul>
     </div>
     <div class="onboard-card">
-      <h3><span class="icon" style="background:#FDE8EF">👤</span> What Gabe owns</h3>
+      <h3><span class="icon" style="background:#FDF5E0">📣</span> Adoption Program Strategy</h3>
       <ul>
-        <li><strong>Content strategy and roadmap</strong> — what gets published, when, and why</li>
-        <li><strong>Publishing, QA, and maintenance</strong> of all resources</li>
-        <li><strong>XFN content intake and governance</strong> — the process for other teams to get content on the Hub</li>
-        <li><strong>Webinar programming</strong> — topic selection, speaker coordination, follow-up content</li>
-        <li><strong>Performance measurement</strong> — traffic, engagement, downloads, and this monthly report</li>
+        <li><strong>Strategy ownership</strong> for specific product adoption focus areas (e.g. Slackbot, retention, multi-intent usage)</li>
+        <li><strong>Defining audience, goals, messaging, and KPIs</strong> for each program</li>
+        <li><strong>Building the brief</strong> that guides email and Success Bot execution</li>
+        <li><strong>Measuring program impact</strong> and iterating strategy based on results</li>
       </ul>
     </div>
     <div class="onboard-card">
-      <h3><span class="icon" style="background:#FDF5E0">🚫</span> What this team doesn't own</h3>
+      <h3><span class="icon" style="background:#FDE8EF">💬</span> Channels &amp; Tools</h3>
       <ul>
-        <li>Email operations or Success Bot operations (owned by Tierra Washington and Victoria Gironda)</li>
-        <li>Segment strategy for the Digital Success customer segment</li>
-        <li>Content creation for other teams — we govern distribution, not production</li>
-        <li>External surfaces like Trailhead or Help Center</li>
+        <li><strong>#slack-digital-success</strong> — main team channel</li>
+        <li><strong>#ds-channel-management</strong> — Hub operations</li>
+        <li><strong>Slack WordPress</strong> — content management and publishing</li>
+        <li><strong>On24</strong> — webinar operations and registration</li>
+        <li><strong>Tableau / GA4</strong> — analytics (this report)</li>
       </ul>
     </div>
   </div>
+
+  <!-- WHAT THIS TEAM DOESNT OWN -->
+  <div class="section-label">What This Team Doesn't Own</div>
+  <div class="onboard-grid">
+    <div class="onboard-card" style="border-left: 4px solid var(--slack-red);">
+      <h3><span class="icon" style="background:#FDE8EF">🚫</span> Out of scope</h3>
+      <ul>
+        <li><strong>Content creation for other teams</strong> — we govern distribution and set standards, we don't produce content on behalf of PMM, RR, or others</li>
+        <li><strong>Email operations</strong> — owned by Tierra Washington</li>
+        <li><strong>Success Bot operations</strong> — owned by Victoria Gironda</li>
+        <li><strong>Segment strategy</strong> for the Digital Success customer segment</li>
+        <li><strong>WordPress operations and technical maintenance</strong> — we publish to the CMS but don't own the platform itself</li>
+        <li><strong>External surfaces</strong> — Trailhead, Help Center, and other properties are not owned by this team, even when content overlaps</li>
+        <li><strong>Trailhead content</strong> — separate team and process; we can contribute input but don't own publishing</li>
+      </ul>
+    </div>
+    <div class="onboard-card" style="border-left: 4px solid var(--slack-yellow);">
+      <h3><span class="icon" style="background:#FDF5E0">⚠️</span> Open question: Path forward for the Hub</h3>
+      <ul>
+        <li>The launch of <strong>Slack Success Plans</strong> raises a strategic question about whether the Hub remains the primary post-sale content surface — or whether content should migrate to other systems</li>
+        <li><strong>Option A — Maintain the Hub</strong> as the primary self-serve destination and continue investing in it as a channel</li>
+        <li><strong>Option B — Migrate content</strong> to platforms like Trailhead or Help Center, where it's more discoverable and integrated into the broader Salesforce ecosystem</li>
+        <li><strong>Option C — Hybrid</strong> — keep the Hub for adoption-focused content while migrating reference/support content to Help Center or Trailhead</li>
+        <li>This decision has implications for resourcing, tooling, and the team's role — <strong>needs alignment before H2 planning</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
 
   <!-- METRICS EXPLAINER -->
   <div class="section-label">How to Read This Report</div>
   <div class="metric-explainer">
     <div class="me-card">
       <h4>Sessions</h4>
-      <p>A visit to the site. One session can include multiple page views. This is our primary volume metric — how many admins are coming to the Hub.</p>
+      <p>A visit to the site. One session can include multiple pageviews. Primary volume metric — how many admins are coming to the Hub.</p>
     </div>
     <div class="me-card">
       <h4>Pageviews</h4>
-      <p>Total pages loaded. Higher than sessions because visitors sometimes view multiple pages. A pageviews/sessions ratio above 1.1 means visitors are exploring beyond their landing page.</p>
+      <p>Total pages loaded. A ratio above 1.1 pageviews/session means visitors are exploring beyond their landing page — a positive signal.</p>
     </div>
     <div class="me-card">
       <h4>Clicks</h4>
-      <p>Outbound clicks to Slack.com resources or product pages. This is our engagement quality signal — a click means the content prompted a next step. We want this growing faster than sessions.</p>
+      <p>Outbound clicks to Slack resources or product pages. Our engagement quality signal — a click means content prompted a next step. We want this growing faster than sessions.</p>
     </div>
     <div class="me-card">
       <h4>Bounce (GA4)</h4>
-      <p>In GA4, a bounce is a session under 10 seconds with no interaction. Unlike old analytics, someone who reads an article for 3 minutes does NOT count as a bounce. High bounce = wrong audience, not bored reader.</p>
+      <p>In GA4, a bounce = a session under 10 seconds with no interaction. Someone reading an article for 3 minutes does NOT bounce. High bounce = wrong audience, not bored reader.</p>
     </div>
   </div>
 
@@ -447,19 +518,19 @@
     <div class="onboard-card">
       <h3><span class="icon" style="background:#E8F9F3">✅</span> Healthy signals</h3>
       <ul>
-        <li><strong>Clicks growing faster than sessions</strong> — means content quality is improving, not just volume</li>
-        <li><strong>Returning visitor % above 60%</strong> — admins are coming back, indicating ongoing value (currently 61–67% each month)</li>
-        <li><strong>Low bounce on high-intent categories</strong> — Salesforce in Slack consistently under 35% bounce rate</li>
-        <li><strong>Consistent category distribution</strong> — no single category dominating to an unhealthy degree</li>
+        <li><strong>Clicks growing faster than sessions</strong> — content quality improving, not just volume</li>
+        <li><strong>Returning visitor % above 60%</strong> — admins coming back (currently 61–67% monthly)</li>
+        <li><strong>Low bounce on high-intent categories</strong> — Salesforce in Slack consistently under 35%</li>
+        <li><strong>Category distribution balanced</strong> — no single category dominating to an unhealthy degree</li>
       </ul>
     </div>
     <div class="onboard-card">
       <h3><span class="icon" style="background:#FDE8EF">⚠️</span> Watch signals</h3>
       <ul>
-        <li><strong>Bounce spiking on a single article</strong> — usually a traffic source mismatch, not a content problem</li>
-        <li><strong>Category traffic dropping two months in a row</strong> — may indicate content is aging out or audience needs have shifted</li>
-        <li><strong>Clicks flat while sessions grow</strong> — traffic without engagement; content isn't prompting next steps</li>
-        <li><strong>New pages with zero sessions</strong> — distribution may not be connected to content publishing</li>
+        <li><strong>Bounce spike on a single article</strong> — usually a traffic source mismatch, not a content problem</li>
+        <li><strong>Category traffic dropping 2+ months in a row</strong> — content may be aging out</li>
+        <li><strong>Clicks flat while sessions grow</strong> — traffic without engagement</li>
+        <li><strong>New pages with near-zero sessions</strong> — distribution may not be connected to publishing</li>
       </ul>
     </div>
   </div>
@@ -475,23 +546,23 @@
         <div class="tl-content">
           <div class="tl-month">January 2026</div>
           <h4>Strong baseline, NUO dominates</h4>
-          <p>Workshop 101 (New User Onboarding webinar) is the #1 article at 565 sessions. Salesforce Channels Implementation Guide is a consistent #2 at 252. Total site: 1,716 sessions.</p>
+          <p>Workshop 101 is the #1 article at 565 sessions. Salesforce Channels Implementation Guide a consistent #2 at 252. Total: 1,716 sessions.</p>
         </div>
       </div>
       <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-content">
           <div class="tl-month">February 2026</div>
-          <h4>Agentforce spike — then drops</h4>
-          <p>"Launching Agentforce in Slack" jumps to 175 sessions (likely tied to a launch moment or email push). Workshop 101 still #1 at 553. Total: 1,918 sessions.</p>
+          <h4>Agentforce spike — doesn't sustain</h4>
+          <p>"Launching Agentforce in Slack" jumps to 175 sessions, likely tied to a launch moment or email push. Workshop 101 still #1 at 553. Total: 1,918 sessions.</p>
         </div>
       </div>
       <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-content">
           <div class="tl-month">March 2026</div>
-          <h4>Slackbot content joins Featured Tools</h4>
-          <p>Slackbot Admin Toolkit (42 sessions) and the Slackbot Guide (34 sessions) appear for the first time. Workshop 101 peaks at 570 sessions. Total: 1,992 sessions.</p>
+          <h4>Slackbot content arrives in Featured Tools</h4>
+          <p>Slackbot Admin Toolkit (42) and the Slackbot Guide (34) appear for the first time. Workshop 101 peaks at 570. Total: 1,992 sessions.</p>
         </div>
       </div>
       <div class="tl-item">
@@ -499,39 +570,17 @@
         <div class="tl-content">
           <div class="tl-month">April 2026</div>
           <h4>Slackbot takes off, NUO drops sharply</h4>
-          <p>Slackbot prompt playbook hits 328 sessions and the Slackbot Guide reaches 274 — both now outpace Workshop 101 (199). Clicks jump to 256 from 151 in March. Total: 2,053 sessions.</p>
+          <p>Slackbot prompt playbook (328) and guide (274) both outpace Workshop 101 (199). Clicks jump to 256 from 151 in March. Total: 2,053 sessions.</p>
         </div>
       </div>
       <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-content">
           <div class="tl-month">May 2026</div>
-          <h4>Traffic peaks — but so does bounce</h4>
-          <p>Best traffic month yet at 2,570 sessions. Slackbot Guide more than doubles (274 → 594) and becomes the #1 article on the site. But bounces double site-wide, driven almost entirely by that article. Quality vs. volume tension emerges.</p>
+          <h4>Best traffic month — but bounce doubles</h4>
+          <p>2,570 sessions. Slackbot Guide becomes #1 at 594. Bounces double site-wide. Quality vs. volume tension is the open question heading into H2.</p>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- TOOLS -->
-  <div class="section-label">Tools &amp; Where to Find Things</div>
-  <div class="onboard-grid">
-    <div class="onboard-card">
-      <h3><span class="icon" style="background:#EEE8EF">🛠</span> Core tools</h3>
-      <ul>
-        <li><strong>Slack WordPress</strong> — Success Hub publication and content management</li>
-        <li><strong>On24</strong> — Webinar operations and registration</li>
-        <li><strong>Tableau</strong> — Dashboard at prod-uswest-c.online.tableau.com (Slack Success Hub view)</li>
-        <li><strong>GA4</strong> — Underlying analytics source; Tableau pulls from here</li>
-      </ul>
-    </div>
-    <div class="onboard-card">
-      <h3><span class="icon" style="background:#E8F9F3">💬</span> Slack channels</h3>
-      <ul>
-        <li><strong>#slack-digital-success</strong> — Main team channel</li>
-        <li><strong>#ds-channel-management</strong> — Channel management and Hub operations</li>
-        <li>Adoption program delivery: <strong>Tierra Washington</strong> (email) and <strong>Victoria Gironda</strong> (Success Bot)</li>
-      </ul>
     </div>
   </div>
 
@@ -608,22 +657,30 @@ function filterMonth(btn) {
 
 function updateMetricCards() {
   if (activeMonth === 'all') {
-    document.getElementById('mc-sessions').textContent = '2,570';
-    document.getElementById('mc-sessions-d').textContent = '+25% vs prior month';
-    document.getElementById('mc-sessions-d').className = 'delta green';
-    document.getElementById('mc-sessions-n').textContent = '+50% vs Jan baseline';
-    document.getElementById('mc-pv').textContent = '2,997';
-    document.getElementById('mc-pv-d').textContent = '+17% vs prior month';
-    document.getElementById('mc-pv-d').className = 'delta green';
-    document.getElementById('mc-pv-n').textContent = '+47% vs Jan baseline';
-    document.getElementById('mc-clicks').textContent = '277';
-    document.getElementById('mc-clicks-d').textContent = '+8% vs prior month';
-    document.getElementById('mc-clicks-d').className = 'delta green';
-    document.getElementById('mc-clicks-n').textContent = '+105% vs Jan baseline';
-    document.getElementById('mc-bounce').textContent = '961';
-    document.getElementById('mc-bounce-d').textContent = '+101% vs prior month';
-    document.getElementById('mc-bounce-d').className = 'delta red';
-    document.getElementById('mc-bounce-n').textContent = 'Bounce rate: 37%';
+    const totS = OV.sessions.reduce((a,b)=>a+b,0);
+    const totPV = OV.pv.reduce((a,b)=>a+b,0);
+    const totC = OV.clicks.reduce((a,b)=>a+b,0);
+    const totB = OV.bounce.reduce((a,b)=>a+b,0);
+    document.getElementById('mc-sessions').textContent = totS.toLocaleString();
+    document.getElementById('mc-sessions-d').textContent = 'CY 2026 total · Jan–May';
+    document.getElementById('mc-sessions-d').style.color = 'var(--muted)';
+    document.getElementById('mc-sessions-d').className = 'delta';
+    document.getElementById('mc-sessions-n').textContent = 'May alone: 2,570 (+25% MoM)';
+    document.getElementById('mc-pv').textContent = totPV.toLocaleString();
+    document.getElementById('mc-pv-d').textContent = 'CY 2026 total · Jan–May';
+    document.getElementById('mc-pv-d').style.color = 'var(--muted)';
+    document.getElementById('mc-pv-d').className = 'delta';
+    document.getElementById('mc-pv-n').textContent = 'May alone: 2,997 (+17% MoM)';
+    document.getElementById('mc-clicks').textContent = totC.toLocaleString();
+    document.getElementById('mc-clicks-d').textContent = 'CY 2026 total · Jan–May';
+    document.getElementById('mc-clicks-d').style.color = 'var(--muted)';
+    document.getElementById('mc-clicks-d').className = 'delta';
+    document.getElementById('mc-clicks-n').textContent = 'May alone: 277 (+8% MoM)';
+    document.getElementById('mc-bounce').textContent = totB.toLocaleString();
+    document.getElementById('mc-bounce-d').textContent = 'CY 2026 total · Jan–May';
+    document.getElementById('mc-bounce-d').style.color = 'var(--muted)';
+    document.getElementById('mc-bounce-d').className = 'delta';
+    document.getElementById('mc-bounce-n').textContent = 'May alone: 961 (+101% MoM)';
     return;
   }
   const mi = parseInt(activeMonth);
