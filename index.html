@@ -208,8 +208,8 @@
   <!-- SUMMARY BANNER -->
   <div class="summary-banner">
     <div class="headline">
-      <h2>Sessions up 67% since January. Clicks grew 76%.</h2>
-      <p>The Hub continues strong growth — June saw 2,861 sessions, though clicks dipped from May's high. Slackbot content remains dominant, and Salesforce in Slack shows consistent quality engagement.</p>
+      <h2>Sessions up 67% since January. April saw peak engagement at 12.4% CTR.</h2>
+      <p>The Hub grew steadily through April, achieving 12.4% click-through rate (254 clicks). June sessions grew 11% but CTR dropped to 8.4% as referral traffic spiked 374% — bringing low-engagement visitors who bounced without clicking.</p>
     </div>
     <div class="kpis">
       <div class="kpi"><div class="val">2,861</div><div class="lbl">June Sessions</div><div class="chg green">+11% vs May</div></div>
@@ -284,6 +284,26 @@
     </div>
   </div>
 
+  <!-- TRAFFIC QUALITY ANALYSIS -->
+  <div class="section-label">Traffic Quality Analysis</div>
+  <div class="insights">
+    <div class="ins neg">
+      <div class="tag">Alert</div>
+      <h4>June referral traffic spike diluted engagement quality</h4>
+      <p>Referral traffic jumped from 70 sessions (March-May avg) to 332 in June (+374%). This low-engagement traffic drove bounce rate from 37% to 45% and CTR from 10.6% to 8.4%. Sessions grew, but quality declined.</p>
+    </div>
+    <div class="ins warn">
+      <div class="tag">Peak</div>
+      <h4>April was the click quality high-water mark</h4>
+      <p>April saw 254 clicks (12.4% CTR) — the best engagement month. Slackbot Prompt Playbook alone drove 134 clicks (53% of total). May held at 10.6% CTR (271 clicks) before June's drop. This is the benchmark to recover.</p>
+    </div>
+    <div class="ins blue">
+      <div class="tag">Pattern</div>
+      <h4>Traffic growth without engagement growth</h4>
+      <p>Sessions grew every month (1,716 → 2,861, +67%), but clicks peaked in May (277) then declined to 238 in June. The quality-vs-quantity tension is now clear: referral traffic brings volume, not engagement.</p>
+    </div>
+  </div>
+
   <!-- TRAFFIC SOURCES -->
   <div class="section-label">How People Find the Hub</div>
   <div class="chart-row">
@@ -312,6 +332,39 @@
     </div>
   </div>
 
+  <!-- TOP PERFORMING CONTENT -->
+  <div class="section-label">Content Performance Leaders (by Clicks)</div>
+  <div class="recs">
+    <div class="rec">
+      <div class="rec-num">1</div>
+      <div>
+        <h4>Slackbot Prompt Playbook — 134 clicks in April</h4>
+        <p>Featured Tools category. Drove 53% of all April clicks alone. Trend: 0 (Jan) → 16 (Mar) → 134 (Apr) → 90 (Jun). This is the engagement quality standard — high clicks despite moderate sessions.</p>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="rec-num">2</div>
+      <div>
+        <h4>SF Channels Implementation — Consistent 61-86 clicks/month</h4>
+        <p>Salesforce in Slack anchor. Jan: 86, Mar: 61, Apr: 65, Jun: 74. Quality leader with high clicks and manageable bounce. Shows that Salesforce admin audience is highly engaged.</p>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="rec-num">3</div>
+      <div>
+        <h4>Slack for Internal Comms — 38 clicks in May</h4>
+        <p>Use Cases top performer. Growing from 11 clicks (Jan) → 22 (Feb) → 38 (May). Proves Use Cases content can drive engagement when it lands with the right audience.</p>
+      </div>
+    </div>
+    <div class="rec">
+      <div class="rec-num">4</div>
+      <div>
+        <h4>Why these matter: Clicks show intent, not just curiosity</h4>
+        <p>Sessions measure traffic volume. Clicks measure engagement quality — someone took action after reading. The Slackbot Playbook and SF Channels prove the Hub can drive high-intent behavior. The challenge is replicating that across other categories.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- INSIGHTS -->
   <div class="section-label">What the Data Is Telling Us</div>
   <div class="insights">
@@ -319,6 +372,11 @@
       <div class="tag">Growth</div>
       <h4>Sessions up 67% since January</h4>
       <p>The Hub grew from 1,716 sessions in January to 2,861 in June (+11% MoM). Slackbot content remains the dominant driver — the Admin Toolkit (384) overtook the guide (290) as the top Featured Tools article in June.</p>
+    </div>
+    <div class="ins warn">
+      <div class="tag">Peak</div>
+      <h4>April was the click quality high-water mark</h4>
+      <p>April saw 254 clicks (12.4% CTR) — the best engagement month. Slackbot Prompt Playbook drove 134 clicks alone (53% of total). May held strong at 10.6% CTR before June's referral-driven decline. This is the engagement benchmark to recover.</p>
     </div>
     <div class="ins neg">
       <div class="tag">Warning</div>
@@ -360,8 +418,8 @@
     <div class="rec">
       <div class="rec-num">2</div>
       <div>
-        <h4>Audit traffic sources driving the bounce spike</h4>
-        <p>1,300 bounces in June vs. 961 in May (+35%). Pull the marketing channel and referral hostname breakdown for June bounces specifically. If organic search is driving most bounces, the issue is likely search intent mismatch or SEO attracting the wrong audience.</p>
+        <h4>Identify and segment the June referral traffic source</h4>
+        <p>Referral traffic jumped 374% in June (70→332 sessions). Pull the referring hostname breakdown for June — if it's a specific campaign or partner link, assess whether that traffic source aligns with Hub goals or should be redirected to more appropriate landing pages.</p>
       </div>
     </div>
     <div class="rec">
@@ -605,34 +663,34 @@ const CAT_COLORS = {
   'Launch':               '#ECB22E',
 };
 const ARTICLES = [
-  { title: 'Complete guide to launching Slackbot',       cat: 'Featured Tools',      s: [0,   0,   34,  274, 594, 290], b: [0,  0,  8,  50,  193, 88]  },
-  { title: 'The Slackbot prompt playbook',               cat: 'Featured Tools',      s: [0,   0,   31,  328, 321, 224], b: [0,  0,  5,  52,  63,  67]  },
-  { title: 'Slackbot Admin Toolkit',                     cat: 'Featured Tools',      s: [0,   0,   42,  147, 127, 384], b: [0,  0,  8,  10,  30,  77]  },
-  { title: 'Resources to achieve your goals with Slack', cat: 'Featured Tools',      s: [9,   7,   19,  8,   26,  44],  b: [1,  1,  0,  0,   17,  35]  },
-  { title: 'Introducing Slack canvas',                   cat: 'Featured Tools',      s: [8,   8,   10,  4,   2,   7],   b: [0,  0,  0,  1,   0,   6]   },
-  { title: 'Salesforce Channels: Implementation Guide',  cat: 'Salesforce in Slack', s: [252, 231, 221, 220, 246, 264], b: [84, 71, 77, 73,  90,  113] },
-  { title: 'Complete guide to launching SF channels',    cat: 'Salesforce in Slack', s: [20,  37,  30,  26,  44,  54],  b: [2,  11, 6,  2,   24,  34]  },
-  { title: 'Salesforce in Slack: Implementation Guide',  cat: 'Salesforce in Slack', s: [0,   0,   23,  46,  56,  92],  b: [0,  0,  4,  12,  26,  48]  },
-  { title: 'Salesforce channels: Launch communications', cat: 'Salesforce in Slack', s: [9,   12,  13,  16,  28,  43],  b: [0,  2,  0,  1,   16,  36]  },
-  { title: 'Workshop 101: Learn the basics (on-demand)', cat: 'New User Onboarding', s: [565, 553, 570, 199, 159, 164], b: [99, 132,113, 40,  24,  36]  },
-  { title: 'Slack for internal communications',          cat: 'Use Cases',           s: [92,  79,  81,  103, 101, 121], b: [11, 22, 18, 30,  38,  54]  },
-  { title: 'Slack for HR, Recruiting, and DEI',          cat: 'Use Cases',           s: [60,  56,  78,  68,  41,  69],  b: [19, 19, 32, 18,  20,  37]  },
-  { title: 'Slack for legal',                            cat: 'Use Cases',           s: [46,  42,  55,  43,  64,  97],  b: [12, 7,  9,  2,   31,  43]  },
-  { title: 'Slack for Executives and EAs',               cat: 'Use Cases',           s: [36,  36,  60,  43,  45,  72],  b: [8,  2,  21, 6,   24,  41]  },
-  { title: 'Slack for sales',                            cat: 'Use Cases',           s: [32,  41,  33,  23,  31,  53],  b: [1,  3,  3,  3,   18,  36]  },
-  { title: 'Slack for customer success',                 cat: 'Use Cases',           s: [23,  43,  54,  41,  33,  51],  b: [4,  19, 24, 21,  16,  38]  },
-  { title: 'Slack for IT and Security',                  cat: 'Use Cases',           s: [25,  26,  58,  57,  57,  56],  b: [5,  9,  15, 24,  34,  43]  },
-  { title: 'Slack for customer service',                 cat: 'Use Cases',           s: [16,  40,  29,  20,  37,  51],  b: [7,  21, 9,  5,   24,  33]  },
-  { title: 'Slack for marketing',                        cat: 'Use Cases',           s: [12,  16,  21,  27,  42,  57],  b: [3,  0,  8,  6,   33,  37]  },
-  { title: 'Unlocking value with Slack',                 cat: 'Use Cases',           s: [29,  15,  27,  17,  27,  42],  b: [12, 3,  9,  3,   15,  33]  },
-  { title: '5 steps to support team adoption',          cat: 'Use Cases',           s: [11,  22,  21,  19,  25,  53],  b: [4,  0,  4,  1,   21,  33]  },
-  { title: 'Launching Agentforce in Slack',              cat: 'Agentforce',          s: [42,  175, 92,  92,  76,  69],  b: [4,  92, 13, 6,   25,  37]  },
-  { title: 'Unlock productivity w/ Slack Professions',   cat: 'Agentforce',          s: [21,  31,  31,  33,  35,  53],  b: [1,  8,  4,  5,   14,  37]  },
-  { title: 'Agentforce in Slack: Admin Setup Guide',     cat: 'Agentforce',          s: [23,  17,  25,  27,  34,  52],  b: [11, 1,  5,  7,   18,  35]  },
-  { title: 'Agentforce: Launch Communications',          cat: 'Agentforce',          s: [7,   7,   15,  5,   16,  33],  b: [1,  0,  0,  1,   13,  30]  },
-  { title: '5 steps to launch Slack',                    cat: 'Launch',              s: [68,  63,  61,  50,  63,  74],  b: [11, 11, 7,  11,  23,  38]  },
-  { title: 'Slack launch communications',                cat: 'Launch',              s: [38,  39,  35,  33,  59,  69],  b: [3,  6,  12, 7,   19,  33]  },
-  { title: 'How to launch Slack at your organization',   cat: 'Launch',              s: [47,  39,  22,  22,  12,  24],  b: [6,  3,  1,  4,   0,   12]  },
+  { title: 'Complete guide to launching Slackbot',       cat: 'Featured Tools',      s: [0,   0,   34,  274, 594, 290], b: [0,  0,  8,  50,  193, 88],  c: [0, 0, 8, 5, 0, 2] },
+  { title: 'The Slackbot prompt playbook',               cat: 'Featured Tools',      s: [0,   0,   31,  328, 321, 224], b: [0,  0,  5,  52,  63,  67],  c: [0, 0, 16, 134, 0, 90] },
+  { title: 'Slackbot Admin Toolkit',                     cat: 'Featured Tools',      s: [0,   0,   42,  147, 127, 384], b: [0,  0,  8,  10,  30,  77],  c: [0, 0, 8, 10, 0, 0] },
+  { title: 'Resources to achieve your goals with Slack', cat: 'Featured Tools',      s: [9,   7,   19,  8,   26,  44],  b: [1,  1,  0,  0,   17,  35],  c: [1, 1, 2, 0, 0, 0] },
+  { title: 'Introducing Slack canvas',                   cat: 'Featured Tools',      s: [8,   8,   10,  4,   2,   7],   b: [0,  0,  0,  1,   0,   6],   c: [0, 0, 0, 1, 0, 0] },
+  { title: 'Salesforce Channels: Implementation Guide',  cat: 'Salesforce in Slack', s: [252, 231, 221, 220, 246, 264], b: [84, 71, 77, 73,  90,  113], c: [86, 78, 61, 65, 0, 74] },
+  { title: 'Complete guide to launching SF channels',    cat: 'Salesforce in Slack', s: [20,  37,  30,  26,  44,  54],  b: [2,  11, 6,  2,   24,  34],  c: [2, 0, 2, 1, 0, 0] },
+  { title: 'Salesforce in Slack: Implementation Guide',  cat: 'Salesforce in Slack', s: [0,   0,   23,  46,  56,  92],  b: [0,  0,  4,  12,  26,  48],  c: [0, 0, 2, 10, 0, 26] },
+  { title: 'Salesforce channels: Launch communications', cat: 'Salesforce in Slack', s: [9,   12,  13,  16,  28,  43],  b: [0,  2,  0,  1,   16,  36],  c: [0, 0, 0, 1, 5, 2] },
+  { title: 'Workshop 101: Learn the basics (on-demand)', cat: 'New User Onboarding', s: [565, 553, 570, 199, 159, 164], b: [99, 132,113, 40,  24,  36],  c: [12, 7, 0, 0, 4, 5] },
+  { title: 'Slack for internal communications',          cat: 'Use Cases',           s: [92,  79,  81,  103, 101, 121], b: [11, 22, 18, 30,  38,  54],  c: [11, 22, 5, 5, 38, 0] },
+  { title: 'Slack for HR, Recruiting, and DEI',          cat: 'Use Cases',           s: [60,  56,  78,  68,  41,  69],  b: [19, 19, 32, 18,  20,  37],  c: [19, 19, 30, 18, 20, 1] },
+  { title: 'Slack for legal',                            cat: 'Use Cases',           s: [46,  42,  55,  43,  64,  97],  b: [12, 7,  9,  2,   31,  43],  c: [12, 7, 9, 2, 31, 0] },
+  { title: 'Slack for Executives and EAs',               cat: 'Use Cases',           s: [36,  36,  60,  43,  45,  72],  b: [8,  2,  21, 6,   24,  41],  c: [8, 2, 21, 6, 24, 0] },
+  { title: 'Slack for sales',                            cat: 'Use Cases',           s: [32,  41,  33,  23,  31,  53],  b: [1,  3,  3,  3,   18,  36],  c: [1, 3, 3, 3, 18, 0] },
+  { title: 'Slack for customer success',                 cat: 'Use Cases',           s: [23,  43,  54,  41,  33,  51],  b: [4,  19, 24, 21,  16,  38],  c: [4, 19, 24, 21, 16, 0] },
+  { title: 'Slack for IT and Security',                  cat: 'Use Cases',           s: [25,  26,  58,  57,  57,  56],  b: [5,  9,  15, 24,  34,  43],  c: [5, 9, 15, 24, 33, 0] },
+  { title: 'Slack for customer service',                 cat: 'Use Cases',           s: [16,  40,  29,  20,  37,  51],  b: [7,  21, 9,  5,   24,  33],  c: [7, 21, 9, 5, 24, 0] },
+  { title: 'Slack for marketing',                        cat: 'Use Cases',           s: [12,  16,  21,  27,  42,  57],  b: [3,  0,  8,  6,   33,  37],  c: [3, 0, 8, 6, 33, 0] },
+  { title: 'Unlocking value with Slack',                 cat: 'Use Cases',           s: [29,  15,  27,  17,  27,  42],  b: [12, 3,  9,  3,   15,  33],  c: [12, 3, 9, 3, 15, 0] },
+  { title: '5 steps to support team adoption',          cat: 'Use Cases',           s: [11,  22,  21,  19,  25,  53],  b: [4,  0,  4,  1,   21,  33],  c: [4, 0, 4, 2, 1, 3] },
+  { title: 'Launching Agentforce in Slack',              cat: 'Agentforce',          s: [42,  175, 92,  92,  76,  69],  b: [4,  92, 13, 6,   25,  37],  c: [6, 0, 0, 0, 10, 5] },
+  { title: 'Unlock productivity w/ Slack Professions',   cat: 'Agentforce',          s: [21,  31,  31,  33,  35,  53],  b: [1,  8,  4,  5,   14,  37],  c: [1, 0, 0, 0, 14, 0] },
+  { title: 'Agentforce in Slack: Admin Setup Guide',     cat: 'Agentforce',          s: [23,  17,  25,  27,  34,  52],  b: [11, 1,  5,  7,   18,  35],  c: [2, 7, 0, 0, 7, 7] },
+  { title: 'Agentforce: Launch Communications',          cat: 'Agentforce',          s: [7,   7,   15,  5,   16,  33],  b: [1,  0,  0,  1,   13,  30],  c: [0, 0, 0, 0, 0, 0] },
+  { title: '5 steps to launch Slack',                    cat: 'Launch',              s: [68,  63,  61,  50,  63,  74],  b: [11, 11, 7,  11,  23,  38],  c: [0, 0, 0, 0, 0, 0] },
+  { title: 'Slack launch communications',                cat: 'Launch',              s: [38,  39,  35,  33,  59,  69],  b: [3,  6,  12, 7,   19,  33],  c: [0, 0, 0, 0, 5, 2] },
+  { title: 'How to launch Slack at your organization',   cat: 'Launch',              s: [47,  39,  22,  22,  12,  24],  b: [6,  3,  1,  4,   0,   12],  c: [0, 0, 0, 0, 5, 0] },
 ];
 
 // ── TABS ─────────────────────────────────────────────────────────────────────
