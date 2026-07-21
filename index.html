@@ -308,27 +308,14 @@
   <div class="section-label">How People Find the Hub</div>
   <div class="chart-row">
     <div class="c-card">
-      <h3>Traffic by Marketing Channel — May 2026</h3>
-      <div style="margin-top:4px">
-        <div class="ts-bar-row"><div class="ts-bar-label">Direct</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:66%;background:#4A154B"></div></div><div class="ts-bar-val">1,689 · 66%</div></div>
-        <div class="ts-bar-row"><div class="ts-bar-label">Organic Search</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:30%;background:#36C5F0"></div></div><div class="ts-bar-val">781 · 30%</div></div>
-        <div class="ts-bar-row"><div class="ts-bar-label">Referral</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:3%;background:#2EB886"></div></div><div class="ts-bar-val">70 · 3%</div></div>
-        <div class="ts-bar-row"><div class="ts-bar-label">SFDC Email</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:1%;background:#ECB22E"></div></div><div class="ts-bar-val">18 · 1%</div></div>
-        <div class="ts-bar-row"><div class="ts-bar-label">Paid Search</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:1%;background:#E01E5A"></div></div><div class="ts-bar-val">17 · 1%</div></div>
-        <div class="ts-bar-row"><div class="ts-bar-label">Other</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:1%;background:#ABABAD"></div></div><div class="ts-bar-val">~25 · &lt;1%</div></div>
-      </div>
-      <p style="font-size:11px;color:var(--subtle);margin-top:14px">Direct includes both bookmarked visits and unattributed traffic (e.g. Slack app links, dark social). The &quot;not set&quot; referral bucket (~35% of hostname traffic) falls largely into this channel.</p>
+      <h3>Sessions by Marketing Channel</h3>
+      <canvas id="channelTrendChart"></canvas>
+      <p style="font-size:11px;color:var(--subtle);margin-top:14px">Note the June referral spike: 70 sessions (May avg) → 332 (June), a 374% increase. Direct traffic includes bookmarked visits and unattributed traffic (Slack app links, dark social).</p>
     </div>
     <div class="c-card">
-      <h3>Top Referring Hostnames — May 2026</h3>
-      <div style="margin-top:4px">
-        <div class="ts-bar-row"><div class="ts-bar-label">(not set)</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:55%;background:#4A154B"></div></div><div class="ts-bar-val">1,412 · 55%</div></div>
-        <div class="ts-bar-row"><div class="ts-bar-label">slack.com</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:13%;background:#36C5F0"></div></div><div class="ts-bar-val">345 · 13%</div></div>
-        <div class="ts-bar-row"><div class="ts-bar-label">google.com</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:28%;background:#2EB886"></div></div><div class="ts-bar-val">709 · 28%</div></div>
-        <div class="ts-bar-row"><div class="ts-bar-label">bing.com</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:1%;background:#ECB22E"></div></div><div class="ts-bar-val">19 · 1%</div></div>
-        <div class="ts-bar-row"><div class="ts-bar-label">chatgpt.com</div><div class="ts-bar-track"><div class="ts-bar-fill" style="width:0.5%;background:#E01E5A"></div></div><div class="ts-bar-val">1 · &lt;1%</div></div>
-      </div>
-      <p style="font-size:11px;color:var(--subtle);margin-top:14px">slack.com referrals = visitors arriving from internal Slack surfaces (app, admin pages, etc.). Google organic is the primary discovery channel for net-new visitors — and likely the source driving the Slackbot guide bounce spike.</p>
+      <h3>Organic Search vs Referral Traffic</h3>
+      <canvas id="organicVsReferralChart"></canvas>
+      <p style="font-size:11px;color:var(--subtle);margin-top:14px">Organic Search (high-intent, quality traffic) remained stable 741-784/month. Referral traffic spiked 374% in June, bringing low-engagement visitors (45% bounce vs 30-37% organic).</p>
     </div>
   </div>
 
@@ -653,6 +640,13 @@ const OV = {
   pv:       [2032, 2202, 2371, 2558, 2997, 3265],
   clicks:   [135,  142,  151,  256,  277,  238],
   bounce:   [351,  502,  486,  478,  961,  1300],
+};
+const CHANNELS = {
+  direct:       [925, 1122, 0,   0,   0,   1773],  // Jan, Feb, Jun only (Mar-May not captured)
+  organic:      [741, 744,  744, 784, 778, 670],
+  referral:     [59,  87,   73,  79,  72,  332],
+  sfdcEmail:    [17,  12,   16,  23,  18,  17],
+  paidSearch:   [21,  16,   12,  21,  16,  11],
 };
 const CAT_COLORS = {
   'Featured Tools':       '#4A154B',
@@ -980,6 +974,40 @@ new Chart(document.getElementById('bounceRateChart'), {
     ...CHART_OPTS,
     plugins: { ...CHART_OPTS.plugins, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } } },
     scales: { ...CHART_OPTS.scales, y: { ...CHART_OPTS.scales.y, max: 100, ticks: { font: { size: 11, family: 'Lato' }, callback: v => v+'%' } } },
+  },
+});
+
+// Marketing Channel Trends
+new Chart(document.getElementById('channelTrendChart'), {
+  type: 'line',
+  data: {
+    labels: MONTHS,
+    datasets: [
+      { label: 'Organic Search', data: CHANNELS.organic, borderColor: '#36C5F0', backgroundColor: 'transparent', tension: 0.3, pointRadius: 4, pointBackgroundColor: '#36C5F0' },
+      { label: 'Referral', data: CHANNELS.referral, borderColor: '#E01E5A', backgroundColor: 'transparent', tension: 0.3, pointRadius: 4, pointBackgroundColor: '#E01E5A', borderWidth: 3 },
+      { label: 'SFDC Email', data: CHANNELS.sfdcEmail, borderColor: '#ECB22E', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3, borderDash: [4,3] },
+      { label: 'Paid Search', data: CHANNELS.paidSearch, borderColor: '#2EB886', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3, borderDash: [4,3] },
+    ],
+  },
+  options: CHART_OPTS,
+});
+
+// Organic vs Referral (simplified view)
+new Chart(document.getElementById('organicVsReferralChart'), {
+  type: 'line',
+  data: {
+    labels: MONTHS,
+    datasets: [
+      { label: 'Organic Search', data: CHANNELS.organic, borderColor: '#36C5F0', backgroundColor: '#36C5F015', fill: true, tension: 0.3, pointRadius: 5, pointBackgroundColor: '#36C5F0', borderWidth: 2 },
+      { label: 'Referral', data: CHANNELS.referral, borderColor: '#E01E5A', backgroundColor: '#E01E5A15', fill: true, tension: 0.3, pointRadius: 5, pointBackgroundColor: '#E01E5A', borderWidth: 2 },
+    ],
+  },
+  options: {
+    ...CHART_OPTS,
+    scales: {
+      ...CHART_OPTS.scales,
+      y: { ...CHART_OPTS.scales.y, max: 800, ticks: { font: { size: 11, family: 'Lato' } } },
+    },
   },
 });
 </script>
