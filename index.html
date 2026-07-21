@@ -283,6 +283,23 @@
       <canvas id="bounceRateChart"></canvas>
     </div>
   </div>
+  <div class="chart-row" style="margin-top:20px">
+    <div class="c-card">
+      <h3>Top 10 Bounce Contributors — June 2026</h3>
+      <canvas id="bounceContributorsChart"></canvas>
+      <p style="font-size:11px;color:var(--subtle);margin-top:14px">Total June bounces: 1,300. Top 3 articles account for 278 bounces (21%). Slackbot Admin Toolkit had high traffic but zero engagement — 77 bounces, 0 clicks.</p>
+    </div>
+    <div class="c-card" style="display:flex;flex-direction:column;justify-content:center;padding:32px;">
+      <div style="margin-bottom:16px;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--aubergine);">Why This Matters</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.65;">Bounces aren't evenly distributed. A small number of high-traffic articles drive most of the problem. This suggests traffic source mismatch — visitors aren't finding what they expected.</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--aubergine);">Action</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.65;">Pull GA4 landing page data for these articles. Check: (1) What search terms drive traffic? (2) Which referring sites? (3) Is the title/meta description misleading?</div>
+      </div>
+    </div>
+  </div>
 
   <!-- TRAFFIC QUALITY ANALYSIS -->
   <div class="section-label">Traffic Quality Analysis</div>
@@ -991,6 +1008,47 @@ new Chart(document.getElementById('channelTrendChart'), {
     ],
   },
   options: CHART_OPTS,
+});
+
+// Bounce Contributors - June 2026 top 10
+const juneBounceData = ARTICLES
+  .map(a => ({ title: a.title, bounces: a.b[5], sessions: a.s[5] }))
+  .filter(a => a.bounces > 0)
+  .sort((a, b) => b.bounces - a.bounces)
+  .slice(0, 10);
+
+new Chart(document.getElementById('bounceContributorsChart'), {
+  type: 'bar',
+  data: {
+    labels: juneBounceData.map(a => a.title.length > 35 ? a.title.substring(0, 35) + '...' : a.title),
+    datasets: [{
+      label: 'Bounces',
+      data: juneBounceData.map(a => a.bounces),
+      backgroundColor: '#E01E5A',
+      borderRadius: 4,
+    }],
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: c => ` ${c.raw} bounces`,
+          afterLabel: c => {
+            const article = juneBounceData[c.dataIndex];
+            const rate = Math.round(article.bounces / article.sessions * 100);
+            return `${article.sessions} sessions (${rate}% bounce rate)`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: { grid: { color: '#F0F0F0' }, ticks: { font: { size: 11 } } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 }, autoSkip: false } },
+    },
+  },
 });
 
 // CTR Trend - engagement quality over time
