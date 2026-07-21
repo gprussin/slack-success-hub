@@ -313,9 +313,9 @@
       <p style="font-size:11px;color:var(--subtle);margin-top:14px">Note the June referral spike: 70 sessions (May avg) → 332 (June), a 374% increase. Direct traffic includes bookmarked visits and unattributed traffic (Slack app links, dark social).</p>
     </div>
     <div class="c-card">
-      <h3>Traffic Composition — % of Total by Channel</h3>
-      <canvas id="channelMixChart"></canvas>
-      <p style="font-size:11px;color:var(--subtle);margin-top:14px">Organic Search declined from 43% (Jan) to 24% (June) of total traffic. Direct grew to 63%. Referral jumped from 3% to 12% in June alone. The Hub is becoming more dependent on unattributed/bookmark traffic and less on high-intent organic discovery.</p>
+      <h3>Click-Through Rate — Engagement Quality Over Time</h3>
+      <canvas id="ctrTrendChart"></canvas>
+      <p style="font-size:11px;color:var(--subtle);margin-top:14px">CTR = clicks / sessions. April was peak engagement at 12.4% — meaning 1 in 8 visitors clicked through to a resource. May held strong at 10.8%. June dropped to 8.3% as the referral spike brought low-engagement traffic. This is the metric that controls for session volume and purely measures engagement quality.</p>
     </div>
   </div>
 
@@ -993,48 +993,29 @@ new Chart(document.getElementById('channelTrendChart'), {
   options: CHART_OPTS,
 });
 
-// Channel Mix - % composition over time
-new Chart(document.getElementById('channelMixChart'), {
+// CTR Trend - engagement quality over time
+const ctrData = MONTHS.map((_, i) => {
+  const ctr = (OV.clicks[i] / OV.sessions[i] * 100);
+  return Math.round(ctr * 10) / 10; // Round to 1 decimal
+});
+
+new Chart(document.getElementById('ctrTrendChart'), {
   type: 'line',
   data: {
     labels: MONTHS,
     datasets: [
       {
-        label: 'Direct',
-        data: MONTHS.map((_, i) => Math.round(CHANNELS.direct[i] / OV.sessions[i] * 100)),
-        borderColor: '#4A154B',
-        backgroundColor: '#4A154B30',
+        label: 'Click-Through Rate (%)',
+        data: ctrData,
+        borderColor: '#2EB886',
+        backgroundColor: '#2EB88630',
         fill: true,
         tension: 0.3,
-        pointRadius: 4
-      },
-      {
-        label: 'Organic Search',
-        data: MONTHS.map((_, i) => Math.round(CHANNELS.organic[i] / OV.sessions[i] * 100)),
-        borderColor: '#36C5F0',
-        backgroundColor: '#36C5F030',
-        fill: true,
-        tension: 0.3,
-        pointRadius: 4
-      },
-      {
-        label: 'Referral',
-        data: MONTHS.map((_, i) => Math.round(CHANNELS.referral[i] / OV.sessions[i] * 100)),
-        borderColor: '#E01E5A',
-        backgroundColor: '#E01E5A30',
-        fill: true,
-        tension: 0.3,
-        pointRadius: 4,
-        borderWidth: 2
-      },
-      {
-        label: 'SFDC Email',
-        data: MONTHS.map((_, i) => Math.round(CHANNELS.sfdcEmail[i] / OV.sessions[i] * 100)),
-        borderColor: '#ECB22E',
-        backgroundColor: 'transparent',
-        tension: 0.3,
-        pointRadius: 3,
-        borderDash: [4,3]
+        pointRadius: 6,
+        pointBackgroundColor: MONTHS.map((_, i) => i === 3 ? '#ECB22E' : '#2EB886'), // Highlight April
+        pointBorderColor: MONTHS.map((_, i) => i === 3 ? '#ECB22E' : '#2EB886'),
+        pointBorderWidth: 2,
+        borderWidth: 3
       },
     ],
   },
@@ -1042,13 +1023,23 @@ new Chart(document.getElementById('channelMixChart'), {
     ...CHART_OPTS,
     plugins: {
       ...CHART_OPTS.plugins,
-      tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } }
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: c => ` CTR: ${c.raw}%`,
+          afterLabel: c => {
+            const i = c.dataIndex;
+            return `${OV.clicks[i]} clicks / ${OV.sessions[i]} sessions`;
+          }
+        }
+      }
     },
     scales: {
       ...CHART_OPTS.scales,
       y: {
         ...CHART_OPTS.scales.y,
-        max: 70,
+        min: 0,
+        max: 14,
         ticks: { font: { size: 11, family: 'Lato' }, callback: v => v+'%' }
       },
     },
