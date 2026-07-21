@@ -204,280 +204,278 @@
 <!-- ══════════════════════════════════════════════════════════════════════════ -->
 <div id="tab-report" class="tab-pane active">
 <div class="container">
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: EXECUTIVE SUMMARY -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="section-label" style="margin-top:0">Executive Summary</div>
 
-  <!-- SUMMARY BANNER -->
-  <div class="summary-banner">
-    <div class="headline">
-      <h2>Sessions up 67% since January. April saw peak engagement at 12.4% CTR.</h2>
-      <p>The Hub grew steadily through April, achieving 12.4% click-through rate (254 clicks). June sessions grew 11% but CTR dropped to 8.4% as referral traffic spiked 374% — bringing low-engagement visitors who bounced without clicking.</p>
-    </div>
-    <div class="kpis">
-      <div class="kpi"><div class="val">2,861</div><div class="lbl">June Sessions</div><div class="chg green">+11% vs May</div></div>
-      <div class="kpi"><div class="val">3,265</div><div class="lbl">June Pageviews</div><div class="chg green">+9% vs May</div></div>
-      <div class="kpi"><div class="val">238</div><div class="lbl">June Clicks</div><div class="chg red">-14% vs May</div></div>
-      <div class="kpi"><div class="val">+76%</div><div class="lbl">Click Growth Jan→Jun</div><div class="chg" style="color:rgba(255,255,255,.5)">baseline: 135 clicks</div></div>
-    </div>
+<div class="summary-banner">
+  <div class="headline">
+    <h2>Sessions up 67% since January. April saw peak engagement at 12.4% CTR.</h2>
+    <p>The Hub grew steadily through April, achieving 12.4% click-through rate (254 clicks). June sessions grew 11% but CTR dropped to 8.4% as referral traffic spiked 374% — bringing low-engagement visitors who bounced without clicking.</p>
   </div>
+  <div class="kpis">
+    <div class="kpi"><div class="val">2,861</div><div class="lbl">June Sessions</div><div class="chg green">+11% vs May</div></div>
+    <div class="kpi"><div class="val">3,265</div><div class="lbl">June Pageviews</div><div class="chg green">+9% vs May</div></div>
+    <div class="kpi"><div class="val">238</div><div class="lbl">June Clicks</div><div class="chg red">-14% vs May</div></div>
+    <div class="kpi"><div class="val">+76%</div><div class="lbl">Click Growth Jan→Jun</div><div class="chg" style="color:rgba(255,255,255,.5)">baseline: 135 clicks</div></div>
+  </div>
+</div>
 
-  <!-- MONTH FILTER -->
-  <p style="font-size:12px; color:var(--subtle); margin-bottom:28px; margin-top:-12px;">Data reflects a static snapshot as of June 30, 2026 · GA4 via Tableau · Global English pages only</p>
+<p style="font-size:12px; color:var(--subtle); margin:16px 0 28px;">Data reflects a static snapshot as of June 30, 2026 · GA4 via Tableau · Global English pages only</p>
 
-  <div class="section-label">Filter by Month</div>
-  <div class="month-filter">
-    <button class="mf-btn active" data-month="all" onclick="filterMonth(this)">All Months</button>
-    <button class="mf-btn" data-month="0" onclick="filterMonth(this)">January</button>
-    <button class="mf-btn" data-month="1" onclick="filterMonth(this)">February</button>
-    <button class="mf-btn" data-month="2" onclick="filterMonth(this)">March</button>
-    <button class="mf-btn" data-month="3" onclick="filterMonth(this)">April</button>
-    <button class="mf-btn" data-month="4" onclick="filterMonth(this)">May</button>
-    <button class="mf-btn" data-month="5" onclick="filterMonth(this)">June</button>
+<!-- KEY INSIGHTS -->
+<div class="insights">
+  <div class="ins pos">
+    <div class="tag">Growth</div>
+    <h4>Sessions up 67% since January</h4>
+    <p>The Hub grew from 1,716 sessions in January to 2,861 in June (+11% MoM). Slackbot content remains the dominant driver — the Admin Toolkit (384) overtook the guide (290) as the top Featured Tools article in June.</p>
   </div>
+  <div class="ins warn">
+    <div class="tag">Peak</div>
+    <h4>April was the click quality high-water mark</h4>
+    <p>April saw 254 clicks (12.4% CTR) — the best engagement month. Slackbot Prompt Playbook drove 134 clicks alone (53% of total). May held strong at 10.6% CTR before June's referral-driven decline. This is the engagement benchmark to recover.</p>
+  </div>
+  <div class="ins neg">
+    <div class="tag">Alert</div>
+    <h4>June referral spike diluted engagement</h4>
+    <p>Referral traffic jumped 374% in June (70→332 sessions), bringing low-engagement visitors. Bounce rate climbed from 37% to 45%, CTR dropped from 10.6% to 8.3%. Growth in volume, decline in quality.</p>
+  </div>
+</div>
 
-  <!-- METRIC CARDS -->
-  <div class="metrics" id="metric-cards">
-    <div class="m-card">
-      <div class="lbl">Sessions</div>
-      <div class="big green" id="mc-sessions">13,110</div>
-      <div class="delta" id="mc-sessions-d" style="color:var(--muted)">CY 2026 total · Jan–Jun</div>
-      <div class="note" id="mc-sessions-n">June alone: 2,861 (+11% MoM)</div>
-    </div>
-    <div class="m-card">
-      <div class="lbl">Pageviews</div>
-      <div class="big green" id="mc-pv">15,425</div>
-      <div class="delta" id="mc-pv-d" style="color:var(--muted)">CY 2026 total · Jan–Jun</div>
-      <div class="note" id="mc-pv-n">June alone: 3,265 (+9% MoM)</div>
-    </div>
-    <div class="m-card">
-      <div class="lbl">Total Clicks</div>
-      <div class="big green" id="mc-clicks">1,199</div>
-      <div class="delta" id="mc-clicks-d" style="color:var(--muted)">CY 2026 total · Jan–Jun</div>
-      <div class="note" id="mc-clicks-n">June alone: 238 (-14% MoM)</div>
-    </div>
-    <div class="m-card">
-      <div class="lbl">Bounce Sessions</div>
-      <div class="big red" id="mc-bounce">4,078</div>
-      <div class="delta" id="mc-bounce-d" style="color:var(--muted)">CY 2026 total · Jan–Jun</div>
-      <div class="note" id="mc-bounce-n">June alone: 1,300 (+35% MoM)</div>
-    </div>
-  </div>
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: TRAFFIC TRENDS -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="section-label">Traffic Trends — Volume & Quality</div>
 
-  <!-- TRENDS -->
-  <div class="section-label">Monthly Trends</div>
-  <div class="chart-row">
-    <div class="c-card">
-      <h3>Sessions &amp; Pageviews</h3>
-      <canvas id="sessionsChart"></canvas>
-    </div>
-    <div class="c-card">
-      <h3>Clicks &amp; Bounce Sessions</h3>
-      <canvas id="clicksBounceChart"></canvas>
-    </div>
-  </div>
-  <div class="chart-row" style="margin-top:20px">
-    <div class="c-card">
-      <h3>Sessions by Category</h3>
-      <canvas id="catTrendChart"></canvas>
-    </div>
-    <div class="c-card">
-      <h3>Bounce Rate by Category (%)</h3>
-      <canvas id="bounceRateChart"></canvas>
-    </div>
-  </div>
-  <div class="chart-row" style="margin-top:20px">
-    <div class="c-card">
-      <h3>Top 10 Bounce Contributors — June 2026</h3>
-      <canvas id="bounceContributorsChart"></canvas>
-      <p style="font-size:11px;color:var(--subtle);margin-top:14px">Total June bounces: 1,300. Top 3 articles account for 278 bounces (21%). Slackbot Admin Toolkit had high traffic but zero engagement — 77 bounces, 0 clicks.</p>
-    </div>
-    <div class="c-card" style="display:flex;flex-direction:column;justify-content:center;padding:32px;">
-      <div style="margin-bottom:16px;">
-        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--aubergine);">Why This Matters</div>
-        <div style="font-size:13px;color:var(--muted);line-height:1.65;">Bounces aren't evenly distributed. A small number of high-traffic articles drive most of the problem. This suggests traffic source mismatch — visitors aren't finding what they expected.</div>
-      </div>
-      <div>
-        <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--aubergine);">Action</div>
-        <div style="font-size:13px;color:var(--muted);line-height:1.65;">Pull GA4 landing page data for these articles. Check: (1) What search terms drive traffic? (2) Which referring sites? (3) Is the title/meta description misleading?</div>
-      </div>
-    </div>
-  </div>
+<div class="month-filter">
+  <button class="mf-btn active" data-month="all" onclick="filterMonth(this)">All Months</button>
+  <button class="mf-btn" data-month="0" onclick="filterMonth(this)">January</button>
+  <button class="mf-btn" data-month="1" onclick="filterMonth(this)">February</button>
+  <button class="mf-btn" data-month="2" onclick="filterMonth(this)">March</button>
+  <button class="mf-btn" data-month="3" onclick="filterMonth(this)">April</button>
+  <button class="mf-btn" data-month="4" onclick="filterMonth(this)">May</button>
+  <button class="mf-btn" data-month="5" onclick="filterMonth(this)">June</button>
+</div>
 
-  <!-- TRAFFIC QUALITY ANALYSIS -->
-  <div class="section-label">Traffic Quality Analysis</div>
-  <div class="insights">
-    <div class="ins neg">
-      <div class="tag">Alert</div>
-      <h4>June referral traffic spike diluted engagement quality</h4>
-      <p>Referral traffic jumped from 70 sessions (March-May avg) to 332 in June (+374%). This low-engagement traffic drove bounce rate from 37% to 45% and CTR from 10.6% to 8.4%. Sessions grew, but quality declined.</p>
-    </div>
-    <div class="ins warn">
-      <div class="tag">Peak</div>
-      <h4>April was the click quality high-water mark</h4>
-      <p>April saw 254 clicks (12.4% CTR) — the best engagement month. Slackbot Prompt Playbook alone drove 134 clicks (53% of total). May held at 10.6% CTR (271 clicks) before June's drop. This is the benchmark to recover.</p>
-    </div>
-    <div class="ins blue">
-      <div class="tag">Pattern</div>
-      <h4>Traffic growth without engagement growth</h4>
-      <p>Sessions grew every month (1,716 → 2,861, +67%), but clicks peaked in May (277) then declined to 238 in June. The quality-vs-quantity tension is now clear: referral traffic brings volume, not engagement.</p>
-    </div>
+<!-- METRIC CARDS -->
+<div class="metrics" id="metric-cards">
+  <div class="m-card">
+    <div class="lbl">Sessions</div>
+    <div class="big green" id="mc-sessions">13,110</div>
+    <div class="delta" id="mc-sessions-d" style="color:var(--muted)">CY 2026 total · Jan–Jun</div>
+    <div class="note" id="mc-sessions-n">June alone: 2,861 (+11% MoM)</div>
   </div>
+  <div class="m-card">
+    <div class="lbl">Pageviews</div>
+    <div class="big green" id="mc-pv">15,425</div>
+    <div class="delta" id="mc-pv-d" style="color:var(--muted)">CY 2026 total · Jan–Jun</div>
+    <div class="note" id="mc-pv-n">June alone: 3,265 (+9% MoM)</div>
+  </div>
+  <div class="m-card">
+    <div class="lbl">Total Clicks</div>
+    <div class="big green" id="mc-clicks">1,199</div>
+    <div class="delta" id="mc-clicks-d" style="color:var(--muted)">CY 2026 total · Jan–Jun</div>
+    <div class="note" id="mc-clicks-n">June alone: 238 (-14% MoM)</div>
+  </div>
+  <div class="m-card">
+    <div class="lbl">Bounce Sessions</div>
+    <div class="big red" id="mc-bounce">4,078</div>
+    <div class="delta" id="mc-bounce-d" style="color:var(--muted)">CY 2026 total · Jan–Jun</div>
+    <div class="note" id="mc-bounce-n">June alone: 1,300 (+35% MoM)</div>
+  </div>
+</div>
 
-  <!-- TRAFFIC SOURCES -->
-  <div class="section-label">How People Find the Hub</div>
-  <div class="chart-row">
-    <div class="c-card">
-      <h3>Sessions by Marketing Channel</h3>
-      <canvas id="channelTrendChart"></canvas>
-      <p style="font-size:11px;color:var(--subtle);margin-top:14px">Note the June referral spike: 70 sessions (May avg) → 332 (June), a 374% increase. Direct traffic includes bookmarked visits and unattributed traffic (Slack app links, dark social).</p>
-    </div>
-    <div class="c-card">
-      <h3>Click-Through Rate — Engagement Quality Over Time</h3>
-      <canvas id="ctrTrendChart"></canvas>
-      <p style="font-size:11px;color:var(--subtle);margin-top:14px">CTR = clicks / sessions. April was peak engagement at 12.4% — meaning 1 in 8 visitors clicked through to a resource. May held strong at 10.8%. June dropped to 8.3% as the referral spike brought low-engagement traffic. This is the metric that controls for session volume and purely measures engagement quality.</p>
-    </div>
+<!-- VOLUME CHARTS -->
+<div class="chart-row">
+  <div class="c-card">
+    <h3>Sessions &amp; Pageviews</h3>
+    <canvas id="sessionsChart"></canvas>
   </div>
+  <div class="c-card">
+    <h3>Clicks &amp; Bounce Sessions</h3>
+    <canvas id="clicksBounceChart"></canvas>
+  </div>
+</div>
 
-  <!-- TOP PERFORMING CONTENT -->
-  <div class="section-label">Content Performance Leaders (by Clicks)</div>
-  <div class="recs">
-    <div class="rec">
-      <div class="rec-num">1</div>
-      <div>
-        <h4>Slackbot Prompt Playbook — 134 clicks in April</h4>
-        <p>Featured Tools category. Drove 53% of all April clicks alone. Trend: 0 (Jan) → 16 (Mar) → 134 (Apr) → 90 (Jun). This is the engagement quality standard — high clicks despite moderate sessions.</p>
-      </div>
-    </div>
-    <div class="rec">
-      <div class="rec-num">2</div>
-      <div>
-        <h4>SF Channels Implementation — Consistent 61-86 clicks/month</h4>
-        <p>Salesforce in Slack anchor. Jan: 86, Mar: 61, Apr: 65, Jun: 74. Quality leader with high clicks and manageable bounce. Shows that Salesforce admin audience is highly engaged.</p>
-      </div>
-    </div>
-    <div class="rec">
-      <div class="rec-num">3</div>
-      <div>
-        <h4>Slack for Internal Comms — 38 clicks in May</h4>
-        <p>Use Cases top performer. Growing from 11 clicks (Jan) → 22 (Feb) → 38 (May). Proves Use Cases content can drive engagement when it lands with the right audience.</p>
-      </div>
-    </div>
-    <div class="rec">
-      <div class="rec-num">4</div>
-      <div>
-        <h4>Why these matter: Clicks show intent, not just curiosity</h4>
-        <p>Sessions measure traffic volume. Clicks measure engagement quality — someone took action after reading. The Slackbot Playbook and SF Channels prove the Hub can drive high-intent behavior. The challenge is replicating that across other categories.</p>
-      </div>
-    </div>
+<!-- TRAFFIC SOURCE & QUALITY CHARTS -->
+<div class="chart-row" style="margin-top:20px">
+  <div class="c-card">
+    <h3>Sessions by Marketing Channel</h3>
+    <canvas id="channelTrendChart"></canvas>
+    <p style="font-size:11px;color:var(--subtle);margin-top:14px">Note the June referral spike: 70 sessions (May avg) → 332 (June), a 374% increase. Direct traffic includes bookmarked visits and unattributed traffic (Slack app links, dark social).</p>
   </div>
+  <div class="c-card">
+    <h3>Click-Through Rate — Engagement Quality Over Time</h3>
+    <canvas id="ctrTrendChart"></canvas>
+    <p style="font-size:11px;color:var(--subtle);margin-top:14px">CTR = clicks / sessions. April was peak engagement at 12.4% — meaning 1 in 8 visitors clicked through to a resource. May held strong at 10.8%. June dropped to 8.3% as the referral spike brought low-engagement traffic. This is the metric that controls for session volume and purely measures engagement quality.</p>
+  </div>
+</div>
 
-  <!-- INSIGHTS -->
-  <div class="section-label">What the Data Is Telling Us</div>
-  <div class="insights">
-    <div class="ins pos">
-      <div class="tag">Growth</div>
-      <h4>Sessions up 67% since January</h4>
-      <p>The Hub grew from 1,716 sessions in January to 2,861 in June (+11% MoM). Slackbot content remains the dominant driver — the Admin Toolkit (384) overtook the guide (290) as the top Featured Tools article in June.</p>
-    </div>
-    <div class="ins warn">
-      <div class="tag">Peak</div>
-      <h4>April was the click quality high-water mark</h4>
-      <p>April saw 254 clicks (12.4% CTR) — the best engagement month. Slackbot Prompt Playbook drove 134 clicks alone (53% of total). May held strong at 10.6% CTR before June's referral-driven decline. This is the engagement benchmark to recover.</p>
-    </div>
-    <div class="ins neg">
-      <div class="tag">Warning</div>
-      <h4>Clicks dropped 14% despite session growth</h4>
-      <p>June saw 238 clicks vs. 277 in May — first month-over-month decline since tracking began. Sessions are growing but engagement is softening. The quality-vs-quantity tension from May is now confirmed as a trend.</p>
-    </div>
-    <div class="ins neg">
-      <div class="tag">Alert</div>
-      <h4>Bounce sessions jumped 35% in June</h4>
-      <p>Bounce climbed from 961 in May to 1,300 in June — now 45% of all sessions bounce (vs. 37% in May). Traffic is growing, but a larger share is low-intent or misdirected. This isn't sustainable growth.</p>
-    </div>
-    <div class="ins warn">
-      <div class="tag">Stabilized</div>
-      <h4>Workshop 101 flat at 164 sessions</h4>
-      <p>After the sharp May decline (570 → 199 → 159), June held steady at 164. It's no longer bleeding traffic, but it's also not recovering. The post-email-deprecation baseline appears to be ~160 sessions/month.</p>
-    </div>
-    <div class="ins blue">
-      <div class="tag">Consistent</div>
-      <h4>Salesforce in Slack remains the quality leader</h4>
-      <p>SF Channels Implementation Guide grew to 264 sessions in June (vs. 246 in May). Category maintains strong clicks and manageable bounce rates. This is the engagement profile every other category should aim for.</p>
-    </div>
-    <div class="ins warn">
-      <div class="tag">Shift</div>
-      <h4>Use Cases growing but engagement mixed</h4>
-      <p>Category sessions climbed across the board — Internal Comms (121), Legal (97), Execs (72), HR (69), Marketing (57). But bounce rates are rising alongside traffic. Volume is up; depth is questionable.</p>
-    </div>
-  </div>
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: CONTENT PERFORMANCE -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="section-label">Content Performance — Engagement by Category & Article</div>
 
-  <!-- RECOMMENDATIONS -->
-  <div class="section-label">Recommendations</div>
-  <div class="recs">
-    <div class="rec">
-      <div class="rec-num">1</div>
-      <div>
-        <h4>Investigate the click decline and bounce spike</h4>
-        <p>June is the first month where sessions grew but clicks dropped. Run a GA4 cohort analysis: are returning visitors clicking less, or are new visitors (who bounce more) diluting engagement? If it's the latter, traffic quality is the issue — not content.</p>
-      </div>
-    </div>
-    <div class="rec">
-      <div class="rec-num">2</div>
-      <div>
-        <h4>Identify and segment the June referral traffic source</h4>
-        <p>Referral traffic jumped 374% in June (70→332 sessions). Pull the referring hostname breakdown for June — if it's a specific campaign or partner link, assess whether that traffic source aligns with Hub goals or should be redirected to more appropriate landing pages.</p>
-      </div>
-    </div>
-    <div class="rec">
-      <div class="rec-num">3</div>
-      <div>
-        <h4>Expand Salesforce in Slack content</h4>
-        <p>SF Channels Implementation Guide grew 7% MoM and maintains the best engagement profile on the site. A troubleshooting guide, video walkthrough, or "Common Mistakes" resource could capture more of this high-intent admin audience without relying on external traffic sources.</p>
-      </div>
-    </div>
-    <div class="rec">
-      <div class="rec-num">4</div>
-      <div>
-        <h4>Test internal cross-promotion to stabilize clicks</h4>
-        <p>Clicks are declining as traffic grows — visitors aren't exploring beyond their landing page. Add a "Related Resources" module or in-content CTAs to high-traffic, low-click articles (e.g., Slackbot Admin Toolkit) to encourage deeper engagement.</p>
-      </div>
-    </div>
+<!-- CATEGORY CHARTS -->
+<div class="chart-row">
+  <div class="c-card">
+    <h3>Sessions by Category</h3>
+    <canvas id="catTrendChart"></canvas>
   </div>
+  <div class="c-card">
+    <h3>Bounce Rate by Category (%)</h3>
+    <canvas id="bounceRateChart"></canvas>
+  </div>
+</div>
 
-  <!-- TABLE -->
-  <div class="section-label">All Articles</div>
-  <div class="table-controls">
-    <input type="text" class="search-box" placeholder="Search articles..." oninput="filterTable(this.value)">
-    <select class="cat-filter" onchange="filterCat(this.value)">
-      <option value="all">All Categories</option>
-      <option value="Featured Tools">Featured Tools</option>
-      <option value="New User Onboarding">New User Onboarding</option>
-      <option value="Salesforce in Slack">Salesforce in Slack</option>
-      <option value="Use Cases">Use Cases</option>
-      <option value="Agentforce">Agentforce</option>
-      <option value="Launch">Launch</option>
-    </select>
+<!-- BOUNCE CONTRIBUTORS -->
+<div class="chart-row" style="margin-top:20px">
+  <div class="c-card">
+    <h3>Top 10 Bounce Contributors — June 2026</h3>
+    <canvas id="bounceContributorsChart"></canvas>
+    <p style="font-size:11px;color:var(--subtle);margin-top:14px">Total June bounces: 1,300. Top 3 articles account for 278 bounces (21%). Slackbot Admin Toolkit had high traffic but zero engagement — 77 bounces, 0 clicks.</p>
   </div>
-  <div class="t-wrap">
-    <table id="main-table">
-      <thead>
-        <tr>
-          <th onclick="sortTable(0)">Article <span class="sort-icon">↕</span></th>
-          <th class="num" onclick="sortTable(1)">Jan <span class="sort-icon">↕</span></th>
-          <th class="num" onclick="sortTable(2)">Feb <span class="sort-icon">↕</span></th>
-          <th class="num" onclick="sortTable(3)">Mar <span class="sort-icon">↕</span></th>
-          <th class="num" onclick="sortTable(4)">Apr <span class="sort-icon">↕</span></th>
-          <th class="num" onclick="sortTable(5)">May <span class="sort-icon">↕</span></th>
-          <th class="num" onclick="sortTable(6)">Jun <span class="sort-icon">↕</span></th>
-          <th class="num" onclick="sortTable(7)">Jan→Jun <span class="sort-icon">↕</span></th>
-          <th class="num" onclick="sortTable(8)">May→Jun <span class="sort-icon">↕</span></th>
-          <th class="num" onclick="sortTable(9)">Jun Bounce <span class="sort-icon">↕</span></th>
-          <th>Trend</th>
-        </tr>
-      </thead>
-      <tbody id="tbody"></tbody>
-    </table>
+  <div class="c-card" style="display:flex;flex-direction:column;justify-content:center;padding:32px;">
+    <div style="margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--aubergine);">Why This Matters</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.65;">Bounces aren't evenly distributed. A small number of high-traffic articles drive most of the problem. This suggests traffic source mismatch — visitors aren't finding what they expected.</div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--aubergine);">Action</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.65;">Pull GA4 landing page data for these articles. Check: (1) What search terms drive traffic? (2) Which referring sites? (3) Is the title/meta description misleading?</div>
+    </div>
   </div>
+</div>
 
-</div><!-- /container -->
+<!-- TOP PERFORMERS -->
+<div class="section-label" style="margin-top:40px">Top Performers — Articles Driving the Most Clicks</div>
+<div class="recs">
+  <div class="rec">
+    <div class="rec-num">1</div>
+    <div>
+      <h4>Slackbot Prompt Playbook — 134 clicks in April</h4>
+      <p>Featured Tools category. Drove 53% of all April clicks alone. Trend: 0 (Jan) → 16 (Mar) → 134 (Apr) → 90 (Jun). This is the engagement quality standard — high clicks despite moderate sessions.</p>
+    </div>
+  </div>
+  <div class="rec">
+    <div class="rec-num">2</div>
+    <div>
+      <h4>SF Channels Implementation — Consistent 61-86 clicks/month</h4>
+      <p>Salesforce in Slack anchor. Jan: 86, Mar: 61, Apr: 65, Jun: 74. Quality leader with high clicks and manageable bounce. Shows that Salesforce admin audience is highly engaged.</p>
+    </div>
+  </div>
+  <div class="rec">
+    <div class="rec-num">3</div>
+    <div>
+      <h4>Slack for Internal Comms — 38 clicks in May</h4>
+      <p>Use Cases top performer. Growing from 11 clicks (Jan) → 22 (Feb) → 38 (May). Proves Use Cases content can drive engagement when it lands with the right audience.</p>
+    </div>
+  </div>
+  <div class="rec">
+    <div class="rec-num">4</div>
+    <div>
+      <h4>Why these matter: Clicks show intent, not just curiosity</h4>
+      <p>Sessions measure traffic volume. Clicks measure engagement quality — someone took action after reading. The Slackbot Playbook and SF Channels prove the Hub can drive high-intent behavior. The challenge is replicating that across other categories.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 4: ANALYSIS & RECOMMENDATIONS -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="section-label">Additional Analysis</div>
+<div class="insights">
+  <div class="ins neg">
+    <div class="tag">Warning</div>
+    <h4>Clicks dropped 14% despite session growth</h4>
+    <p>June saw 238 clicks vs. 277 in May — first month-over-month decline since tracking began. Sessions are growing but engagement is softening. The quality-vs-quantity tension from May is now confirmed as a trend.</p>
+  </div>
+  <div class="ins warn">
+    <div class="tag">Stabilized</div>
+    <h4>Workshop 101 flat at 164 sessions</h4>
+    <p>After the sharp May decline (570 → 199 → 159), June held steady at 164. It's no longer bleeding traffic, but it's also not recovering. The post-email-deprecation baseline appears to be ~160 sessions/month.</p>
+  </div>
+  <div class="ins blue">
+    <div class="tag">Consistent</div>
+    <h4>Salesforce in Slack remains the quality leader</h4>
+    <p>SF Channels Implementation Guide grew to 264 sessions in June (vs. 246 in May). Category maintains strong clicks and manageable bounce rates. This is the engagement profile every other category should aim for.</p>
+  </div>
+  <div class="ins warn">
+    <div class="tag">Shift</div>
+    <h4>Use Cases growing but engagement mixed</h4>
+    <p>Category sessions climbed across the board — Internal Comms (121), Legal (97), Execs (72), HR (69), Marketing (57). But bounce rates are rising alongside traffic. Volume is up; depth is questionable.</p>
+  </div>
+</div>
+
+<div class="section-label" style="margin-top:40px">Recommendations</div>
+<div class="recs">
+  <div class="rec">
+    <div class="rec-num">1</div>
+    <div>
+      <h4>Investigate the click decline and bounce spike</h4>
+      <p>June is the first month where sessions grew but clicks dropped. Run a GA4 cohort analysis: are returning visitors clicking less, or are new visitors (who bounce more) diluting engagement? If it's the latter, traffic quality is the issue — not content.</p>
+    </div>
+  </div>
+  <div class="rec">
+    <div class="rec-num">2</div>
+    <div>
+      <h4>Identify and segment the June referral traffic source</h4>
+      <p>Referral traffic jumped 374% in June (70→332 sessions). Pull the referring hostname breakdown for June — if it's a specific campaign or partner link, assess whether that traffic source aligns with Hub goals or should be redirected to more appropriate landing pages.</p>
+    </div>
+  </div>
+  <div class="rec">
+    <div class="rec-num">3</div>
+    <div>
+      <h4>Expand Salesforce in Slack content</h4>
+      <p>SF Channels Implementation Guide grew 7% MoM and maintains the best engagement profile on the site. A troubleshooting guide, video walkthrough, or "Common Mistakes" resource could capture more of this high-intent admin audience without relying on external traffic sources.</p>
+    </div>
+  </div>
+  <div class="rec">
+    <div class="rec-num">4</div>
+    <div>
+      <h4>Test internal cross-promotion to stabilize clicks</h4>
+      <p>Clicks are declining as traffic grows — visitors aren't exploring beyond their landing page. Add a "Related Resources" module or in-content CTAs to high-traffic, low-click articles (e.g., Slackbot Admin Toolkit) to encourage deeper engagement.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 5: DATA EXPLORER -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div class="section-label">Data Explorer — All Articles</div>
+<div class="table-controls">
+  <input type="text" class="search-box" placeholder="Search articles..." oninput="filterTable(this.value)">
+  <select class="cat-filter" onchange="filterCat(this.value)">
+    <option value="all">All Categories</option>
+    <option value="Featured Tools">Featured Tools</option>
+    <option value="New User Onboarding">New User Onboarding</option>
+    <option value="Salesforce in Slack">Salesforce in Slack</option>
+    <option value="Use Cases">Use Cases</option>
+    <option value="Agentforce">Agentforce</option>
+    <option value="Launch">Launch</option>
+  </select>
+</div>
+<div class="t-wrap">
+  <table id="main-table">
+    <thead>
+      <tr>
+        <th onclick="sortTable(0)">Article <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(1)">Jan <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(2)">Feb <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(3)">Mar <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(4)">Apr <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(5)">May <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(6)">Jun <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(7)">Jan→Jun <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(8)">May→Jun <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(9)">Jun Bounce <span class="sort-icon">↕</span></th>
+        <th>Trend</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
 </div><!-- /tab-report -->
 
 
