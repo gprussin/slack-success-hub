@@ -287,7 +287,7 @@
 </div>
 
 <!-- VOLUME CHARTS -->
-<div class="chart-row">
+<div class="chart-row" style="margin-top:28px">
   <div class="c-card">
     <h3>Sessions &amp; Pageviews</h3>
     <canvas id="sessionsChart"></canvas>
@@ -713,12 +713,15 @@ function switchTab(name) {
 
 // ── MONTH FILTER ─────────────────────────────────────────────────────────────
 let activeMonth = 'all';
+let allCharts = {}; // Store chart references for updating
+
 function filterMonth(btn) {
   document.querySelectorAll('.mf-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   activeMonth = btn.dataset.month;
   updateMetricCards();
   updateTableForMonth();
+  highlightChartsForMonth();
 }
 
 function updateMetricCards() {
@@ -797,6 +800,42 @@ function updateTableForMonth() {
         td.style.background = (i === mi + 1) ? '#F3EEF4' : '';
       });
     }
+  });
+}
+
+function highlightChartsForMonth() {
+  const mi = activeMonth === 'all' ? null : parseInt(activeMonth);
+
+  // Update each chart to highlight the selected month
+  Object.keys(allCharts).forEach(chartKey => {
+    const chart = allCharts[chartKey];
+    if (!chart) return;
+
+    chart.data.datasets.forEach((dataset, dsIndex) => {
+      // Reset all points to default
+      const defaultRadius = dataset.type === 'line' ? (chartKey === 'ctrTrendChart' ? 6 : 4) : undefined;
+      const defaultBorderWidth = dataset.type === 'line' ? (chartKey === 'ctrTrendChart' ? 3 : 1) : undefined;
+
+      if (dataset.pointRadius !== undefined) {
+        dataset.pointRadius = MONTHS.map((_, i) => {
+          if (mi === null) return defaultRadius;
+          // Highlight selected month
+          return i === mi ? defaultRadius * 1.5 : defaultRadius;
+        });
+      }
+
+      if (dataset.pointBackgroundColor && Array.isArray(dataset.pointBackgroundColor)) {
+        // For CTR chart, keep April yellow, but make selected month yellow too
+        dataset.pointBackgroundColor = MONTHS.map((_, i) => {
+          if (chartKey === 'ctrTrendChart' && i === 3) return '#ECB22E'; // April always yellow
+          if (mi === null) return dataset.borderColor;
+          return i === mi ? '#ECB22E' : dataset.borderColor;
+        });
+        dataset.pointBorderColor = dataset.pointBackgroundColor;
+      }
+    });
+
+    chart.update('none'); // Update without animation
   });
 }
 
@@ -913,7 +952,7 @@ const CHART_OPTS = {
   },
 };
 
-new Chart(document.getElementById('sessionsChart'), {
+allCharts.sessionsChart = new Chart(document.getElementById('sessionsChart'), {
   type: 'line',
   data: {
     labels: MONTHS,
@@ -925,7 +964,7 @@ new Chart(document.getElementById('sessionsChart'), {
   options: CHART_OPTS,
 });
 
-new Chart(document.getElementById('clicksBounceChart'), {
+allCharts.clicksBounceChart = new Chart(document.getElementById('clicksBounceChart'), {
   type: 'bar',
   data: {
     labels: MONTHS,
@@ -994,7 +1033,7 @@ new Chart(document.getElementById('bounceRateChart'), {
 });
 
 // Marketing Channel Trends
-new Chart(document.getElementById('channelTrendChart'), {
+allCharts.channelTrendChart = new Chart(document.getElementById('channelTrendChart'), {
   type: 'line',
   data: {
     labels: MONTHS,
@@ -1055,7 +1094,7 @@ const ctrData = MONTHS.map((_, i) => {
   return Math.round(ctr * 10) / 10; // Round to 1 decimal
 });
 
-new Chart(document.getElementById('ctrTrendChart'), {
+allCharts.ctrTrendChart = new Chart(document.getElementById('ctrTrendChart'), {
   type: 'line',
   data: {
     labels: MONTHS,
