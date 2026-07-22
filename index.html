@@ -997,7 +997,7 @@ allCharts.clicksBounceChart = new Chart(document.getElementById('clicksBounceCha
 });
 
 const CATS = ['Featured Tools','New User Onboarding','Salesforce in Slack','Use Cases','Agentforce','Launch'];
-new Chart(document.getElementById('catTrendChart'), {
+allCharts.catTrendChart = new Chart(document.getElementById('catTrendChart'), {
   type: 'line',
   data: {
     labels: MONTHS,
@@ -1010,7 +1010,7 @@ new Chart(document.getElementById('catTrendChart'), {
   options: CHART_OPTS,
 });
 
-new Chart(document.getElementById('bounceRateChart'), {
+allCharts.bounceRateChart = new Chart(document.getElementById('bounceRateChart'), {
   type: 'line',
   data: {
     labels: MONTHS,
@@ -1054,7 +1054,7 @@ const juneBounceData = ARTICLES
   .sort((a, b) => b.bounces - a.bounces)
   .slice(0, 10);
 
-new Chart(document.getElementById('bounceContributorsChart'), {
+allCharts.bounceContributorsChart = new Chart(document.getElementById('bounceContributorsChart'), {
   type: 'bar',
   data: {
     labels: juneBounceData.map(a => a.title.length > 35 ? a.title.substring(0, 35) + '...' : a.title),
