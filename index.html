@@ -714,6 +714,7 @@ function switchTab(name) {
 // ── MONTH FILTER ─────────────────────────────────────────────────────────────
 let activeMonth = 'all';
 let allCharts = {}; // Store chart references for updating
+let originalChartStyles = {}; // Store original colors and sizes before any modifications
 
 function filterMonth(btn) {
   document.querySelectorAll('.mf-btn').forEach(b => b.classList.remove('active'));
@@ -803,6 +804,17 @@ function updateTableForMonth() {
   });
 }
 
+function storeOriginalStyles(chartKey, chart) {
+  // Store original styles once, before any modifications
+  if (originalChartStyles[chartKey]) return;
+
+  originalChartStyles[chartKey] = chart.data.datasets.map(dataset => ({
+    pointBackgroundColor: dataset.pointBackgroundColor || dataset.borderColor,
+    pointRadius: dataset.pointRadius || 4,
+    backgroundColor: dataset.backgroundColor,
+  }));
+}
+
 function highlightChartsForMonth() {
   const mi = activeMonth === 'all' ? null : parseInt(activeMonth);
 
@@ -811,16 +823,18 @@ function highlightChartsForMonth() {
     const chart = allCharts[chartKey];
     if (!chart) return;
 
+    // Store original styles if not already stored
+    storeOriginalStyles(chartKey, chart);
+
     chart.data.datasets.forEach((dataset, dsIndex) => {
       const isBarChart = dataset.type === 'bar' || chart.config.type === 'bar';
+      const original = originalChartStyles[chartKey][dsIndex];
 
       if (isBarChart) {
         // Bar charts: highlight with border
-        const baseColor = dsIndex === 0 ? '#2EB886' : '#E01E5A99';
         dataset.backgroundColor = MONTHS.map((_, i) => {
-          if (mi === null) return baseColor;
-          // Slightly darken selected month
-          return i === mi ? (dsIndex === 0 ? '#2EB886' : '#E01E5A') : baseColor;
+          if (mi === null) return original.backgroundColor;
+          return i === mi ? (dsIndex === 0 ? '#2EB886' : '#E01E5A') : original.backgroundColor;
         });
         dataset.borderWidth = MONTHS.map((_, i) => {
           if (mi === null) return 0;
@@ -832,11 +846,7 @@ function highlightChartsForMonth() {
         });
       } else {
         // Line charts: highlight with point size and color
-        const originalColor = Array.isArray(dataset.pointBackgroundColor)
-          ? dataset.borderColor
-          : (dataset.pointBackgroundColor || dataset.borderColor);
-
-        const defaultRadius = chartKey === 'ctrTrendChart' ? 6 : (dataset.pointRadius || 4);
+        const defaultRadius = chartKey === 'ctrTrendChart' ? 6 : original.pointRadius;
 
         dataset.pointRadius = MONTHS.map((_, i) => {
           if (mi === null) return defaultRadius;
@@ -845,8 +855,8 @@ function highlightChartsForMonth() {
 
         dataset.pointBackgroundColor = MONTHS.map((_, i) => {
           if (chartKey === 'ctrTrendChart' && i === 3) return '#ECB22E';
-          if (mi === null) return originalColor;
-          return i === mi ? '#ECB22E' : originalColor;
+          if (mi === null) return original.pointBackgroundColor;
+          return i === mi ? '#ECB22E' : original.pointBackgroundColor;
         });
 
         dataset.pointBorderColor = dataset.pointBackgroundColor;
