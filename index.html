@@ -812,36 +812,48 @@ function highlightChartsForMonth() {
     if (!chart) return;
 
     chart.data.datasets.forEach((dataset, dsIndex) => {
-      // Skip bar charts and non-line datasets
-      if (dataset.type === 'bar' || chart.config.type === 'bar') return;
+      const isBarChart = dataset.type === 'bar' || chart.config.type === 'bar';
 
-      // Get original color (string or first array element)
-      const originalColor = Array.isArray(dataset.pointBackgroundColor)
-        ? dataset.borderColor
-        : (dataset.pointBackgroundColor || dataset.borderColor);
+      if (isBarChart) {
+        // Bar charts: highlight with border
+        const baseColor = dsIndex === 0 ? '#2EB886' : '#E01E5A99';
+        dataset.backgroundColor = MONTHS.map((_, i) => {
+          if (mi === null) return baseColor;
+          // Slightly darken selected month
+          return i === mi ? (dsIndex === 0 ? '#2EB886' : '#E01E5A') : baseColor;
+        });
+        dataset.borderWidth = MONTHS.map((_, i) => {
+          if (mi === null) return 0;
+          return i === mi ? 3 : 0;
+        });
+        dataset.borderColor = MONTHS.map((_, i) => {
+          if (mi === null) return 'transparent';
+          return i === mi ? '#ECB22E' : 'transparent';
+        });
+      } else {
+        // Line charts: highlight with point size and color
+        const originalColor = Array.isArray(dataset.pointBackgroundColor)
+          ? dataset.borderColor
+          : (dataset.pointBackgroundColor || dataset.borderColor);
 
-      const defaultRadius = chartKey === 'ctrTrendChart' ? 6 : (dataset.pointRadius || 4);
+        const defaultRadius = chartKey === 'ctrTrendChart' ? 6 : (dataset.pointRadius || 4);
 
-      // Update point radius for all line charts
-      dataset.pointRadius = MONTHS.map((_, i) => {
-        if (mi === null) return defaultRadius;
-        return i === mi ? defaultRadius * 1.5 : defaultRadius;
-      });
+        dataset.pointRadius = MONTHS.map((_, i) => {
+          if (mi === null) return defaultRadius;
+          return i === mi ? defaultRadius * 1.5 : defaultRadius;
+        });
 
-      // Update point colors
-      dataset.pointBackgroundColor = MONTHS.map((_, i) => {
-        // CTR chart: April always yellow
-        if (chartKey === 'ctrTrendChart' && i === 3) return '#ECB22E';
-        // No month selected: use original color
-        if (mi === null) return originalColor;
-        // Highlight selected month in yellow
-        return i === mi ? '#ECB22E' : originalColor;
-      });
+        dataset.pointBackgroundColor = MONTHS.map((_, i) => {
+          if (chartKey === 'ctrTrendChart' && i === 3) return '#ECB22E';
+          if (mi === null) return originalColor;
+          return i === mi ? '#ECB22E' : originalColor;
+        });
 
-      dataset.pointBorderColor = dataset.pointBackgroundColor;
+        dataset.pointBorderColor = dataset.pointBackgroundColor;
+      }
     });
 
-    chart.update('none'); // Update without animation
+    chart.update(); // Use animation to make transition visible
   });
 }
 
