@@ -812,27 +812,33 @@ function highlightChartsForMonth() {
     if (!chart) return;
 
     chart.data.datasets.forEach((dataset, dsIndex) => {
-      // Reset all points to default
-      const defaultRadius = dataset.type === 'line' ? (chartKey === 'ctrTrendChart' ? 6 : 4) : undefined;
-      const defaultBorderWidth = dataset.type === 'line' ? (chartKey === 'ctrTrendChart' ? 3 : 1) : undefined;
+      // Skip bar charts and non-line datasets
+      if (dataset.type === 'bar' || chart.config.type === 'bar') return;
 
-      if (dataset.pointRadius !== undefined) {
-        dataset.pointRadius = MONTHS.map((_, i) => {
-          if (mi === null) return defaultRadius;
-          // Highlight selected month
-          return i === mi ? defaultRadius * 1.5 : defaultRadius;
-        });
-      }
+      // Get original color (string or first array element)
+      const originalColor = Array.isArray(dataset.pointBackgroundColor)
+        ? dataset.borderColor
+        : (dataset.pointBackgroundColor || dataset.borderColor);
 
-      if (dataset.pointBackgroundColor && Array.isArray(dataset.pointBackgroundColor)) {
-        // For CTR chart, keep April yellow, but make selected month yellow too
-        dataset.pointBackgroundColor = MONTHS.map((_, i) => {
-          if (chartKey === 'ctrTrendChart' && i === 3) return '#ECB22E'; // April always yellow
-          if (mi === null) return dataset.borderColor;
-          return i === mi ? '#ECB22E' : dataset.borderColor;
-        });
-        dataset.pointBorderColor = dataset.pointBackgroundColor;
-      }
+      const defaultRadius = chartKey === 'ctrTrendChart' ? 6 : (dataset.pointRadius || 4);
+
+      // Update point radius for all line charts
+      dataset.pointRadius = MONTHS.map((_, i) => {
+        if (mi === null) return defaultRadius;
+        return i === mi ? defaultRadius * 1.5 : defaultRadius;
+      });
+
+      // Update point colors
+      dataset.pointBackgroundColor = MONTHS.map((_, i) => {
+        // CTR chart: April always yellow
+        if (chartKey === 'ctrTrendChart' && i === 3) return '#ECB22E';
+        // No month selected: use original color
+        if (mi === null) return originalColor;
+        // Highlight selected month in yellow
+        return i === mi ? '#ECB22E' : originalColor;
+      });
+
+      dataset.pointBorderColor = dataset.pointBackgroundColor;
     });
 
     chart.update('none'); // Update without animation
