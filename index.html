@@ -188,15 +188,15 @@
     <h1>Success Hub</h1>
   </div>
   <div class="header-right">
-    <span class="badge">CY 2026 · Jan–Jun · GA4</span>
+    <span class="badge">CY 2026 · Jan–Jul · GA4</span>
     <a class="cta-btn" href="https://slack.com/resources/collections/slack-adoption-success-hub" target="_blank" rel="noopener">Visit Success Hub →</a>
   </div>
 </div>
 
 <!-- TAB BAR -->
 <div class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('report')">Content Report</button>
-  <button class="tab-btn" onclick="switchTab('onboard')">About Success Hub</button>
+  <button class="tab-btn active" onclick="switchTab('report',this)">Content Report</button>
+  <button class="tab-btn" onclick="switchTab('onboard',this)">About Success Hub</button>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════════════ -->
@@ -211,35 +211,35 @@
 
 <div class="summary-banner">
   <div class="headline">
-    <h2>Sessions up 67% since January. April saw peak engagement at 12.4% CTR.</h2>
-    <p>The Hub grew steadily through April, achieving 12.4% click-through rate (254 clicks). June sessions grew 11% but CTR dropped to 8.4% as referral traffic spiked 374% — bringing low-engagement visitors who bounced without clicking.</p>
+    <h2>Sessions up 58% since January. July CTR recovered to 9.2% as June's referral spike normalized.</h2>
+    <p>June's quality concern has eased. Referral traffic fell 65% (332→116 sessions) back to its normal baseline, and click-through rate recovered from 8.3% to 9.2%. July sessions dipped 5% (2,708) but clicks rose 5% (249) — a healthier quality-over-volume profile.</p>
   </div>
   <div class="kpis">
-    <div class="kpi"><div class="val">2,861</div><div class="lbl">June Sessions</div><div class="chg green">+11% vs May</div></div>
-    <div class="kpi"><div class="val">3,265</div><div class="lbl">June Pageviews</div><div class="chg green">+9% vs May</div></div>
-    <div class="kpi"><div class="val">238</div><div class="lbl">June Clicks</div><div class="chg red">-14% vs May</div></div>
-    <div class="kpi"><div class="val">+76%</div><div class="lbl">Click Growth Jan→Jun</div><div class="chg" style="color:rgba(255,255,255,.5)">baseline: 135 clicks</div></div>
+    <div class="kpi"><div class="val">2,708</div><div class="lbl">July Sessions</div><div class="chg red">-5% vs June</div></div>
+    <div class="kpi"><div class="val">3,180</div><div class="lbl">July Pageviews</div><div class="chg red">-3% vs June</div></div>
+    <div class="kpi"><div class="val">249</div><div class="lbl">July Clicks</div><div class="chg green">+5% vs June</div></div>
+    <div class="kpi"><div class="val">+84%</div><div class="lbl">Click Growth Jan→Jul</div><div class="chg" style="color:rgba(255,255,255,.5)">baseline: 135 clicks</div></div>
   </div>
 </div>
 
-<p style="font-size:12px; color:var(--subtle); margin:16px 0 28px;">Data reflects a static snapshot as of June 30, 2026 · GA4 via Tableau · Global English pages only</p>
+<p style="font-size:12px; color:var(--subtle); margin:16px 0 28px;">Data reflects a static snapshot as of July 31, 2026 · GA4 via Tableau · Global English pages only</p>
 
 <!-- KEY INSIGHTS -->
 <div class="insights">
   <div class="ins pos">
     <div class="tag">Growth</div>
-    <h4>Sessions up 67% since January</h4>
-    <p>The Hub grew from 1,716 sessions in January to 2,861 in June (+11% MoM). Slackbot content remains the dominant driver — the Admin Toolkit (384) overtook the guide (290) as the top Featured Tools article in June.</p>
+    <h4>Sessions up 58% since January</h4>
+    <p>The Hub grew from 1,716 sessions in January to 2,708 in July. Slackbot content remains the dominant driver — the Prompt Playbook (260 sessions) and Admin Toolkit (201) lead Featured Tools, with the Playbook alone driving 100 clicks in July.</p>
   </div>
-  <div class="ins warn">
-    <div class="tag">Peak</div>
-    <h4>April was the click quality high-water mark</h4>
-    <p>April saw 254 clicks (12.4% CTR) — the best engagement month. Slackbot Prompt Playbook drove 134 clicks alone (53% of total). May held strong at 10.6% CTR before June's referral-driven decline. This is the engagement benchmark to recover.</p>
+  <div class="ins pos">
+    <div class="tag">Recovery</div>
+    <h4>July CTR recovered to 9.2%</h4>
+    <p>After June's referral-driven dip to 8.3%, CTR climbed back to 9.2% (249 clicks, +5% MoM). The Slackbot Prompt Playbook (100 clicks) and SF Channels Implementation Guide (76 clicks) drove 71% of all July clicks. April's 12.4% remains the benchmark to beat.</p>
   </div>
-  <div class="ins neg">
-    <div class="tag">Alert</div>
-    <h4>June referral spike diluted engagement</h4>
-    <p>Referral traffic jumped 374% in June (70→332 sessions), bringing low-engagement visitors. Bounce rate climbed from 37% to 45%, CTR dropped from 10.6% to 8.3%. Growth in volume, decline in quality.</p>
+  <div class="ins pos">
+    <div class="tag">Resolved</div>
+    <h4>June referral spike has normalized</h4>
+    <p>The 374% June referral spike (70→332) reversed in July: referral fell to 116 sessions (−65%), back near the ~70/month baseline. Direct (1,884, 70%) and Organic Search (658) again drive traffic. The June quality concern has largely resolved.</p>
   </div>
 </div>
 
@@ -256,33 +256,34 @@
   <button class="mf-btn" data-month="3" onclick="filterMonth(this)">April</button>
   <button class="mf-btn" data-month="4" onclick="filterMonth(this)">May</button>
   <button class="mf-btn" data-month="5" onclick="filterMonth(this)">June</button>
+  <button class="mf-btn" data-month="6" onclick="filterMonth(this)">July</button>
 </div>
 
 <!-- METRIC CARDS -->
 <div class="metrics" id="metric-cards">
   <div class="m-card">
     <div class="lbl">Sessions</div>
-    <div class="big green" id="mc-sessions">13,110</div>
-    <div class="delta" id="mc-sessions-d" style="color:var(--muted)">CY 2026 total · Jan–Jun</div>
-    <div class="note" id="mc-sessions-n">June alone: 2,861 (+11% MoM)</div>
+    <div class="big green" id="mc-sessions">15,818</div>
+    <div class="delta" id="mc-sessions-d" style="color:var(--muted)">CY 2026 total · Jan–Jul</div>
+    <div class="note" id="mc-sessions-n">July alone: 2,708 (-5% MoM)</div>
   </div>
   <div class="m-card">
     <div class="lbl">Pageviews</div>
-    <div class="big green" id="mc-pv">15,425</div>
-    <div class="delta" id="mc-pv-d" style="color:var(--muted)">CY 2026 total · Jan–Jun</div>
-    <div class="note" id="mc-pv-n">June alone: 3,265 (+9% MoM)</div>
+    <div class="big green" id="mc-pv">18,605</div>
+    <div class="delta" id="mc-pv-d" style="color:var(--muted)">CY 2026 total · Jan–Jul</div>
+    <div class="note" id="mc-pv-n">July alone: 3,180 (-3% MoM)</div>
   </div>
   <div class="m-card">
     <div class="lbl">Total Clicks</div>
-    <div class="big green" id="mc-clicks">1,199</div>
-    <div class="delta" id="mc-clicks-d" style="color:var(--muted)">CY 2026 total · Jan–Jun</div>
-    <div class="note" id="mc-clicks-n">June alone: 238 (-14% MoM)</div>
+    <div class="big green" id="mc-clicks">1,448</div>
+    <div class="delta" id="mc-clicks-d" style="color:var(--muted)">CY 2026 total · Jan–Jul</div>
+    <div class="note" id="mc-clicks-n">July alone: 249 (+5% MoM)</div>
   </div>
   <div class="m-card">
     <div class="lbl">Bounce Sessions</div>
-    <div class="big red" id="mc-bounce">4,078</div>
-    <div class="delta" id="mc-bounce-d" style="color:var(--muted)">CY 2026 total · Jan–Jun</div>
-    <div class="note" id="mc-bounce-n">June alone: 1,300 (+35% MoM)</div>
+    <div class="big red" id="mc-bounce">5,361</div>
+    <div class="delta" id="mc-bounce-d" style="color:var(--muted)">CY 2026 total · Jan–Jul</div>
+    <div class="note" id="mc-bounce-n">July alone: 1,283 (-1% MoM)</div>
   </div>
 </div>
 
@@ -303,12 +304,12 @@
   <div class="c-card">
     <h3>Sessions by Marketing Channel</h3>
     <canvas id="channelTrendChart"></canvas>
-    <p style="font-size:11px;color:var(--subtle);margin-top:14px">Note the June referral spike: 70 sessions (May avg) → 332 (June), a 374% increase. Direct traffic includes bookmarked visits and unattributed traffic (Slack app links, dark social).</p>
+    <p style="font-size:11px;color:var(--subtle);margin-top:14px">The June referral spike (70→332) normalized in July, falling 65% to 116 sessions — close to the ~70/month baseline. Direct traffic (1,884) includes bookmarked visits and unattributed traffic (Slack app links, dark social).</p>
   </div>
   <div class="c-card">
     <h3>Click-Through Rate — Engagement Quality Over Time</h3>
     <canvas id="ctrTrendChart"></canvas>
-    <p style="font-size:11px;color:var(--subtle);margin-top:14px">CTR = clicks / sessions. April was peak engagement at 12.4% — meaning 1 in 8 visitors clicked through to a resource. May held strong at 10.8%. June dropped to 8.3% as the referral spike brought low-engagement traffic. This is the metric that controls for session volume and purely measures engagement quality.</p>
+    <p style="font-size:11px;color:var(--subtle);margin-top:14px">CTR = clicks / sessions. April was peak engagement at 12.4% — meaning 1 in 8 visitors clicked through to a resource. June dropped to 8.3% as the referral spike brought low-engagement traffic, then July recovered to 9.2% as that traffic normalized. This is the metric that controls for session volume and purely measures engagement quality.</p>
   </div>
 </div>
 
@@ -332,9 +333,9 @@
 <!-- BOUNCE CONTRIBUTORS -->
 <div class="chart-row" style="margin-top:20px">
   <div class="c-card">
-    <h3>Top 10 Bounce Contributors — June 2026</h3>
+    <h3>Top 10 Bounce Contributors — July 2026</h3>
     <canvas id="bounceContributorsChart"></canvas>
-    <p style="font-size:11px;color:var(--subtle);margin-top:14px">Total June bounces: 1,300. Top 3 articles account for 278 bounces (21%). Slackbot Admin Toolkit had high traffic but zero engagement — 77 bounces, 0 clicks.</p>
+    <p style="font-size:11px;color:var(--subtle);margin-top:14px">Total July bounces: 1,283. The top 3 articles (SF Channels 99, Slackbot launch guide 84, Workshop 101 82) account for 265 bounces (21%). Slackbot Admin Toolkit still converts poorly — 201 sessions, 49 bounces, 0 clicks.</p>
   </div>
   <div class="c-card" style="display:flex;flex-direction:column;justify-content:center;padding:32px;">
     <div style="margin-bottom:16px;">
@@ -354,15 +355,15 @@
   <div class="rec">
     <div class="rec-num">1</div>
     <div>
-      <h4>Slackbot Prompt Playbook — 134 clicks in April</h4>
-      <p>Featured Tools category. Drove 53% of all April clicks alone. Trend: 0 (Jan) → 16 (Mar) → 134 (Apr) → 90 (Jun). This is the engagement quality standard — high clicks despite moderate sessions.</p>
+      <h4>Slackbot Prompt Playbook — 100 clicks in July</h4>
+      <p>Featured Tools category. Drove 40% of all July clicks alone. Trend: 0 (Jan) → 16 (Mar) → 134 (Apr) → 90 (Jun) → 100 (Jul). This is the engagement quality standard — high clicks despite moderate sessions.</p>
     </div>
   </div>
   <div class="rec">
     <div class="rec-num">2</div>
     <div>
       <h4>SF Channels Implementation — Consistent 61-86 clicks/month</h4>
-      <p>Salesforce in Slack anchor. Jan: 86, Mar: 61, Apr: 65, Jun: 74. Quality leader with high clicks and manageable bounce. Shows that Salesforce admin audience is highly engaged.</p>
+      <p>Salesforce in Slack anchor. Jan: 86, Mar: 61, Apr: 65, Jun: 74, Jul: 76. Quality leader with high clicks and manageable bounce. Shows that Salesforce admin audience is highly engaged.</p>
     </div>
   </div>
   <div class="rec">
@@ -386,25 +387,25 @@
 <!-- ══════════════════════════════════════════════════════════════════════════ -->
 <div class="section-label">Additional Analysis</div>
 <div class="insights">
-  <div class="ins neg">
-    <div class="tag">Warning</div>
-    <h4>Clicks dropped 14% despite session growth</h4>
-    <p>June saw 238 clicks vs. 277 in May — first month-over-month decline since tracking began. Sessions are growing but engagement is softening. The quality-vs-quantity tension from May is now confirmed as a trend.</p>
+  <div class="ins blue">
+    <div class="tag">Recovered</div>
+    <h4>Clicks rose 5% as engagement quality returned</h4>
+    <p>July saw 249 clicks vs. 238 in June — reversing June's decline even as sessions dipped 5%. CTR climbed from 8.3% to 9.2%. The June softening was a traffic-source artifact, not a content problem; core-audience engagement held.</p>
   </div>
   <div class="ins warn">
-    <div class="tag">Stabilized</div>
-    <h4>Workshop 101 flat at 164 sessions</h4>
-    <p>After the sharp May decline (570 → 199 → 159), June held steady at 164. It's no longer bleeding traffic, but it's also not recovering. The post-email-deprecation baseline appears to be ~160 sessions/month.</p>
+    <div class="tag">Rebound</div>
+    <h4>Workshop 101 jumped back to 291 sessions</h4>
+    <p>After stabilizing near 160 in May–June, Workshop 101 rebounded to 291 sessions in July (its highest since March). Bounces rose with it (82), so the traffic is broad but shallow — worth watching whether the interest sticks.</p>
   </div>
   <div class="ins blue">
     <div class="tag">Consistent</div>
     <h4>Salesforce in Slack remains the quality leader</h4>
-    <p>SF Channels Implementation Guide grew to 264 sessions in June (vs. 246 in May). Category maintains strong clicks and manageable bounce rates. This is the engagement profile every other category should aim for.</p>
+    <p>SF Channels Implementation Guide held flat at 264 sessions in July with 76 clicks — the single biggest click driver after the Playbook. Category maintains strong clicks and manageable bounce rates. This is the engagement profile every other category should aim for.</p>
   </div>
   <div class="ins warn">
     <div class="tag">Shift</div>
-    <h4>Use Cases growing but engagement mixed</h4>
-    <p>Category sessions climbed across the board — Internal Comms (121), Legal (97), Execs (72), HR (69), Marketing (57). But bounce rates are rising alongside traffic. Volume is up; depth is questionable.</p>
+    <h4>Use Cases traffic eased off June's peak</h4>
+    <p>Most Use Cases articles cooled from their June highs — Internal Comms (115), IT & Security (75), Marketing (67), Legal (62). Bounce rates remain elevated relative to sessions, so depth is still the open question even as volume normalizes.</p>
   </div>
 </div>
 
@@ -413,22 +414,22 @@
   <div class="rec">
     <div class="rec-num">1</div>
     <div>
-      <h4>Investigate the click decline and bounce spike</h4>
-      <p>June is the first month where sessions grew but clicks dropped. Run a GA4 cohort analysis: are returning visitors clicking less, or are new visitors (who bounce more) diluting engagement? If it's the latter, traffic quality is the issue — not content.</p>
+      <h4>Confirm the referral traffic was one-off, not recurring</h4>
+      <p>June's referral spike (70→332) reversed in July (→116) with no intervention, and CTR recovered to 9.2%. Pull the June referring-hostname breakdown to confirm what it was (campaign, partner link, bot traffic) so we can recognize — or dismiss — a repeat if it reappears.</p>
     </div>
   </div>
   <div class="rec">
     <div class="rec-num">2</div>
     <div>
-      <h4>Identify and segment the June referral traffic source</h4>
-      <p>Referral traffic jumped 374% in June (70→332 sessions). Pull the referring hostname breakdown for June — if it's a specific campaign or partner link, assess whether that traffic source aligns with Hub goals or should be redirected to more appropriate landing pages.</p>
+      <h4>Capitalize on the Slackbot Playbook's momentum</h4>
+      <p>The Slackbot Prompt Playbook drove 100 clicks in July (40% of the total) on just 260 sessions — the best intent-per-visit on the Hub. Feature it more prominently and cross-link it from the high-traffic Slackbot launch guide and Admin Toolkit, which pull big audiences but convert near zero.</p>
     </div>
   </div>
   <div class="rec">
     <div class="rec-num">3</div>
     <div>
       <h4>Expand Salesforce in Slack content</h4>
-      <p>SF Channels Implementation Guide grew 7% MoM and maintains the best engagement profile on the site. A troubleshooting guide, video walkthrough, or "Common Mistakes" resource could capture more of this high-intent admin audience without relying on external traffic sources.</p>
+      <p>SF Channels Implementation Guide held flat at 264 sessions with 76 clicks and maintains the best engagement profile on the site. A troubleshooting guide, video walkthrough, or "Common Mistakes" resource could capture more of this high-intent admin audience without relying on external traffic sources.</p>
     </div>
   </div>
   <div class="rec">
@@ -467,15 +468,17 @@
         <th class="num" onclick="sortTable(4)">Apr <span class="sort-icon">↕</span></th>
         <th class="num" onclick="sortTable(5)">May <span class="sort-icon">↕</span></th>
         <th class="num" onclick="sortTable(6)">Jun <span class="sort-icon">↕</span></th>
-        <th class="num" onclick="sortTable(7)">Jan→Jun <span class="sort-icon">↕</span></th>
-        <th class="num" onclick="sortTable(8)">May→Jun <span class="sort-icon">↕</span></th>
-        <th class="num" onclick="sortTable(9)">Jun Bounce <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(7)">Jul <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(8)">Jan→Jul <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(9)">Jun→Jul <span class="sort-icon">↕</span></th>
+        <th class="num" onclick="sortTable(10)">Jul Bounce <span class="sort-icon">↕</span></th>
         <th>Trend</th>
       </tr>
     </thead>
     <tbody id="tbody"></tbody>
   </table>
 </div>
+</div><!-- /container -->
 </div><!-- /tab-report -->
 
 
@@ -645,24 +648,45 @@
 </div><!-- /container -->
 </div><!-- /tab-onboard -->
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <footer>Slack Success Hub &nbsp;·&nbsp; CY 2026 Content Engagement Report &nbsp;·&nbsp; GA4 via Tableau &nbsp;·&nbsp; Global English pages only</footer>
 
 <script>
 // ── DATA ────────────────────────────────────────────────────────────────────
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
 const OV = {
-  sessions: [1716, 1918, 1992, 2053, 2570, 2861],
-  pv:       [2032, 2202, 2371, 2558, 2997, 3265],
-  clicks:   [135,  142,  151,  256,  277,  238],
-  bounce:   [351,  502,  486,  478,  961,  1300],
+  sessions: [1716, 1918, 1992, 2053, 2570, 2861, 2708],
+  pv:       [2032, 2202, 2371, 2558, 2997, 3265, 3180],
+  clicks:   [135,  142,  151,  256,  277,  238,  249],
+  bounce:   [351,  502,  486,  478,  961,  1300, 1283],
 };
 const CHANNELS = {
-  direct:       [925, 1122, 1130, 1113, 1650, 1773],  // Calculated from total - (sum of other channels)
-  organic:      [741, 744,  744,  784,  778,  670],
-  referral:     [59,  87,   73,   79,   72,   332],
-  sfdcEmail:    [17,  12,   16,   23,   18,   17],
-  paidSearch:   [21,  16,   12,   21,   16,   11],
-  other:        [0,   0,    12,   28,   20,   0],     // (Other) channel from Mar-May
+  direct:       [925, 1122, 1130, 1113, 1650, 1773, 1884],  // Calculated from total - (sum of other channels)
+  organic:      [741, 744,  744,  784,  778,  670,  658],
+  referral:     [59,  87,   73,   79,   72,   332,  116],
+  sfdcEmail:    [17,  12,   16,   23,   18,   17,   14],
+  paidSearch:   [21,  16,   12,   21,   16,   11,   11],
+  other:        [0,   0,    12,   28,   20,   0,    45],     // (Other) channel from Mar-May, Jul
 };
 const CAT_COLORS = {
   'Featured Tools':       '#4A154B',
@@ -673,43 +697,65 @@ const CAT_COLORS = {
   'Launch':               '#ECB22E',
 };
 const ARTICLES = [
-  { title: 'Complete guide to launching Slackbot',       cat: 'Featured Tools',      s: [0,   0,   34,  274, 594, 290], b: [0,  0,  8,  50,  193, 88],  c: [0, 0, 8, 5, 0, 2] },
-  { title: 'The Slackbot prompt playbook',               cat: 'Featured Tools',      s: [0,   0,   31,  328, 321, 224], b: [0,  0,  5,  52,  63,  67],  c: [0, 0, 16, 134, 0, 90] },
-  { title: 'Slackbot Admin Toolkit',                     cat: 'Featured Tools',      s: [0,   0,   42,  147, 127, 384], b: [0,  0,  8,  10,  30,  77],  c: [0, 0, 8, 10, 0, 0] },
-  { title: 'Resources to achieve your goals with Slack', cat: 'Featured Tools',      s: [9,   7,   19,  8,   26,  44],  b: [1,  1,  0,  0,   17,  35],  c: [1, 1, 2, 0, 0, 0] },
-  { title: 'Introducing Slack canvas',                   cat: 'Featured Tools',      s: [8,   8,   10,  4,   2,   7],   b: [0,  0,  0,  1,   0,   6],   c: [0, 0, 0, 1, 0, 0] },
-  { title: 'Salesforce Channels: Implementation Guide',  cat: 'Salesforce in Slack', s: [252, 231, 221, 220, 246, 264], b: [84, 71, 77, 73,  90,  113], c: [86, 78, 61, 65, 0, 74] },
-  { title: 'Complete guide to launching SF channels',    cat: 'Salesforce in Slack', s: [20,  37,  30,  26,  44,  54],  b: [2,  11, 6,  2,   24,  34],  c: [2, 0, 2, 1, 0, 0] },
-  { title: 'Salesforce in Slack: Implementation Guide',  cat: 'Salesforce in Slack', s: [0,   0,   23,  46,  56,  92],  b: [0,  0,  4,  12,  26,  48],  c: [0, 0, 2, 10, 0, 26] },
-  { title: 'Salesforce channels: Launch communications', cat: 'Salesforce in Slack', s: [9,   12,  13,  16,  28,  43],  b: [0,  2,  0,  1,   16,  36],  c: [0, 0, 0, 1, 5, 2] },
-  { title: 'Workshop 101: Learn the basics (on-demand)', cat: 'New User Onboarding', s: [565, 553, 570, 199, 159, 164], b: [99, 132,113, 40,  24,  36],  c: [12, 7, 0, 0, 4, 5] },
-  { title: 'Slack for internal communications',          cat: 'Use Cases',           s: [92,  79,  81,  103, 101, 121], b: [11, 22, 18, 30,  38,  54],  c: [11, 22, 5, 5, 38, 0] },
-  { title: 'Slack for HR, Recruiting, and DEI',          cat: 'Use Cases',           s: [60,  56,  78,  68,  41,  69],  b: [19, 19, 32, 18,  20,  37],  c: [19, 19, 30, 18, 20, 1] },
-  { title: 'Slack for legal',                            cat: 'Use Cases',           s: [46,  42,  55,  43,  64,  97],  b: [12, 7,  9,  2,   31,  43],  c: [12, 7, 9, 2, 31, 0] },
-  { title: 'Slack for Executives and EAs',               cat: 'Use Cases',           s: [36,  36,  60,  43,  45,  72],  b: [8,  2,  21, 6,   24,  41],  c: [8, 2, 21, 6, 24, 0] },
-  { title: 'Slack for sales',                            cat: 'Use Cases',           s: [32,  41,  33,  23,  31,  53],  b: [1,  3,  3,  3,   18,  36],  c: [1, 3, 3, 3, 18, 0] },
-  { title: 'Slack for customer success',                 cat: 'Use Cases',           s: [23,  43,  54,  41,  33,  51],  b: [4,  19, 24, 21,  16,  38],  c: [4, 19, 24, 21, 16, 0] },
-  { title: 'Slack for IT and Security',                  cat: 'Use Cases',           s: [25,  26,  58,  57,  57,  56],  b: [5,  9,  15, 24,  34,  43],  c: [5, 9, 15, 24, 33, 0] },
-  { title: 'Slack for customer service',                 cat: 'Use Cases',           s: [16,  40,  29,  20,  37,  51],  b: [7,  21, 9,  5,   24,  33],  c: [7, 21, 9, 5, 24, 0] },
-  { title: 'Slack for marketing',                        cat: 'Use Cases',           s: [12,  16,  21,  27,  42,  57],  b: [3,  0,  8,  6,   33,  37],  c: [3, 0, 8, 6, 33, 0] },
-  { title: 'Unlocking value with Slack',                 cat: 'Use Cases',           s: [29,  15,  27,  17,  27,  42],  b: [12, 3,  9,  3,   15,  33],  c: [12, 3, 9, 3, 15, 0] },
-  { title: '5 steps to support team adoption',          cat: 'Use Cases',           s: [11,  22,  21,  19,  25,  53],  b: [4,  0,  4,  1,   21,  33],  c: [4, 0, 4, 2, 1, 3] },
-  { title: 'Launching Agentforce in Slack',              cat: 'Agentforce',          s: [42,  175, 92,  92,  76,  69],  b: [4,  92, 13, 6,   25,  37],  c: [6, 0, 0, 0, 10, 5] },
-  { title: 'Unlock productivity w/ Slack Professions',   cat: 'Agentforce',          s: [21,  31,  31,  33,  35,  53],  b: [1,  8,  4,  5,   14,  37],  c: [1, 0, 0, 0, 14, 0] },
-  { title: 'Agentforce in Slack: Admin Setup Guide',     cat: 'Agentforce',          s: [23,  17,  25,  27,  34,  52],  b: [11, 1,  5,  7,   18,  35],  c: [2, 7, 0, 0, 7, 7] },
-  { title: 'Agentforce: Launch Communications',          cat: 'Agentforce',          s: [7,   7,   15,  5,   16,  33],  b: [1,  0,  0,  1,   13,  30],  c: [0, 0, 0, 0, 0, 0] },
-  { title: '5 steps to launch Slack',                    cat: 'Launch',              s: [68,  63,  61,  50,  63,  74],  b: [11, 11, 7,  11,  23,  38],  c: [0, 0, 0, 0, 0, 0] },
-  { title: 'Slack launch communications',                cat: 'Launch',              s: [38,  39,  35,  33,  59,  69],  b: [3,  6,  12, 7,   19,  33],  c: [0, 0, 0, 0, 5, 2] },
-  { title: 'How to launch Slack at your organization',   cat: 'Launch',              s: [47,  39,  22,  22,  12,  24],  b: [6,  3,  1,  4,   0,   12],  c: [0, 0, 0, 0, 5, 0] },
+  { title: 'Complete guide to launching Slackbot',       cat: 'Featured Tools',      s: [0,   0,   34,  274, 594, 290, 248], b: [0,  0,  8,  50,  193, 88,  84],  c: [0, 0, 8, 5, 0, 2, 0] },
+  { title: 'The Slackbot prompt playbook',               cat: 'Featured Tools',      s: [0,   0,   31,  328, 321, 224, 260], b: [0,  0,  5,  52,  63,  67,  59],  c: [0, 0, 16, 134, 0, 90, 100] },
+  { title: 'Slackbot Admin Toolkit',                     cat: 'Featured Tools',      s: [0,   0,   42,  147, 127, 384, 201], b: [0,  0,  8,  10,  30,  77,  49],  c: [0, 0, 8, 10, 0, 0, 0] },
+  { title: 'Resources to achieve your goals with Slack', cat: 'Featured Tools',      s: [9,   7,   19,  8,   26,  44,  31],  b: [1,  1,  0,  0,   17,  35,  23],  c: [1, 1, 2, 0, 0, 0, 0] },
+  { title: 'Introducing Slack canvas',                   cat: 'Featured Tools',      s: [8,   8,   10,  4,   2,   7,   25],  b: [0,  0,  0,  1,   0,   6,   25],  c: [0, 0, 0, 1, 0, 0, 0] },
+  { title: 'Salesforce Channels: Implementation Guide',  cat: 'Salesforce in Slack', s: [252, 231, 221, 220, 246, 264, 264], b: [84, 71, 77, 73,  90,  113, 99],  c: [86, 78, 61, 65, 0, 74, 76] },
+  { title: 'Complete guide to launching SF channels',    cat: 'Salesforce in Slack', s: [20,  37,  30,  26,  44,  54,  51],  b: [2,  11, 6,  2,   24,  34,  29],  c: [2, 0, 2, 1, 0, 0, 3] },
+  { title: 'Salesforce in Slack: Implementation Guide',  cat: 'Salesforce in Slack', s: [0,   0,   23,  46,  56,  92,  95],  b: [0,  0,  4,  12,  26,  48,  48],  c: [0, 0, 2, 10, 0, 26, 34] },
+  { title: 'Salesforce channels: Launch communications', cat: 'Salesforce in Slack', s: [9,   12,  13,  16,  28,  43,  39],  b: [0,  2,  0,  1,   16,  36,  25],  c: [0, 0, 0, 1, 5, 2, 0] },
+  { title: 'Workshop 101: Learn the basics (on-demand)', cat: 'New User Onboarding', s: [565, 553, 570, 199, 159, 164, 291], b: [99, 132,113, 40,  24,  36,  82],  c: [12, 7, 0, 0, 4, 5, 6] },
+  { title: 'Slack for internal communications',          cat: 'Use Cases',           s: [92,  79,  81,  103, 101, 121, 115], b: [11, 22, 18, 30,  38,  54,  53],  c: [11, 22, 5, 5, 38, 0, 0] },
+  { title: 'Slack for HR, Recruiting, and DEI',          cat: 'Use Cases',           s: [60,  56,  78,  68,  41,  69,  75],  b: [19, 19, 32, 18,  20,  37,  39],  c: [19, 19, 30, 18, 20, 1, 0] },
+  { title: 'Slack for legal',                            cat: 'Use Cases',           s: [46,  42,  55,  43,  64,  97,  62],  b: [12, 7,  9,  2,   31,  43,  38],  c: [12, 7, 9, 2, 31, 0, 0] },
+  { title: 'Slack for Executives and EAs',               cat: 'Use Cases',           s: [36,  36,  60,  43,  45,  72,  53],  b: [8,  2,  21, 6,   24,  41,  36],  c: [8, 2, 21, 6, 24, 0, 0] },
+  { title: 'Slack for sales',                            cat: 'Use Cases',           s: [32,  41,  33,  23,  31,  53,  43],  b: [1,  3,  3,  3,   18,  36,  33],  c: [1, 3, 3, 3, 18, 0, 0] },
+  { title: 'Slack for customer success',                 cat: 'Use Cases',           s: [23,  43,  54,  41,  33,  51,  56],  b: [4,  19, 24, 21,  16,  38,  34],  c: [4, 19, 24, 21, 16, 0, 0] },
+  { title: 'Slack for IT and Security',                  cat: 'Use Cases',           s: [25,  26,  58,  57,  57,  56,  75],  b: [5,  9,  15, 24,  34,  43,  56],  c: [5, 9, 15, 24, 33, 0, 0] },
+  { title: 'Slack for customer service',                 cat: 'Use Cases',           s: [16,  40,  29,  20,  37,  51,  55],  b: [7,  21, 9,  5,   24,  33,  33],  c: [7, 21, 9, 5, 24, 0, 0] },
+  { title: 'Slack for marketing',                        cat: 'Use Cases',           s: [12,  16,  21,  27,  42,  57,  67],  b: [3,  0,  8,  6,   33,  37,  44],  c: [3, 0, 8, 6, 33, 0, 0] },
+  { title: 'Unlocking value with Slack',                 cat: 'Use Cases',           s: [29,  15,  27,  17,  27,  42,  38],  b: [12, 3,  9,  3,   15,  33,  28],  c: [12, 3, 9, 3, 15, 0, 0] },
+  { title: '5 steps to support team adoption',          cat: 'Use Cases',           s: [11,  22,  21,  19,  25,  53,  38],  b: [4,  0,  4,  1,   21,  33,  28],  c: [4, 0, 4, 2, 1, 3, 0] },
+  { title: 'Launching Agentforce in Slack',              cat: 'Agentforce',          s: [42,  175, 92,  92,  76,  69,  75],  b: [4,  92, 13, 6,   25,  37,  28],  c: [6, 0, 0, 0, 10, 5, 5] },
+  { title: 'Unlock productivity w/ Slack Professions',   cat: 'Agentforce',          s: [21,  31,  31,  33,  35,  53,  66],  b: [1,  8,  4,  5,   14,  37,  52],  c: [1, 0, 0, 0, 14, 0, 0] },
+  { title: 'Agentforce in Slack: Admin Setup Guide',     cat: 'Agentforce',          s: [23,  17,  25,  27,  34,  52,  41],  b: [11, 1,  5,  7,   18,  35,  29],  c: [2, 7, 0, 0, 7, 7, 3] },
+  { title: 'Agentforce: Launch Communications',          cat: 'Agentforce',          s: [7,   7,   15,  5,   16,  33,  27],  b: [1,  0,  0,  1,   13,  30,  23],  c: [0, 0, 0, 0, 0, 0, 0] },
+  { title: '5 steps to launch Slack',                    cat: 'Launch',              s: [68,  63,  61,  50,  63,  74,  73],  b: [11, 11, 7,  11,  23,  38,  38],  c: [0, 0, 0, 0, 0, 0, 0] },
+  { title: 'Slack launch communications',                cat: 'Launch',              s: [38,  39,  35,  33,  59,  69,  54],  b: [3,  6,  12, 7,   19,  33,  31],  c: [0, 0, 0, 0, 5, 2, 0] },
+  { title: 'How to launch Slack at your organization',   cat: 'Launch',              s: [47,  39,  22,  22,  12,  24,  61],  b: [6,  3,  1,  4,   0,   12,  50],  c: [0, 0, 0, 0, 5, 0, 0] },
 ];
 
 // ── TABS ─────────────────────────────────────────────────────────────────────
-function switchTab(name) {
+function switchTab(name, btn, skipHash) {
+  var pane = document.getElementById('tab-' + name);
+  if (!pane) return; // unknown tab name (e.g. bad hash) — ignore
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  event.target.classList.add('active');
+  pane.classList.add('active');
+  // Prefer the passed button; fall back to the matching tab button so this works
+  // in every browser (Safari/Firefox don't provide a global `event`).
+  var el = btn || (window.event && window.event.target);
+  if (!el) {
+    el = [].slice.call(document.querySelectorAll('.tab-btn'))
+           .find(function (b) { return b.getAttribute('onclick').indexOf("'" + name + "'") !== -1; });
+  }
+  if (el) el.classList.add('active');
+  // Deep-linking: reflect the active tab in the URL so it can be shared/bookmarked.
+  if (!skipHash) {
+    if (history.replaceState) history.replaceState(null, '', '#' + name);
+    else location.hash = name;
+  }
 }
+
+// On load (and on manual hash change), open the tab named in the URL hash.
+function openTabFromHash() {
+  var name = (location.hash || '').replace('#', '');
+  if (name && document.getElementById('tab-' + name)) switchTab(name, null, true);
+}
+window.addEventListener('DOMContentLoaded', openTabFromHash);
+window.addEventListener('hashchange', openTabFromHash);
 
 // ── MONTH FILTER ─────────────────────────────────────────────────────────────
 let activeMonth = 'all';
@@ -732,25 +778,25 @@ function updateMetricCards() {
     const totC = OV.clicks.reduce((a,b)=>a+b,0);
     const totB = OV.bounce.reduce((a,b)=>a+b,0);
     document.getElementById('mc-sessions').textContent = totS.toLocaleString();
-    document.getElementById('mc-sessions-d').textContent = 'CY 2026 total · Jan–Jun';
+    document.getElementById('mc-sessions-d').textContent = 'CY 2026 total · Jan–Jul';
     document.getElementById('mc-sessions-d').style.color = 'var(--muted)';
     document.getElementById('mc-sessions-d').className = 'delta';
-    document.getElementById('mc-sessions-n').textContent = 'June alone: 2,861 (+11% MoM)';
+    document.getElementById('mc-sessions-n').textContent = 'July alone: 2,708 (-5% MoM)';
     document.getElementById('mc-pv').textContent = totPV.toLocaleString();
-    document.getElementById('mc-pv-d').textContent = 'CY 2026 total · Jan–Jun';
+    document.getElementById('mc-pv-d').textContent = 'CY 2026 total · Jan–Jul';
     document.getElementById('mc-pv-d').style.color = 'var(--muted)';
     document.getElementById('mc-pv-d').className = 'delta';
-    document.getElementById('mc-pv-n').textContent = 'June alone: 3,265 (+9% MoM)';
+    document.getElementById('mc-pv-n').textContent = 'July alone: 3,180 (-3% MoM)';
     document.getElementById('mc-clicks').textContent = totC.toLocaleString();
-    document.getElementById('mc-clicks-d').textContent = 'CY 2026 total · Jan–Jun';
+    document.getElementById('mc-clicks-d').textContent = 'CY 2026 total · Jan–Jul';
     document.getElementById('mc-clicks-d').style.color = 'var(--muted)';
     document.getElementById('mc-clicks-d').className = 'delta';
-    document.getElementById('mc-clicks-n').textContent = 'June alone: 238 (-14% MoM)';
+    document.getElementById('mc-clicks-n').textContent = 'July alone: 249 (+5% MoM)';
     document.getElementById('mc-bounce').textContent = totB.toLocaleString();
-    document.getElementById('mc-bounce-d').textContent = 'CY 2026 total · Jan–Jun';
+    document.getElementById('mc-bounce-d').textContent = 'CY 2026 total · Jan–Jul';
     document.getElementById('mc-bounce-d').style.color = 'var(--muted)';
     document.getElementById('mc-bounce-d').className = 'delta';
-    document.getElementById('mc-bounce-n').textContent = 'June alone: 1,300 (+35% MoM)';
+    document.getElementById('mc-bounce-n').textContent = 'July alone: 1,283 (-1% MoM)';
     return;
   }
   const mi = parseInt(activeMonth);
@@ -875,12 +921,12 @@ CATS_ORDER.forEach(cat => {
   const catRow = document.createElement('tr');
   catRow.className = 'cat-row';
   catRow.dataset.cat = cat;
-  catRow.innerHTML = `<td colspan="11" style="color:${CAT_COLORS[cat]}">${cat}</td>`;
+  catRow.innerHTML = `<td colspan="12" style="color:${CAT_COLORS[cat]}">${cat}</td>`;
   tbody.appendChild(catRow);
 
-  ARTICLES.filter(a => a.cat === cat).sort((a,b) => b.s[5]-a.s[5]).forEach(a => {
-    const tot = a.s[0] > 0 ? Math.round((a.s[5]-a.s[0])/a.s[0]*100) : null;
-    const mom = a.s[4] > 0 ? Math.round((a.s[5]-a.s[4])/a.s[4]*100) : null;
+  ARTICLES.filter(a => a.cat === cat).sort((a,b) => b.s[6]-a.s[6]).forEach(a => {
+    const tot = a.s[0] > 0 ? Math.round((a.s[6]-a.s[0])/a.s[0]*100) : null;
+    const mom = a.s[5] > 0 ? Math.round((a.s[6]-a.s[5])/a.s[5]*100) : null;
     const totPill = tot === null ? '<span class="pill new">new</span>'
       : tot > 0 ? `<span class="pill up">+${tot}%</span>`
       : tot < 0 ? `<span class="pill down">${tot}%</span>`
@@ -893,9 +939,9 @@ CATS_ORDER.forEach(cat => {
     const spMax = Math.max(...a.s, 1);
     const spark = a.s.map((v,i) => {
       const h = Math.round((v/spMax)*18)+2;
-      return `<span style="height:${h}px;background:${i===5?CAT_COLORS[cat]:'#DDD'}"></span>`;
+      return `<span style="height:${h}px;background:${i===6?CAT_COLORS[cat]:'#DDD'}"></span>`;
     }).join('');
-    const bCls = a.b[5] > a.b[4] ? 'b-bad' : 'b-ok';
+    const bCls = a.b[6] > a.b[5] ? 'b-bad' : 'b-ok';
     const tr = document.createElement('tr');
     tr.dataset.art = '1';
     tr.dataset.cat = cat;
@@ -908,10 +954,11 @@ CATS_ORDER.forEach(cat => {
       <td class="muted">${a.s[2]||'—'}</td>
       <td class="muted">${a.s[3]||'—'}</td>
       <td class="muted">${a.s[4]||'—'}</td>
-      <td class="num" style="font-weight:700">${a.s[5]}</td>
+      <td class="muted">${a.s[5]||'—'}</td>
+      <td class="num" style="font-weight:700">${a.s[6]}</td>
       <td class="num">${totPill}</td>
       <td class="num">${momPill}</td>
-      <td class="${bCls}">${a.b[5]}</td>
+      <td class="${bCls}">${a.b[6]}</td>
       <td><div class="sparkline">${spark}</div></td>`;
     tbody.appendChild(tr);
   });
@@ -960,8 +1007,8 @@ function sortTable(col) {
       let va, vb;
       if (col === 0) { va = a.dataset.title; vb = b.dataset.title; return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va); }
       const getVal = (row, c) => { const vals = row.dataset.vals.split(',').map(Number); return vals[c-1] || 0; };
-      if (col >= 1 && col <= 6) { va = getVal(a, col); vb = getVal(b, col); }
-      else if (col === 9) { va = parseInt(a.querySelector('td:nth-child(10)').textContent)||0; vb = parseInt(b.querySelector('td:nth-child(10)').textContent)||0; }
+      if (col >= 1 && col <= 7) { va = getVal(a, col); vb = getVal(b, col); }
+      else if (col === 10) { va = parseInt(a.querySelector('td:nth-child(11)').textContent)||0; vb = parseInt(b.querySelector('td:nth-child(11)').textContent)||0; }
       else { va = 0; vb = 0; }
       return sortAsc ? va - vb : vb - va;
     });
@@ -1075,9 +1122,9 @@ allCharts.channelTrendChart = new Chart(document.getElementById('channelTrendCha
   options: CHART_OPTS,
 });
 
-// Bounce Contributors - June 2026 top 10
+// Bounce Contributors - July 2026 top 10
 const juneBounceData = ARTICLES
-  .map(a => ({ title: a.title, bounces: a.b[5], sessions: a.s[5] }))
+  .map(a => ({ title: a.title, bounces: a.b[6], sessions: a.s[6] }))
   .filter(a => a.bounces > 0)
   .sort((a, b) => b.bounces - a.bounces)
   .slice(0, 10);
@@ -1167,7 +1214,6 @@ allCharts.ctrTrendChart = new Chart(document.getElementById('ctrTrendChart'), {
       },
     },
   },
-});
-</script>
+});</script>
 </body>
 </html>
